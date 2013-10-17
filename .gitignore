@@ -8,3 +8,10 @@
 # IntelliJ Files #
 .idea/*
 *.iml
+
+# NetBeans Files #
+/nbproject/
+/dist/
+/build/
+/manifest.mf
+/build.xml
