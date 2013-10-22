@@ -11,11 +11,8 @@ package model.class <<folder>> {
 		}	
 	}
 	
-	package model.class.interface <<folder>> {
-		class An_Interface {
-		  - name : String
-		}
-	}
+	A_class " " - " " A_class
+	
 
 	package model.class.relation <<folder>> {
 			
@@ -32,14 +29,11 @@ package model.class <<folder>> {
 			class Generalization {
 			}	
 		
-		
+			(A_class, A_class) .. Relation
 			Generalization --|> BinaryRelationWithoutMultiplicity
 			BinaryRelationWithoutMultiplicity --|> BinaryRelation
 			BinaryRelation --|> Relation
 			
-			Relation " " --* "1" A_class
-			BinaryRelation " " --* "1" A_class
-		
 		
 			abstract class BinaryRelationWithMultiplicity{
 			}
@@ -50,7 +44,7 @@ package model.class <<folder>> {
 			
 			class Composition {
 			}
-			note left: new composition(\n  new classA(), new singleMultiplicity(1),\n  new classB(), new DoubleMultiplicity(1,*)\n)
+
 			class SimpleRelation {
 			}
 			
@@ -58,8 +52,7 @@ package model.class <<folder>> {
 				Association contains a class
 			}
 			
-			class Implementation {
-			}
+			
 						
 		}
 		
@@ -68,9 +61,12 @@ package model.class <<folder>> {
 		Agregation --|> BinaryRelationWithMultiplicity
 		Composition --|> BinaryRelationWithMultiplicity
 		BinaryRelationWithMultiplicity --|> BinaryRelation
-		Implementation " " --* "1" An_Interface
-		Implementation --|> Relation
 		
+		A_class " " - " " An_Interface
+		(A_class, An_Interface) .. Implementation
+
+		class Implementation {
+		}
 		
 		
 		

@@ -26,10 +26,16 @@ package model.class <<folder>> {
 		class An_Interface {
 		}
 	}
+	
+	package model.class.relation <<folder>> {
+		class Relation {
+		}
+	}
 
 	A_ClassDiagram "1" *-- "1..*" Package
 	A_ClassDiagram "1" *-- "1..*" A_class
 	A_ClassDiagram "1" *-- "1..*" An_Interface
+	A_ClassDiagram "1" *-- "1..*" Relation
 		
 }
 
