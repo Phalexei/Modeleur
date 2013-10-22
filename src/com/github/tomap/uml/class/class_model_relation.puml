@@ -50,7 +50,7 @@ package model.class <<folder>> {
 			
 			class Composition {
 			}
-			note left: new composition(\n  new classA(), new singleMultiplicity(1),\n  new classB(), new DoubleMultiplicity(1,*)\n)
+
 			class SimpleRelation {
 			}
 			
