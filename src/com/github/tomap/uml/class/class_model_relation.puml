@@ -8,6 +8,11 @@ package model.class <<folder>> {
 		 
 		 class A_class {
 		  - name : String
+		}
+		
+		
+		abstract class Meta{
+			- name : String
 		}	
 	}
 	
@@ -24,21 +29,20 @@ package model.class <<folder>> {
 			}
 			
 			abstract class BinaryRelation{
+				- visibility : int
 			}
 		
-			abstract class BinaryRelationWithoutMultiplicity{
-			}
+			
 			
 			class Generalization {
 			}	
 		
 		
-			Generalization --|> BinaryRelationWithoutMultiplicity
-			BinaryRelationWithoutMultiplicity --|> BinaryRelation
+			Generalization --|> Relation
 			BinaryRelation --|> Relation
 			
-			Relation " " --* "1" A_class
-			BinaryRelation " " --* "1" A_class
+			Relation " " --* "1 from" A_class
+			BinaryRelation " " --* "1 to" A_class
 		
 		
 			abstract class BinaryRelationWithMultiplicity{
@@ -94,10 +98,18 @@ package model.class <<folder>> {
 		DoubleMultiplicity --|> SingleMultiplicity
 		NoMultiplicity --|> Multiplicity
 	
-		BinaryRelationWithMultiplicity " " --* "1" Multiplicity
-		BinaryRelationWithMultiplicity " " --* "1" Multiplicity
+		BinaryRelationWithMultiplicity " " --* "1 from" Multiplicity
+		BinaryRelationWithMultiplicity " " --* "1 to" Multiplicity
 		
 		Association " " --* "1" A_class
+		
+		
+		
+		
+		Generalization " " --* "1 from" Meta
+		
+		
+		
 }
 
 
