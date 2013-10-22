@@ -44,10 +44,6 @@ package model.class <<folder>> {
 			Relation " " --* "1 from" A_class
 			BinaryRelation " " --* "1 to" A_class
 		
-		
-			abstract class BinaryRelationWithMultiplicity{
-			}
-			
 			class Agregation {
 			}
 			
@@ -67,11 +63,10 @@ package model.class <<folder>> {
 						
 		}
 		
-		SimpleRelation --|> BinaryRelationWithMultiplicity
-		Association --|> BinaryRelationWithMultiplicity
-		Agregation --|> BinaryRelationWithMultiplicity
-		Composition --|> BinaryRelationWithMultiplicity
-		BinaryRelationWithMultiplicity --|> BinaryRelation
+		SimpleRelation --|> BinaryRelation
+		Association --|> BinaryRelation
+		Agregation --|> BinaryRelation
+		Composition --|> BinaryRelation
 		Implementation " " --* "1" An_Interface
 		Implementation --|> Relation
 		
@@ -98,8 +93,8 @@ package model.class <<folder>> {
 		DoubleMultiplicity --|> SingleMultiplicity
 		NoMultiplicity --|> Multiplicity
 	
-		BinaryRelationWithMultiplicity " " --* "1 from" Multiplicity
-		BinaryRelationWithMultiplicity " " --* "1 to" Multiplicity
+		BinaryRelation " " --* "1 from" Multiplicity
+		BinaryRelation " " --* "1 to" Multiplicity
 		
 		Association " " --* "1" A_class
 		
