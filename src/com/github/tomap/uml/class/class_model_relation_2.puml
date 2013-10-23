@@ -1,0 +1,123 @@
+@startuml
+
+title Class diagram which models relations
+
+package model.class <<folder>> {
+
+	package model.class.class <<folder>> {
+
+		 class A_class {
+		  - name : String
+		}
+
+
+		abstract class Meta{
+			- name : String
+		}
+	}
+
+	package model.class.interface <<folder>> {
+		class An_Interface {
+		  - name : String
+		}
+	}
+
+	package model.class.relation <<folder>> {
+
+			abstract class Relation{
+				- title : String
+			}
+
+			abstract class BinaryRelation{
+				- visibility : int
+			}
+
+			abstract class NAireRelation {
+			}
+
+			abstract class Association{
+				Association contains a class
+			}
+
+			class Generalization {
+			}
+
+			NAireRelation --|> Relation
+			Generalization --|> Relation
+			BinaryRelation --|> Relation
+
+			Relation " " --* "1 from" A_class
+			BinaryRelation " " --* "1 to" A_class
+
+			class Agregation {
+			}
+
+
+			class Composition {
+			}
+
+			class SimpleRelation {
+			}
+
+			class Implementation {
+			}
+
+			class AssociationSimple {
+			}
+			class AssociationNAire {
+			}
+
+			AssociationSimple --|> Association
+			AssociationNAire --|> Association
+
+		}
+
+		SimpleRelation --|> BinaryRelation
+		AssociationSimple --|> BinaryRelation
+		AssociationNAire --|> NAireRelation
+		Agregation --|> BinaryRelation
+		Composition --|> BinaryRelation
+		Implementation " " --* "1" An_Interface
+		Implementation --|> Relation
+
+
+
+
+		package model.class.multiplicity <<folder>> {
+			Abstract class Multiplicity{
+			}
+
+			class SingleMultiplicity{
+				- value : int
+			}
+
+			class DoubleMultiplicity{
+				- maxValue : int
+			}
+
+			class NoMultiplicity{
+			}
+		}
+
+		SingleMultiplicity --|> Multiplicity
+		DoubleMultiplicity --|> SingleMultiplicity
+		NoMultiplicity --|> Multiplicity
+
+		BinaryRelation " " --* "1 from" Multiplicity
+		BinaryRelation " " --* "1 to" Multiplicity
+		NAireRelation " " --* "1..*" Multiplicity
+
+		Association " " --* "1" A_class
+
+
+
+
+		Generalization " " --* "1 from" Meta
+
+
+
+}
+
+
+
+@enduml
