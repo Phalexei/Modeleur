@@ -1,0 +1,9 @@
+@startuml
+actor User
+participant System
+
+	User -> System: Add Class
+	System -> User: name, visibility ?
+	User -> System: name
+
+@enduml
