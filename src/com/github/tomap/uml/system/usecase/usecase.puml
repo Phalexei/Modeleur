@@ -1,0 +1,15 @@
+@startuml
+skinparam packageStyle rect
+
+:User: as User
+
+rectangle UML_Modeller {
+    (Create a class diagram) as (Class)
+    (Create an object diagram) as (Object)
+    (Check coherence between\n class and objet diagrams) as (Coherence)
+
+    User -- (Class)
+    (Object) ..> (Class) : <<include>>
+    User -- (Coherence)
+}
+@enduml
