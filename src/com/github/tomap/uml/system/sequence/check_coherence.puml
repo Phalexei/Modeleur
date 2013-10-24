@@ -1,0 +1,13 @@
+@startuml
+actor User
+participant System
+
+loop Verification failed
+    User -> System: Launch verification procedure
+    activate System
+
+    System --> User: Verification status
+    deactivate System
+end
+
+@enduml

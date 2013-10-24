@@ -9,18 +9,18 @@ package model.class <<folder>> {
 		 class A_class {
 		  - name : String
 		}
-		
-		
-		abstract class Meta{
-			- name : String
-		}	
+		 class Type {
+		  - name : String
+		}
 	}
-	
 	package model.class.interface <<folder>> {
 		class An_Interface {
 		  - name : String
 		}
 	}
+	
+	An_Interface --|> Type
+	A_class --|> Type
 
 	package model.class.relation <<folder>> {
 			
@@ -29,24 +29,17 @@ package model.class <<folder>> {
 			}
 			
 			abstract class BinaryRelation{
-				- visibility : int
 			}
-		
 			
+			class N_Relation{
+			}
 			
+			note top of Generalization : forbidden : \n class extends interface\n interface extends class
 			class Generalization {
 			}	
 		
-		
-			Generalization --|> Relation
-			BinaryRelation --|> Relation
-			
-			Relation " " --* "1 from" A_class
-			BinaryRelation " " --* "1 to" A_class
-		
 			class Agregation {
 			}
-			
 			
 			class Composition {
 			}
@@ -54,21 +47,34 @@ package model.class <<folder>> {
 			class SimpleRelation {
 			}
 			
-			class Association{
-				Association contains a class
+			class Implementation {
 			}
 			
-			class Implementation {
+			class Association {
 			}
 						
 		}
+		Association" " --* "1" Relation
+		Association " " --> "1" A_class
 		
+		N_Relation --|> Relation
+		N_Relation " " --> "1 from" A_class
+		
+		
+		BinaryRelation --|> Relation
+		
+		BinaryRelation " " --> "1 from" A_class
+		BinaryRelation " " --> "1 to" A_class
+		
+		Generalization " " -->"from 1" Type
+		Generalization " " -->"                 1 to" Type
+			
 		SimpleRelation --|> BinaryRelation
-		Association --|> BinaryRelation
 		Agregation --|> BinaryRelation
 		Composition --|> BinaryRelation
-		Implementation " " --* "1" An_Interface
-		Implementation --|> Relation
+		
+		Implementation " " --> "1" An_Interface
+		Implementation " " --> "1" A_class
 		
 		
 		
@@ -79,6 +85,7 @@ package model.class <<folder>> {
 			
 			class SingleMultiplicity{
 				- value : int
+				- attributeName : String
 			}	
 			
 			class DoubleMultiplicity{
@@ -92,19 +99,9 @@ package model.class <<folder>> {
 		SingleMultiplicity --|> Multiplicity
 		DoubleMultiplicity --|> SingleMultiplicity
 		NoMultiplicity --|> Multiplicity
-	
-		BinaryRelation " " --* "1 from" Multiplicity
-		BinaryRelation " " --* "1 to" Multiplicity
-		
-		Association " " --* "1" A_class
-		
-		
-		
-		
-		Generalization " " --* "1 from" Meta
-		
-		
-		
+		(N_Relation, A_class) .. Multiplicity
+		(BinaryRelation, A_class) .. Multiplicity
+		(BinaryRelation, A_class) .. Multiplicity
 }
 
 

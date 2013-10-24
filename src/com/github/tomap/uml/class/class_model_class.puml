@@ -6,7 +6,9 @@ package model.class <<folder>> {
 
 
 	package model.class.package <<folder>> {
-		class Package {
+		class A_Package {
+		 - void addClass()
+		 - void addInterface()
 		}
 	}
 	
@@ -14,6 +16,12 @@ package model.class <<folder>> {
 		 
 		 class A_class {
 		  - name : String
+		  - isFinal : boolean
+		  - isStatic : boolean
+		  - isAbstract : boolean
+		  
+		   - void addMethod()
+		   - void addAttribute()
 		}	
 	}
 	
@@ -26,9 +34,12 @@ package model.class <<folder>> {
 	package model.class.typedElement <<folder>> {
 		
 		class Attribute {
+			- isDerivated : boolean
 		}
 		
 		class Method {
+			- isAbstract : boolean
+			- void addParameter()
 		}
 		
 		class Parameter {
@@ -36,9 +47,11 @@ package model.class <<folder>> {
 		
 		abstract class TypedElement{
 			- name : String
+			- isFinal : boolean
 		}
 		
 		abstract class VisibleTypedElement {
+			- isStatic : boolean
 		}
 	}
 	
@@ -46,6 +59,7 @@ package model.class <<folder>> {
 	
 	package model.class.type <<folder>> {
 		abstract class Type{
+			- name : String
 		}
 		
 		abstract class TypeBase{
@@ -89,11 +103,15 @@ package model.class <<folder>> {
 		
 		class Protected {
 		}
+		
+		class Package {
+		}
 	}
 	
 	Private --|> Visibility
 	Public --|> Visibility
 	Protected --|> Visibility
+	Package --|> Visibility
 	
 	VisibleTypedElement --|> TypedElement
 	Parameter --|> TypedElement
@@ -104,21 +122,16 @@ package model.class <<folder>> {
 	
 	
 	A_class --|> Type
-	A_class "1..*" --* "1" Package
-	An_Interface "1..*" --* "1" Package
+	A_class "1..*" --* "1" A_Package
+	An_Interface "1..*" --* "1" A_Package
 	A_class "1" *-- "1..*" Attribute
 	A_class "1" *-- "1..*" Method
 	
 	An_Interface "1..*" *-- "1" Method
 	
 	Method "1..*" *-- "1" Parameter
-
-	abstract class Meta{
-			- name : String
-	}
-		
-	Type --|> Meta
-	An_Interface --|> Meta	
+	
+	An_Interface --|> Type	
 	
 }
 
