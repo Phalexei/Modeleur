@@ -4,18 +4,40 @@ left to right direction
 :User: as User
 
 rectangle UML_Modeller {
-	rectangle Class_Diagramm_System {
-		(Create a class diagram) as (Class)
-	}
-	rectangle Object_Diagramm_System {
-		(Create an object diagram) as (Object)
-	}
-   
-    (Check coherence between\n class and objet diagrams) as (Coherence)
 
+	rectangle Class_Diagramm_System {
+		(Add Class) as (addClass)
+	    (Add Relation) as (addRelation)
+		(Edit Method) as (editMethod)
+	    (Edit Attribute) as (editAttribute)
+	    (Edit Multiplicity) as (editMultiplicity)
+	}
+
+	User -- (addRelation)
+    User -- (addClass)
+    (editMethod) ..> (addClass) : <<include>>
+    (editAttribute) ..> (addClass) : <<include>>
+    (editMultiplicity) ..> (addClass) : <<include>>
+    (editMultiplicity) ..> (addRelation) : <<include>>
+
+	rectangle Object_Diagramm_System {
+		(Add Object) as (addObject)
+	    (Add Relation) as (addObjectRelation)
+	}
+
+	User -- (addObject)
+    User -- (addObjectRelation)
+
+	(Create a class diagram) as (Class)
+    (Create an object diagram) as (Object)
+    (Save workspace) as (Save)
+    (Check coherence between\n class and object diagrams) as (Coherence)
+
+	User -- (Save)
     User -- (Class)
-    (Object) ..> (Class) : <<include>>
     User -- (Coherence)
+   (Object) ..> (Class) : <<include>>
+
 }
 
 @enduml
