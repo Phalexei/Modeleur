@@ -2,31 +2,47 @@
 
 title Class diagram which models a class and interface
 
-package model.class <<folder>> {
 
+
+package model.class <<folder>> {
 
 	package model.class.package <<folder>> {
 		class A_Package {
-		 - void addClass()
-		 - void addInterface()
+		 - name : String
+		 
+		 + A_Package(String name)
+		 + addClass(A_Class) : void
+		 + removeClass(A_Class) : void
+		 + addInterface(An_Interface) : void
+		 + removeInterface(An_Interface) : void
+		 + toString() : String
 		}
 	}
 	
 	package model.class.class <<folder>> {
 		 
 		 class A_class {
-		  - name : String
 		  - isFinal : boolean
 		  - isStatic : boolean
 		  - isAbstract : boolean
 		  
-		   - void addMethod()
-		   - void addAttribute()
+		  + A_class(String, boolean, boolean, boolean, A_Package)
+		  + addMethod(Method) : void
+		  + removeMethod(Method) : void
+		  + addAttribute(Attribute) : void
+		  + addAttribute(Attribute) : void
+		  + toString() : String
 		}	
 	}
 	
 	package model.class.interface <<folder>> {
 		class An_Interface {
+		
+		+ An_Interface(String, A_Package)
+		+ addMethod(Method) : void
+		+ removeMethod(Method) : void
+		+ removeAllMethod() : void
+		+ toString() : String
 		}
 	}
 	
@@ -35,23 +51,36 @@ package model.class <<folder>> {
 		
 		class Attribute {
 			- isDerivated : boolean
+			
+			+ Attribute(boolean, boolean, boolean,String, Type, Visibility,Type)
+			+ toString() : String
 		}
 		
 		class Method {
 			- isAbstract : boolean
-			- void addParameter()
+			
+			+ Method(Visibility, Type, String, boolean, boolean, Type)
+			+ addParameter (Parameter) : void
+			+ removeParameter (Parameter) : void
+			+ toString() : String
 		}
 		
 		class Parameter {
+			+ Parameter(boolean, boolean, Type, String, Method)
+			+ toString() : String
 		}
 		
 		abstract class TypedElement{
-			- name : String
-			- isFinal : boolean
+			# name : String
+			# isFinal : boolean
+			
+			+ TypedElement(String, boolean, Type)
 		}
 		
 		abstract class VisibleTypedElement {
-			- isStatic : boolean
+			# isStatic : boolean
+			
+			+ VisibleTypedElement(String, boolean, Type, boolean, Visibility)
 		}
 	}
 	
@@ -59,30 +88,49 @@ package model.class <<folder>> {
 	
 	package model.class.type <<folder>> {
 		abstract class Type{
-			- name : String
+			# name : String
+			
+			+ Type (String)
+			+ toString() : String
+			+ getName() : String
 		}
 		
 		abstract class TypeBase{
 		 	- ByteSize : int
+		 	+ TypeBase(String, int)
 		}
 		
-		class Int {
+		class Integer {
+			+ Integer()
 		}
 		
 		class Double {
+			+ Double()
 		}
 		
 		class Float {
+			+ IntFloateger()
+		}
+		
+		class Void {
+			+ Void()
 		}
 		
 		class Boolean {
+			+ Boolean()
+		}
+		
+		class AString {
+			+ AString()
 		}	
 	}
 	
 	Boolean --|> TypeBase
 	Float --|> TypeBase
 	Double --|> TypeBase
-	Int --|> TypeBase
+	Integer --|> TypeBase
+	Void --|> TypeBase
+	AString --|> TypeBase
 	
 	TypeBase --|> Type
 	
@@ -93,18 +141,25 @@ package model.class <<folder>> {
 		
 		abstract class Visibility{
 			- name : String
+			
+			+ Visibility(String)
+			+ toString() : String
 		}
 		
 		class Private {
+			+ Private()
 		}
 		
 		class Public {
+			+ Public()
 		}
 		
 		class Protected {
+			+ Protected()
 		}
 		
 		class Package {
+			+ Package()
 		}
 	}
 	

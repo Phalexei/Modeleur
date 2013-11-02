@@ -7,53 +7,80 @@ package model.class <<folder>> {
 	package model.class.class <<folder>> {
 		 
 		 class A_class {
-		  - name : String
 		}
 		 class Type {
-		  - name : String
 		}
 	}
 	package model.class.interface <<folder>> {
 		class An_Interface {
-		  - name : String
 		}
 	}
 	
 	An_Interface --|> Type
 	A_class --|> Type
 
+	package model.class.exception <<folder>> {
+		class BadTypeException {
+			+ BadTypeException(String)
+		}
+	}
+
 	package model.class.relation <<folder>> {
 			
-			abstract class Relation{
-				- title : String
-			}
-			
-			abstract class BinaryRelation{
-			}
-			
-			class N_Relation{
-			}
-			
-			note top of Generalization : forbidden : \n class extends interface\n interface extends class
-			class Generalization {
-			}	
-		
-			class Agregation {
-			}
-			
-			class Composition {
-			}
 
-			class SimpleRelation {
-			}
+		abstract class Relation{
+			- title : String
 			
-			class Implementation {
-			}
-			
-			class Association {
-			}
-						
+			+ Relation(String)
 		}
+		
+		abstract class BinaryRelation{
+			
+			+ BinaryRelation(String, Multiplicity, Multiplicity)
+			+ updateMultiplicities (Multiplicity, Multiplicity) : void
+		}
+		
+		class N_Relation{
+			+ N_Relation (String)
+			+ addMultiplicity(Multiplicity) : void
+			+ removeMultiplicity(Multiplicity) : void
+			+ toString() : String
+		}
+		
+		note top of Generalization : forbidden : \n class extends interface\n interface extends class\nlaunch BadTypeException()
+		class Generalization {
+			+ Generalization (Type, Type)
+			+ toString() : String
+		}	
+	
+		class Agregation {
+			+ Agregation(String)
+			+ toString() : String
+		}
+			
+		class Composition {
+			+ Composition(String)
+			+ toString() : String
+		}
+
+		class SimpleRelation {
+			+ SimpleRelation(String)
+			+ toString() : String
+		}
+		
+		class Implementation {
+			+ Implementation (A_class, An_Interface)
+			+ toString() : String
+			
+		}
+		
+		class Association {
+			+ Association(A_class, Relation)
+			+ toString() : String
+		}
+						
+	}
+		Association --|> Relation
 		Association" " --* "1" Relation
 		Association " " --> "1" A_class
 		
@@ -68,11 +95,13 @@ package model.class <<folder>> {
 		
 		Generalization " " -->"from 1" Type
 		Generalization " " -->"                 1 to" Type
-			
+		
+		Generalization --|> Relation
 		SimpleRelation --|> BinaryRelation
 		Agregation --|> BinaryRelation
 		Composition --|> BinaryRelation
 		
+		Implementation --|> Relation
 		Implementation " " --> "1" An_Interface
 		Implementation " " --> "1" A_class
 		
@@ -81,18 +110,27 @@ package model.class <<folder>> {
 		
 		package model.class.multiplicity <<folder>> {
 			Abstract class Multiplicity{
+				+ Multiplicity (A_class, Relation)
 			}
 			
 			class SingleMultiplicity{
-				- value : int
-				- attributeName : String
+				# value : int
+				# attributeName : String
+				
+				+ SingleMultiplicity(int, String, A_class, Relation)
+				+ toString() : String
 			}	
 			
 			class DoubleMultiplicity{
 				- maxValue : int
+				
+				+ DoubleMultiplicity(int,int, String, A_class, Relation)
+				+ toString() : String
 			}
 			
 			class NoMultiplicity{
+				+ NoMultiplicity(A_class, Relation)
+				+ toString() : String
 			}	
 		}
 		

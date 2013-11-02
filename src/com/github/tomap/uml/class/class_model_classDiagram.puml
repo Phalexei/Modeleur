@@ -7,6 +7,12 @@ package model.class <<folder>> {
 	package model.class.Classdiagram <<folder>> {
 		 
 		 class A_ClassDiagram {
+		 	+ A_ClassDiagram()
+		 	+ addPackage(A_Package) : void
+		 	+ removePackage(A_Package) : void
+		 	+ addRelation (Relation) : void
+		 	+ removeRelation (Relation) : void
+		 	+ toString() : String
 		}	
 	}
 	
