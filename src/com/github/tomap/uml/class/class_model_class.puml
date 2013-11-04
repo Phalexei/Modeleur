@@ -66,7 +66,7 @@ package model.class <<folder>> {
 		}
 		
 		class Parameter {
-			+ Parameter(boolean, boolean, Type, String, Method)
+			+ Parameter(boolean, Type, String, Method)
 			+ toString() : String
 		}
 		
