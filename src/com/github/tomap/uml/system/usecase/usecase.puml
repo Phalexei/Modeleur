@@ -1,42 +1,51 @@
 @startuml
 skinparam packageStyle rect
 left to right direction
-:User: as User
+:User: as Utilisateur
 
-rectangle UML_Modeller {
+rectangle UML_Modeleur {
 
-	rectangle Class_Diagramm_System {
-		(Add Class) as (addClass)
-	    (Add Relation) as (addRelation)
-		(Edit Method) as (editMethod)
-	    (Edit Attribute) as (editAttribute)
-	    (Edit Multiplicity) as (editMultiplicity)
+	rectangle systeme_diagramme_classe {
+		
+		(Ajouter une classe) as (ajouterClasse)
+		(Ajouter une interface) as (ajouterInterface)
+		(Ajouter une relation) as (ajouterRelationC)
+		(Ajouter un package) as (ajouterPackage)
+		
+		(Supprimer une classe) as (supprimerClasse)
+		(Supprimer une interface) as (supprimerInterface)
+		(Supprimer une relation) as (supprimerrRelationC)
+		(Supprimer un package) as (supprimerPackage)
+		
 	}
 
-	User -- (addRelation)
-    User -- (addClass)
-    (editMethod) ..> (addClass) : <<include>>
-    (editAttribute) ..> (addClass) : <<include>>
-    (editMultiplicity) ..> (addClass) : <<include>>
-    (editMultiplicity) ..> (addRelation) : <<include>>
+	Utilisateur -- (ajouterClasse)
+	Utilisateur -- (ajouterInterface)
+	Utilisateur -- (ajouterRelationC)
+	Utilisateur -- (ajouterPackage)
+	
+	(ajouterClasse) <. (supprimerClasse) : extends
+	(ajouterInterface) <. (supprimerInterface) : extends
+	(ajouterRelationC) <. (supprimerrRelationC) : extends
+	(ajouterPackage) <. (supprimerPackage) : extends
 
-	rectangle Object_Diagramm_System {
-		(Add Object) as (addObject)
-	    (Add Relation) as (addObjectRelation)
+
+	rectangle systeme_diagramme_objet {
+		(Ajouter un objet) as (ajouterObjet)
+	    (Ajouter une relation) as (ajouterRelationO)
+	    
+	    (Supprimer un objet) as (supprimerObjet)
+	    (Supprimer une relation) as (supprimerRelationO)
+	    
+	    (vérifier la cohérence du diagramme d'objet\navec le diagramme de classe) as (verifierDiagramme)
 	}
 
-	User -- (addObject)
-    User -- (addObjectRelation)
-
-	(Create a class diagram) as (Class)
-    (Create an object diagram) as (Object)
-    (Save workspace) as (Save)
-    (Check coherence between\n class and object diagrams) as (Coherence)
-
-	User -- (Save)
-    User -- (Class)
-    User -- (Coherence)
-   (Object) ..> (Class) : <<include>>
+	Utilisateur -- (ajouterObjet)
+    Utilisateur -- (ajouterRelationO)
+    (ajouterObjet) <. (supprimerObjet) : extends
+    (ajouterRelationO) <. (supprimerRelationO) : extends
+    
+	Utilisateur -- (verifierDiagramme)
 
 }
 
