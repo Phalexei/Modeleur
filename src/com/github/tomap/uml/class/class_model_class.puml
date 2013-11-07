@@ -9,7 +9,7 @@ package model.class <<folder>> {
 	package model.class.package <<folder>> {
 		class A_Package {
 		 - name : String
-		 
+
 		 + A_Package(String name)
 		 + addClass(A_Class) : void
 		 + removeClass(A_Class) : void
@@ -18,26 +18,26 @@ package model.class <<folder>> {
 		 + toString() : String
 		}
 	}
-	
+
 	package model.class.class <<folder>> {
-		 
+
 		 class A_class {
 		  - isFinal : boolean
 		  - isStatic : boolean
 		  - isAbstract : boolean
-		  
+
 		  + A_class(String, boolean, boolean, boolean, A_Package)
 		  + addMethod(Method) : void
 		  + removeMethod(Method) : void
 		  + addAttribute(Attribute) : void
 		  + addAttribute(Attribute) : void
 		  + toString() : String
-		}	
+		}
 	}
-	
+
 	package model.class.interface <<folder>> {
 		class An_Interface {
-		
+
 		+ An_Interface(String, A_Package)
 		+ addMethod(Method) : void
 		+ removeMethod(Method) : void
@@ -45,149 +45,150 @@ package model.class <<folder>> {
 		+ toString() : String
 		}
 	}
-	
-	
+
+
 	package model.class.typedElement <<folder>> {
-		
+
 		class Attribute {
 			- isDerivated : boolean
-			
-			+ Attribute(boolean, boolean, boolean,String, Type, Visibility,Type)
+
+			+ Attribute(boolean, boolean, boolean,String, TypeBase, Visibility,Type)
 			+ toString() : String
 		}
-		
+
 		class Method {
 			- isAbstract : boolean
-			
+
 			+ Method(Visibility, Type, String, boolean, boolean, Type)
 			+ addParameter (Parameter) : void
 			+ removeParameter (Parameter) : void
 			+ toString() : String
 		}
-		
+
 		class Parameter {
 			+ Parameter(boolean, Type, String, Method)
 			+ toString() : String
 		}
-		
+
 		abstract class TypedElement{
 			# name : String
 			# isFinal : boolean
-			
+
 			+ TypedElement(String, boolean, Type)
 		}
-		
+
 		abstract class VisibleTypedElement {
 			# isStatic : boolean
-			
+
 			+ VisibleTypedElement(String, boolean, Type, boolean, Visibility)
 		}
 	}
-	
-	
-	
+
+
+
 	package model.class.type <<folder>> {
 		abstract class Type{
 			# name : String
-			
+
 			+ Type (String)
 			+ toString() : String
 			+ getName() : String
 		}
-		
+
 		abstract class TypeBase{
 		 	- ByteSize : int
 		 	+ TypeBase(String, int)
 		}
-		
+
 		class Integer {
 			+ Integer()
 		}
-		
+
 		class Double {
 			+ Double()
 		}
-		
+
 		class Float {
 			+ IntFloateger()
 		}
-		
+
 		class Void {
 			+ Void()
 		}
-		
+
 		class Boolean {
 			+ Boolean()
 		}
-		
+
 		class AString {
 			+ AString()
-		}	
+		}
 	}
-	
+
 	Boolean --|> TypeBase
 	Float --|> TypeBase
 	Double --|> TypeBase
 	Integer --|> TypeBase
 	Void --|> TypeBase
 	AString --|> TypeBase
-	
+
 	TypeBase --|> Type
-	
-	TypedElement  " " --* "1" Type
-	
-	
+
+	TypedElement  " " --* "1 type" Type
+	Attribute  " " --* "1 typeB {redefine type}" TypeBase
+
+
 	package model.class.visibility <<folder>> {
-		
+
 		abstract class Visibility{
 			- name : String
-			
+
 			+ Visibility(String)
 			+ toString() : String
 		}
-		
+
 		class Private {
 			+ Private()
 		}
-		
+
 		class Public {
 			+ Public()
 		}
-		
+
 		class Protected {
 			+ Protected()
 		}
-		
+
 		class Package {
 			+ Package()
 		}
 	}
-	
+
 	Private --|> Visibility
 	Public --|> Visibility
 	Protected --|> Visibility
 	Package --|> Visibility
-	
+
 	VisibleTypedElement --|> TypedElement
 	Parameter --|> TypedElement
-	
+
 	Method --|> VisibleTypedElement
 	Attribute --|> VisibleTypedElement
 	VisibleTypedElement " " --* "1" Visibility
-	
-	
+
+
 	A_class --|> Type
 	A_class "1..*" --* "1" A_Package
 	An_Interface "1..*" --* "1" A_Package
 	A_class "1" *-- "1..*" Attribute
 	A_class "1" *-- "1..*" Method
-	
+
 	An_Interface "1..*" *-- "1" Method
-	
+
 	Method "1..*" *-- "1" Parameter
-	
-	An_Interface --|> Type	
-	
+
+	An_Interface --|> Type
+
 }
 
 

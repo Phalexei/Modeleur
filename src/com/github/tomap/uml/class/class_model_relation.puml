@@ -5,7 +5,7 @@ title Class diagram which models relations
 package model.class <<folder>> {
 
 	package model.class.class <<folder>> {
-		 
+
 		 class A_class {
 		}
 		 class Type {
@@ -15,7 +15,7 @@ package model.class <<folder>> {
 		class An_Interface {
 		}
 	}
-	
+
 	An_Interface --|> Type
 	A_class --|> Type
 
@@ -26,38 +26,38 @@ package model.class <<folder>> {
 	}
 
 	package model.class.relation <<folder>> {
-			
+
 
 		abstract class Relation{
 			- title : String
-			
+
 			+ Relation(String)
 		}
-		
+
 		abstract class BinaryRelation{
-			
+
 			+ BinaryRelation(String, Multiplicity, Multiplicity)
 			+ updateMultiplicities (Multiplicity, Multiplicity) : void
 		}
-		
+
 		class N_Relation{
 			+ N_Relation (String)
 			+ addMultiplicity(Multiplicity) : void
 			+ removeMultiplicity(Multiplicity) : void
 			+ toString() : String
 		}
-		
+
 		note top of Generalization : forbidden : \n class extends interface\n interface extends class\nlaunch BadTypeException()
 		class Generalization {
 			+ Generalization (Type, Type)
 			+ toString() : String
-		}	
-	
+		}
+
 		class Agregation {
 			+ Agregation(String)
 			+ toString() : String
 		}
-			
+
 		class Composition {
 			+ Composition(String)
 			+ toString() : String
@@ -67,73 +67,73 @@ package model.class <<folder>> {
 			+ SimpleRelation(String)
 			+ toString() : String
 		}
-		
+
 		class Implementation {
 			+ Implementation (A_class, An_Interface)
 			+ toString() : String
-			
+
 		}
-		
+
 		class Association {
 			+ Association(A_class, Relation)
 			+ toString() : String
 		}
-						
+
 	}
 		Association --|> Relation
 		Association" " --* "1" Relation
 		Association " " --> "1" A_class
-		
+
 		N_Relation --|> Relation
 		N_Relation " " --> "1 from" A_class
-		
-		
+
+
 		BinaryRelation --|> Relation
-		
+
 		BinaryRelation " " --> "1 from" A_class
 		BinaryRelation " " --> "1 to" A_class
-		
+
 		Generalization " " -->"from 1" Type
 		Generalization " " -->"                 1 to" Type
-		
+
 		Generalization --|> Relation
 		SimpleRelation --|> BinaryRelation
 		Agregation --|> BinaryRelation
 		Composition --|> BinaryRelation
-		
+
 		Implementation --|> Relation
 		Implementation " " --> "1" An_Interface
 		Implementation " " --> "1" A_class
-		
-		
-		
-		
+
+
+
+
 		package model.class.multiplicity <<folder>> {
 			Abstract class Multiplicity{
 				+ Multiplicity (A_class, Relation)
 			}
-			
+
 			class SingleMultiplicity{
 				# value : int
 				# attributeName : String
-				
+
 				+ SingleMultiplicity(int, String, A_class, Relation)
 				+ toString() : String
-			}	
-			
+			}
+
 			class DoubleMultiplicity{
 				- maxValue : int
-				
+
 				+ DoubleMultiplicity(int,int, String, A_class, Relation)
 				+ toString() : String
 			}
-			
+
 			class NoMultiplicity{
 				+ NoMultiplicity(A_class, Relation)
 				+ toString() : String
-			}	
+			}
 		}
-		
+
 		SingleMultiplicity --|> Multiplicity
 		DoubleMultiplicity --|> SingleMultiplicity
 		NoMultiplicity --|> Multiplicity
