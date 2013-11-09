@@ -1,0 +1,13 @@
+@startuml
+    actor User as U
+    participant System as S
+
+    opt class exits
+        U -> S: delete an object
+        S --> U: confirmation demand (deletion consequences)
+        U -> S: confirmation answer
+        opt user confirmed the operation
+            S --> U: objet deleted
+        end
+    end
+@enduml

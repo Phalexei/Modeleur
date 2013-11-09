@@ -1,35 +1,30 @@
 @startuml
 skinparam packageStyle rect
 left to right direction
-:User: as Utilisateur
+:User:
 
 rectangle UML_Modeleur {
 
-	rectangle systeme_diagramme_classe {
-		
-		(Gérer les classes) as (gererClasses)
-		(Gérer les interfaces) as (gererInterfaces)
-		(Gérer les relations) as (gererRelationsC)
-		(Gérer les packages) as (gererPackages)
-		
+	rectangle class diagram {
+		(Manage classes) as (manageClasses)
+		(Manage interfaces) as (manageInterfaces)
+		(Manage relations between classes) as (manageRelationsC)
+		(Manage packages) as (managePackages)	
 	}
 
-	Utilisateur -- (gererClasses)
-	Utilisateur -- (gererInterfaces)
-	Utilisateur -- (gererRelationsC)
-	Utilisateur -- (gererPackages)
+	User -- (manageClasses)
+	User -- (manageInterfaces)
+	User -- (manageRelationsC)
+	User -- (managePackages)
 
 
-
-	rectangle systeme_diagramme_objet {
-            (Gérer les objets) as (gererObjets)
-	    (Gérer les relations) as (gererRelationsO)
-	    (Vérifier la cohérence du diagramme d'objet\navec le diagramme de classe) as (verifierDiagramme)
+	rectangle object diagram {
+		(Manage objects) as (manageObjets)
+		(Manage relations between objects) as (manageRelationsO)
 	}
 
-	Utilisateur -- (gererObjets)
-        Utilisateur -- (gererRelationsO)
-	Utilisateur -- (verifierDiagramme)
+	User -- (manageObjets)
+	User -- (manageRelationsO)
 }
 
 @enduml

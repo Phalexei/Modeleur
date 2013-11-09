@@ -1,0 +1,16 @@
+@startuml
+    actor User as u
+    participant System as s
+
+    opt number of existing class >= 2
+        u -> s: add a binary relation
+        s -> u: information demand
+        u --> s: type, classes, visibily, cardinality
+    end
+
+    opt number of existing class >= 3
+        u -> s: add a n-ary relation
+        s -> u: information demand
+        u --> s: classes, visibily, cardinality, type
+    end
+@enduml

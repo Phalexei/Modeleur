@@ -2,13 +2,13 @@
 
 package utils <<folder>> {
 	interface Observable {
-		+ attache(Observateur)
-		+ detache(Observateur)
-		+ informe()
+		+ attach(Observateur)
+		+ detach(Observateur)
+		+ notify()
 	}
 
-	interface Observateur {
-		+ misAJour()
+	interface Observator {
+		+ notified()
 	}
 }
 
@@ -39,9 +39,9 @@ package model.class <<folder>> {
 	Attribute --|> Observable
 	A_class --|> Observable
 
-	Relation "1" --> "*" Observateur
-	Attribute "1" --> "*" Observateur
-	A_class "1" --> "*" Observateur
+	Relation "1" --> "*" Observator
+	Attribute "1" --> "*" Observator
+	A_class "1" --> "*" Observator
 }
 
 
@@ -93,9 +93,9 @@ package model.object.objectDiagram <<folder>> {
 	StringValue --|> Value
 	BooleanValue --|> Value
 
-	Value --|> Observateur
-	RelationO --|> Observateur
-	Object --|> Observateur
+	Value --|> Observator
+	RelationO --|> Observator
+	Object --|> Observator
 }
 
 

@@ -1,9 +1,0 @@
-@startuml
-actor User
-participant System
-
-	User -> System: Add Attribute
-	System -> User: type, name ?
-	User -> System: type, name
-
-@enduml

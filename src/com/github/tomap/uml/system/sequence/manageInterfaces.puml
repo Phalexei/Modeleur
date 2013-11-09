@@ -1,0 +1,15 @@
+@startuml
+    actor User as U
+    participant System as S
+
+    U -> S: add an interface
+    S -> U: informations demand
+    U --> S: name, package
+
+    loop
+        U -> S: add a method
+        S -> U: information demand
+        U --> S: name, type, visibility, parameters
+    end
+    
+@enduml
