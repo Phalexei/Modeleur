@@ -1,6 +1,6 @@
 @startuml
 
-
+package utils <<folder>> {
 	interface Observable {
 		+ attache(Observateur)
 		+ detache(Observateur)
@@ -10,6 +10,7 @@
 	interface Observateur {
 		+ misAJour()
 	}
+}
 
 
 package model.class <<folder>> {
@@ -17,25 +18,11 @@ package model.class <<folder>> {
 	package model.class.typedElement <<folder>> {
 
 		class Attribute {
-			- isDerivated : boolean
-
-			+ Attribute(boolean, boolean, boolean,String, TypeBase, Visibility,Type)
-			+ toString() : String
 		}
 	}
 	package model.class.class <<folder>> {
 
 		 class A_class {
-		  - isFinal : boolean
-		  - isStatic : boolean
-		  - isAbstract : boolean
-
-		  + A_class(String, boolean, boolean, boolean, A_Package)
-		  + addMethod(Method) : void
-		  + removeMethod(Method) : void
-		  + addAttribute(Attribute) : void
-		  + addAttribute(Attribute) : void
-		  + toString() : String
 		}
 	}
 

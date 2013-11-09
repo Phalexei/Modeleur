@@ -7,46 +7,29 @@ rectangle UML_Modeleur {
 
 	rectangle systeme_diagramme_classe {
 		
-		(Ajouter une classe) as (ajouterClasse)
-		(Ajouter une interface) as (ajouterInterface)
-		(Ajouter une relation) as (ajouterRelationC)
-		(Ajouter un package) as (ajouterPackage)
-		
-		(Supprimer une classe) as (supprimerClasse)
-		(Supprimer une interface) as (supprimerInterface)
-		(Supprimer une relation) as (supprimerrRelationC)
-		(Supprimer un package) as (supprimerPackage)
+		(Gérer les classes) as (gererClasses)
+		(Gérer les interfaces) as (gererInterfaces)
+		(Gérer les relations) as (gererRelationsC)
+		(Gérer les packages) as (gererPackages)
 		
 	}
 
-	Utilisateur -- (ajouterClasse)
-	Utilisateur -- (ajouterInterface)
-	Utilisateur -- (ajouterRelationC)
-	Utilisateur -- (ajouterPackage)
-	
-	(ajouterClasse) <. (supprimerClasse) : extends
-	(ajouterInterface) <. (supprimerInterface) : extends
-	(ajouterRelationC) <. (supprimerrRelationC) : extends
-	(ajouterPackage) <. (supprimerPackage) : extends
+	Utilisateur -- (gererClasses)
+	Utilisateur -- (gererInterfaces)
+	Utilisateur -- (gererRelationsC)
+	Utilisateur -- (gererPackages)
+
 
 
 	rectangle systeme_diagramme_objet {
-		(Ajouter un objet) as (ajouterObjet)
-	    (Ajouter une relation) as (ajouterRelationO)
-	    
-	    (Supprimer un objet) as (supprimerObjet)
-	    (Supprimer une relation) as (supprimerRelationO)
-	    
-	    (v�rifier la coh�rence du diagramme d'objet\navec le diagramme de classe) as (verifierDiagramme)
+            (Gérer les objets) as (gererObjets)
+	    (Gérer les relations) as (gererRelationsO)
+	    (Vérifier la cohérence du diagramme d'objet\navec le diagramme de classe) as (verifierDiagramme)
 	}
 
-	Utilisateur -- (ajouterObjet)
-    Utilisateur -- (ajouterRelationO)
-    (ajouterObjet) <. (supprimerObjet) : extends
-    (ajouterRelationO) <. (supprimerRelationO) : extends
-    
+	Utilisateur -- (gererObjets)
+        Utilisateur -- (gererRelationsO)
 	Utilisateur -- (verifierDiagramme)
-
 }
 
 @enduml
