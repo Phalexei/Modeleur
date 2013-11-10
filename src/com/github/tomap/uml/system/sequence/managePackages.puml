@@ -3,6 +3,8 @@
     participant System as s
 
     u -> s: add a package
-    s -> u: information demand
-    u --> s: name
+    loop !validation
+        s -> u: information demand
+        u --> s: name
+    end
 @enduml

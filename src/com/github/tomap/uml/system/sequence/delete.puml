@@ -3,7 +3,7 @@
     participant System as S
 
     opt class exits
-        U -> S: delete an object
+        U -> S: delete an object (class, interface, package, relation, object) 
         S --> U: confirmation demand (deletion consequences)
         U -> S: confirmation answer
         opt user confirmed the operation

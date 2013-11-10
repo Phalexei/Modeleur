@@ -3,13 +3,17 @@
     participant System as S
 
     U -> S: add an interface
-    S -> U: informations demand
-    U --> S: name, package
+    loop !validation
+        S -> U: informations demand
+        U --> S: name, package
+    end
 
     loop
         U -> S: add a method
-        S -> U: information demand
-        U --> S: name, type, visibility, parameters
+        loop !validation
+            S -> U: information demand
+            U --> S: name, type, visibility, parameters
+        end
     end
     
 @enduml

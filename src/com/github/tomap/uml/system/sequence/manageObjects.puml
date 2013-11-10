@@ -1,0 +1,18 @@
+@startuml
+    actor User as U
+    participant System as S
+
+    U -> S: add an object
+    loop !validation
+        S -> U: informations demand
+        U --> S: name, corresponding class
+    end
+
+    loop
+        U -> S: add a value
+        loop !validation
+            S -> U: informations demand
+            U --> S: corresponding attribute, value
+        end
+    end
+@enduml
