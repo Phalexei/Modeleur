@@ -1,0 +1,50 @@
+@startuml
+
+    actor User as u
+    participant Application as a
+    participant A_ClassDiagram as Cd
+    participant "p : A_Package" as p
+    participant "c : A_Class" as c
+
+	u -> a: Add class click\n String : className, packageName\n Boolean : final, static, abstract
+	activate a
+
+	a -> Cd: listPackage.contains(packageName)
+	Cd -> a: yes / no
+
+	opt ! packageName exist
+		a -> p: new A_Package(PackageName)
+		note left of p
+	    	See the addPackage
+	    	diagram sequence
+	    end note
+	    p -> a: return p
+	end
+
+	a -> c: new A_Class(className, final, static, abstract, p)
+	activate c
+
+	loop as user wish
+		c -> c: addAttribute()
+	end
+	note right of c
+    	See the addAttribute
+    	diagram sequence
+    end note
+
+	loop as user wish
+		c -> c: addMethod()
+	end
+	note right of c
+    	See the addMethod
+    	diagram sequence
+    end note
+
+	c -> p: addClass(this)
+	deactivate c
+
+	p -> a:
+	a -> u:
+	deactivate a
+
+@enduml

@@ -1,0 +1,30 @@
+@startuml
+
+    actor User as u
+    participant Application as a
+    participant "p : A_Package" as p
+    participant "c : A_Class" as c
+
+	u -> a: Remove class click\n String ClassName
+	activate a
+
+	a -> c:
+	activate c
+
+	loop !listAttributes.isEmpty()
+		c -> c: removeAttribute(Attribute)
+	end
+
+	loop !listMethods.isEmpty()
+		c -> c: removeMethod(Method)
+	end
+
+	c -> p: p.removeClass(this)
+	deactivate c
+
+	p -> a
+	a -> u
+	deactivate a
+
+
+@enduml

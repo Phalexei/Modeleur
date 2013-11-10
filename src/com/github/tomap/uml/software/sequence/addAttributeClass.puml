@@ -1,0 +1,22 @@
+@startuml
+
+    actor User as u
+    participant Application as a
+    participant "c : A_Class" as c
+    participant " : Attribute" as at
+
+    loop as user wish
+    	u -> a: Add attribute\n String : name\n Boolean : static, final, derivated\n TypeBase\n Visibility\n Type : class
+    	activate a
+    	a -> at: new Attribute(static, final, derivated, name, TypeBase, Visibility, class)
+    	activate at
+    	at -> c: addAttribute(this)
+    	deactivate at
+    	activate c
+    	c -> a
+    	deactivate c
+    	a -> u
+    	deactivate a
+    end
+
+@enduml

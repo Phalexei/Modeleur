@@ -1,0 +1,49 @@
+@startuml
+
+    actor User as u
+    participant Application as a
+    participant A_ClassDiagram as Cd
+    participant "p : A_Package" as p
+
+	u -> a: remove package click / string PackageName
+
+	a -> Cd: removePackage(p)
+	activate Cd
+
+	Cd -> p: p.removeClasses()
+	activate p
+
+	loop !listClasses.isEmpty()
+		p -> p: removeClass(A_Class)
+	end
+
+	note right of p
+    	See the removeClass
+    	diagram sequence
+    end note
+
+	p -> Cd:
+	deactivate p
+
+	Cd -> p: p.removeInterfaces()
+	activate p
+
+	loop !listInterfaces.isEmpty()
+		p -> p: removeInterface(An_Interface)
+	end
+
+	note right of p
+    	See the removeInterface
+    	diagram sequence
+    end note
+
+	p -> Cd:
+	deactivate p
+
+	Cd -> a
+	deactivate Cd
+	a -> u
+
+
+
+@enduml

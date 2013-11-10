@@ -1,0 +1,42 @@
+@startuml
+
+    actor User as u
+    participant Application as a
+    participant A_ClassDiagram as Cd
+    participant "p : A_Package" as p
+    participant "i : An_Interface" as i
+
+	u -> a: Add interface click\n String : interfaceName, packageName
+	activate a
+
+	a -> Cd: listPackage.contains(packageName)
+	Cd -> a: yes / no
+
+	opt ! packageName exist
+		a -> p: new A_Package(PackageName)
+		note left of p
+	    	See the addPackage
+	    	diagram sequence
+	    end note
+	    p -> a: return p
+	end
+
+	a -> i: new An_Interface(interfaceName, p)
+	activate i
+
+	loop as user wish
+		i -> i: addMethod()
+	end
+	note right of i
+    	See the addMethod
+    	diagram sequence
+    end note
+
+	i -> p: addInterface(this)
+	deactivate i
+
+	p -> a:
+	a -> u:
+	deactivate a
+
+@enduml

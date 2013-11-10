@@ -13,8 +13,10 @@ package model.class <<folder>> {
 		 + A_Package(String name)
 		 + addClass(A_Class) : void
 		 + removeClass(A_Class) : void
+		 + removeClasses() : void
 		 + addInterface(An_Interface) : void
 		 + removeInterface(An_Interface) : void
+		 + removeInterfaces() : void
 		 + toString() : String
 		}
 	}
@@ -30,7 +32,7 @@ package model.class <<folder>> {
 		  + addMethod(Method) : void
 		  + removeMethod(Method) : void
 		  + addAttribute(Attribute) : void
-		  + addAttribute(Attribute) : void
+		  + removeAttribute(Attribute) : void
 		  + toString() : String
 		}
 	}

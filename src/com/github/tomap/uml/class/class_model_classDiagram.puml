@@ -5,11 +5,11 @@ title Class diagram which models class diagrams
 package model.class <<folder>> {
 
 	class UMLDiagram {
-	
+		+ UMLDiagram()
 	}
 
 	package model.class.Classdiagram <<folder>> {
-		 
+
 		 class A_ClassDiagram {
 		 	+ A_ClassDiagram()
 		 	+ addPackage(A_Package) : void
@@ -17,26 +17,27 @@ package model.class <<folder>> {
 		 	+ addRelation (Relation) : void
 		 	+ removeRelation (Relation) : void
 		 	+ toString() : String
-		}	
-	}
-	
-	
-	package model.class.package <<folder>> {
-		class Package {
 		}
 	}
-	
+
+
+	package model.class.package <<folder>> {
+		class A_Package {
+			+ A_Package(String)
+		}
+	}
+
 	package model.class.relation <<folder>> {
 		class Relation {
 		}
 	}
 
-	A_ClassDiagram "1" *-- "1..*" Package
+	A_ClassDiagram "1" *-- "1..*" A_Package
 	A_ClassDiagram "1" *-- "1..*" Relation
-	
-	
+
+
 	package model.object.Objectdiagram <<folder>> {
-		 
+
 		 class A_ObjectDiagram {
 		 	+ A_ObjectDiagram()
 		 	+ addPackage(A_PackageObject) : void
@@ -44,22 +45,22 @@ package model.class <<folder>> {
 		 	+ addRelation (RelationObject) : void
 		 	+ removeRelation (RelationObject) : void
 		 	+ toString() : String
-		}	
+		}
 	}
-	
+
 	package model.object.package <<folder>> {
 		class PackageObject {
 		}
 	}
-	
+
 	package model.object.relation <<folder>> {
 		class RelationObject {
 		}
 	}
-	
+
 	A_ObjectDiagram "1" *-- "1..*" PackageObject
 	A_ObjectDiagram "1" *-- "1..*" RelationObject
-	
+
 	UMLDiagram  "1" *-- "1" A_ObjectDiagram
 	UMLDiagram  "1" *-- "1" A_ClassDiagram
 }
