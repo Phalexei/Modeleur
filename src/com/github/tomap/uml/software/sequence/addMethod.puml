@@ -1,0 +1,31 @@
+@startuml
+
+    actor User as u
+    participant Application as a
+    participant "c : A_Class" as c
+    participant " : Method" as m
+
+    loop as user wish
+    	u -> a: Add method\n String : name\n Boolean : static, final\n TypeRetour\n Visibility\n Type : class
+    	activate a
+    	a -> m: new Method(Visibility, TypeRetour, String, boolean, boolean, class)
+    	activate m
+
+    	loop as user wish
+    		m -> m: addParameter(Parameter)
+    		note right of m
+		    	See the addParameter
+		    	diagram sequence
+    		end note
+    	end
+
+    	m -> c: addMethod(this)
+    	deactivate m
+    	activate c
+    	c -> a
+    	deactivate c
+    	a -> u
+    	deactivate a
+    end
+
+@enduml
