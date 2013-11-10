@@ -1,11 +1,11 @@
 @startuml
 skinparam packageStyle rect
 left to right direction
-:User:
+actor User
 
-rectangle UML_Modeleur {
+rectangle UML_Modeler {
 
-	rectangle class diagram {
+	rectangle class_diagram {
 		(Manage classes) as (manageClasses)
 		(Manage interfaces) as (manageInterfaces)
 		(Manage relations between classes) as (manageRelationsC)
@@ -18,7 +18,7 @@ rectangle UML_Modeleur {
 	User -- (managePackages)
 
 
-	rectangle object diagram {
+	rectangle object_diagram {
 		(Manage objects) as (manageObjets)
 		(Manage relations between objects) as (manageRelationsO)
 	}
