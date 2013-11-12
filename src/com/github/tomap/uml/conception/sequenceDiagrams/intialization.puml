@@ -1,0 +1,14 @@
+@startuml
+    actor User as u
+    participant Application as a
+    participant A_ClassDiagram as Cd
+    
+    u -> a: Start the application
+    activate a
+    a -> Cd: new ClassDiagram()
+    activate Cd
+    Cd --> a
+    deactivate Cd
+    
+
+@enduml

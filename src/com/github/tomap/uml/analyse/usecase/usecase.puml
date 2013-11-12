@@ -9,13 +9,11 @@ rectangle UML_Modeler {
 		(Manage classes) as (manageClasses)
 		(Manage interfaces) as (manageInterfaces)
 		(Manage relations between classes) as (manageRelationsC)
-		(Manage packages) as (managePackages)	
 	}
 
 	User -- (manageClasses)
 	User -- (manageInterfaces)
 	User -- (manageRelationsC)
-	User -- (managePackages)
 
 
 	rectangle object_diagram {

@@ -1,0 +1,42 @@
+@startuml
+
+    actor User as u
+    participant Application as a
+    participant A_ClassDiagram as Cd
+    participant "p : A_Package" as p
+    participant "c : A_Class" as c
+        
+	u -> a: Add class click
+	activate a
+
+        a --> u: Information form
+        u -> a: String : className, packageName\n Boolean : final, static, abstract
+
+
+	a -> Cd: getListPackage()
+        activate Cd
+	Cd --> a: listPackage
+        deactivate Cd
+
+        a -> a: existsPackage(p)
+
+	opt !existsPackage(p)
+            a -> p: new A_Package(packageName)
+            activate p
+            p --> a
+            deactivate p
+	end
+        
+	a -> c: new A_Class(className, final, static, abstract, p)
+        activate c
+        c --> a
+	deactivate c
+
+        a -> p: addClass(c)
+        activate p
+        deactivate p
+
+        a -> a: listPackage.add(p)
+	deactivate a
+
+@enduml
