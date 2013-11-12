@@ -93,6 +93,7 @@ public class ListenerEditor implements MouseListener {
 			//DialogNrelation dialogNelation = new DialogNrelation(cGlobal);
 			//dialogNelation.setVisible(true);
 
+			
 		}
 	}
 
