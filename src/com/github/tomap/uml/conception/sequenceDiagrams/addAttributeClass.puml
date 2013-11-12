@@ -3,20 +3,33 @@
     actor User as u
     participant Application as a
     participant "c : A_Class" as c
-    participant " : Attribute" as at
+    participant "a : Attribute" as at
 
-    loop as user wish
-    	u -> a: Add attribute\n String : name\n Boolean : static, final, derivated\n TypeBase\n Visibility\n Type : class
-    	activate a
-    	a -> at: new Attribute(static, final, derivated, name, TypeBase, Visibility, class)
-    	activate at
-    	at -> c: addAttribute(this)
-    	deactivate at
-    	activate c
-    	c -> a
-    	deactivate c
-    	a -> u
-    	deactivate a
+    u -> a: click add attribute
+    activate a
+
+    a -> c: getClickedClass()
+    activate c
+
+    c --> a: this
+    deactivate c
+
+    a --> u: information form
+
+    loop for each attribute
+        u -> a: click add attribute
+        u -> a: String : name\nBoolean : static, final, derivated\nTypeBase\nVisibility
     end
 
+    u -> a: click OK
+
+    loop for each attribute
+        a -> at: new Attribute(static, final, derivated, name, TypeBase, Visibility, class)
+        activate at
+        at --> a
+        deactivate at
+        a -> c: addAttribute(a)
+        activate c
+        deactivate c
+    end
 @enduml

@@ -6,37 +6,35 @@
     participant "p : A_Package" as p
     participant "i : An_Interface" as i
 
-	u -> a: Add interface click\n String : interfaceName, packageName
-	activate a
+	u -> a: Add interface click
+        activate a
+        a --> u: information form
+        u -> a: String : interfaceName, packageName
 
-	a -> Cd: listPackage.contains(packageName)
-	Cd -> a: yes / no
+	a -> Cd: getListPackage()
+        activate Cd
+	Cd --> a: listPackage
+        deactivate Cd
 
-	opt ! packageName exist
-		a -> p: new A_Package(PackageName)
-		note left of p
-	    	See the addPackage
-	    	diagram sequence
-	    end note
-	    p -> a: return p
+        a -> a: existsPackage(p)
+
+	opt !existsPackage(p)
+            a -> p: new A_Package(packageName)
+            activate p
+            p --> a
+            deactivate p
+            a -> a: listPackage.add(p)
 	end
 
 	a -> i: new An_Interface(interfaceName, p)
 	activate i
 
-	loop as user wish
-		i -> i: addMethod()
-	end
-	note right of i
-    	See the addMethod
-    	diagram sequence
-    end note
-
-	i -> p: addInterface(this)
+	i --> a
 	deactivate i
 
-	p -> a:
-	a -> u:
+        a -> p: addInterface(i)
+        activate p
+        deactivate p
 	deactivate a
 
 @enduml

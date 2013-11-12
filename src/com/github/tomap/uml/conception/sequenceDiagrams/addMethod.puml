@@ -3,29 +3,43 @@
     actor User as u
     participant Application as a
     participant "c : A_Class" as c
-    participant " : Method" as m
+    participant "m : Method" as m
+    participant "p : Parameter" as p
 
-    loop as user wish
-    	u -> a: Add method\n String : name\n Boolean : static, final\n TypeRetour\n Visibility\n Type : class
-    	activate a
-    	a -> m: new Method(Visibility, TypeRetour, String, boolean, boolean, class)
-    	activate m
 
-    	loop as user wish
-    		m -> m: addParameter(Parameter)
-    		note right of m
-		    	See the addParameter
-		    	diagram sequence
-    		end note
-    	end
+     u -> a: click add method
+    activate a
 
-    	m -> c: addMethod(this)
-    	deactivate m
-    	activate c
-    	c -> a
-    	deactivate c
-    	a -> u
-    	deactivate a
+    a -> c: getClickedClass()
+    activate c
+
+    c --> a: this
+    deactivate c
+
+    a --> u: information form
+
+    u -> a: String : name\nBoolean : static, final\nTypeRetour\nVisibility\n
+    loop for each parameter
+        u -> a: click add parameter
+        u -> a: String : name\nBoolean : final\nType
     end
 
+    u -> a: click OK
+    a -> m: new Method(Visibility, TypeRetour, String, boolean, boolean, class)
+    activate m
+    m --> a
+    deactivate m
+    loop for each parameter
+        a -> p: new Parameter(name, final, Type)
+        activate p
+        p --> a
+        deactivate p
+        a -> m: addParameter(p)
+        activate m
+        deactivate m
+    end
+    deactivate m
+    a -> c: addMethod(m)
+    activate c
+    deactivate c
 @enduml

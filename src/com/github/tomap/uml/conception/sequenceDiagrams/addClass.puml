@@ -12,7 +12,6 @@
         a --> u: Information form
         u -> a: String : className, packageName\n Boolean : final, static, abstract
 
-
 	a -> Cd: getListPackage()
         activate Cd
 	Cd --> a: listPackage
@@ -25,6 +24,8 @@
             activate p
             p --> a
             deactivate p
+
+            a -> a: listPackage.add(p)
 	end
         
 	a -> c: new A_Class(className, final, static, abstract, p)
@@ -36,7 +37,5 @@
         activate p
         deactivate p
 
-        a -> a: listPackage.add(p)
-	deactivate a
 
 @enduml

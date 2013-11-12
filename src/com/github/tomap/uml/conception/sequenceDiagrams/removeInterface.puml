@@ -5,22 +5,25 @@
     participant "p : A_Package" as p
     participant "i : An_Interface" as i
 
-	u -> a: Remove class click\n String interfaceName
+        u -> a: Remove class click
 	activate a
 
-	a -> i:
+        a -> i: getClickedInterface()
+        activate i
+
+        i --> a: this
+        deactivate i
+
+	a -> i: getPackage()
 	activate i
+        i --> a: package
+        deactivate i
 
-	loop !listMethods.isEmpty()
-		i -> i: removeMethod(Method)
-	end
-
-	i -> p: p.removeInterface(this)
-	deactivate i
-
-	p -> a
-	a -> u
-	deactivate a
+	a -> p: removeInterface(i)
+        activate p
+        p -> p: listInterfaces.remove(i)
+        p --> a
+	deactivate p
 
 
 @enduml

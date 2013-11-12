@@ -5,26 +5,25 @@
     participant "p : A_Package" as p
     participant "c : A_Class" as c
 
-	u -> a: Remove class click\n String ClassName
+	u -> a: Remove class click
 	activate a
 
-	a -> c:
+        a -> c: getClickedClass()
+        activate c
+
+        c --> a: this
+        deactivate c
+
+	a -> c: getPackage()
 	activate c
+        c --> a: package
+        deactivate c
 
-	loop !listAttributes.isEmpty()
-		c -> c: removeAttribute(Attribute)
-	end
-
-	loop !listMethods.isEmpty()
-		c -> c: removeMethod(Method)
-	end
-
-	c -> p: p.removeClass(this)
-	deactivate c
-
-	p -> a
-	a -> u
-	deactivate a
+	a -> p: removeClass(c)
+        activate p
+        p -> p: listClasses.remove(c)
+        p --> a
+	deactivate p
 
 
 @enduml
