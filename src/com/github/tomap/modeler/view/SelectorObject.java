@@ -90,4 +90,14 @@ public class SelectorObject extends JPanel{
         return tempPanel;
     }
 
+	public List<JPanel> getPanels() {
+		return panels;
+	}
+
+	public void setPanels(List<JPanel> panels) {
+		this.panels = panels;
+	}
+	
+	
+
 }

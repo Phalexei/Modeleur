@@ -264,6 +264,7 @@ public class DialogMethodInterface extends JDialog {
 		group.clearSelection();
 
 		parameterModel = new ParameterInterfaceTableModel();
+		parameterModel.addColumn("Parameter(type, final, name)");
 		tableParameter.setModel(parameterModel);
 		parameterModel.addRow();
 

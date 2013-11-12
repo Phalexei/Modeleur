@@ -88,8 +88,9 @@ public class ListenerGclass implements InternalFrameListener {
 		}
 		
 		// delete the class (model + ui)
+		
+		drawClassPane.getListClasses().remove(c);
 		c.getaPackage().removeClass(c);
-		drawClassPane.getListClasses().remove(frame);
 		
 		drawClassPane.repaint();
 		

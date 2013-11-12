@@ -1,6 +1,7 @@
 package com.github.tomap.modeler.view.dialog;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -10,6 +11,7 @@ import java.awt.event.ItemListener;
 import java.util.EventObject;
 import java.util.HashMap;
 import java.util.Iterator;
+
 import javax.swing.AbstractCellEditor;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -20,6 +22,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
@@ -28,11 +31,13 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+
 import com.github.tomap.modeler.view.GlobalContainer;
 import com.github.tomap.modeler.model.diagramClass.A_Class_Diagram;
 import com.github.tomap.modeler.model.diagramClass.aclass.A_Class;
 import com.github.tomap.modeler.model.diagramClass.apackage.A_Package;
 import com.github.tomap.modeler.model.diagramClass.multiplicity.DoubleMultiplicity;
+import com.github.tomap.modeler.model.diagramClass.multiplicity.Multiplicity;
 import com.github.tomap.modeler.model.diagramClass.relation.Association;
 import com.github.tomap.modeler.model.diagramClass.relation.N_Relation;
 
@@ -61,10 +66,11 @@ public class DialogNrelation extends JDialog {
 	private JButton addButton;
 
 	private JPanel panelAssociativeClass;
-
+	private A_Class tmp;
 	private A_Class_Diagram a_classDiagram;
 	private GlobalContainer cGlobal;
-
+	private JPanel panelError;
+	private JTextArea areaError;
 	private JCheckBox isAssociative;
 	private JComboBox<com.github.tomap.modeler.model.diagramClass.type.Type> comboAssociativeWith;
 
@@ -84,11 +90,7 @@ public class DialogNrelation extends JDialog {
 		this.pack();
 		this.setTitle("Make a relation");
 		this.setLocationRelativeTo(cGlobal.getMainframe());
-
-		
-
 		this.pack();
-		this.setTitle("Make a Method");
 		this.setLocationRelativeTo(null);
 
 	}
@@ -103,10 +105,22 @@ public class DialogNrelation extends JDialog {
 
 		panel.add(makePanelTable(),BorderLayout.NORTH);
 		panel.add(makePanelAssociativeClass(),BorderLayout.CENTER);
+		panel.add(makePanelError(),BorderLayout.CENTER);
 		panel.add(makePanelValidation(),BorderLayout.SOUTH);
 
 		return panel;
 	}
+	
+	private Component makePanelError() {
+		panelError = new JPanel();
+		areaError = new JTextArea(5, 50);
+		areaError.setEditable(false);
+		areaError.setForeground(Color.red);
+		panelError.add(areaError);
+		
+		return panelError;
+	}
+
 
 	private Component makePanelTable() {
 		
@@ -165,24 +179,36 @@ public class DialogNrelation extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				N_Relation rn = new N_Relation("n-ary");
-				
-				for (int i = 0; i < nRelationModel.getRowCount(); i++) {
-					for (int j = 0; j < nRelationModel.getColumnCount(); j++) {
-						DoubleMultiplicity m = (DoubleMultiplicity) nRelationModel.getValueAt(i,j);
-						rn.addMultiplicity(m);
+					N_Relation rn = new N_Relation("n-ary");
+					boolean stop = false;
+					label:
+					for (int i = 0; i < nRelationModel.getRowCount(); i++) {
+						for (int j = 0; j < nRelationModel.getColumnCount(); j++) {
+							DoubleMultiplicity m = (DoubleMultiplicity) nRelationModel.getValueAt(i,j);
+							if (m.getaClass().getName().equals(A_Class.EMPTY_CLASS)){
+								stop = true;
+								break label;
+							}else{
+								rn.addMultiplicity(m);
+							}
+							
+						}
 					}
-				}
+					if(!stop){
+						if (isAssociative.isSelected()){
+							A_Class associativeC = (A_Class)comboAssociativeWith.getSelectedItem();
+							Association ass = new Association(associativeC, rn);
+							//System.out.println(ass.display());
+							cGlobal.getContainerTabbedPane().getPanelClass().addRelation(ass);
+						}else{
+							//System.out.println(rn.display());
+							cGlobal.getContainerTabbedPane().getPanelClass().addRelation(rn);
+						}
+						setVisible(false);
+					}else{
+						areaError.setText("Please choose classes (not empty) !");
+					}
 				
-				if (isAssociative.isSelected()){
-					A_Class associativeC = (A_Class)comboAssociativeWith.getSelectedItem();
-					Association ass = new Association(associativeC, rn);
-					cGlobal.getContainerTabbedPane().getPanelClass().addRelation(ass);
-				}else{
-					cGlobal.getContainerTabbedPane().getPanelClass().addRelation(rn);
-				}
-				
-				setVisible(false);
 			}
 		});
 
@@ -209,10 +235,11 @@ public class DialogNrelation extends JDialog {
 			while(iter.hasNext()) { 
 				String key = (String)iter.next(); 
 				A_Package p = (A_Package)a_classDiagram.getListPackages().get(key); 
-				
+				j.addItem(new A_Class());
 				for (int i = 0; i < p.getListClass().size(); i++){
 					j.addItem(p.getListClass().get(i));
 				}
+				
 				
 				if(includesInterface){
 					for (int k = 0; k < p.getListInterfaces().size(); k++){
@@ -254,8 +281,10 @@ public class DialogNrelation extends JDialog {
 	private void privateResetAllFields() {
 		
 		nRelationModel = new NRelationTableModel();
+		nRelationModel.addColumn("NRelation(class, multiplicity, multiplicity, attribute's name)");
 		tableNrelation.setModel(nRelationModel);
 		nRelationModel.addRow();
+		areaError.setText("");
 		
 		isAssociative.setSelected(false);
 	}
@@ -311,7 +340,8 @@ public class DialogNrelation extends JDialog {
 		}
 
 		public void addRow() {
-			super.addRow(new Object[] { new DoubleMultiplicity(0, 0, "", null, new N_Relation("")) });
+			
+			super.addRow(new Object[] { new DoubleMultiplicity(0, 0, "",new A_Class(), new N_Relation("")) });
 			super.fireTableDataChanged();
 
 		}
@@ -323,9 +353,9 @@ public class DialogNrelation extends JDialog {
 		private static final long serialVersionUID = 1L;
 		private JComboBox<com.github.tomap.modeler.model.diagramClass.type.Type> nRelationCombo = makeJcomboboxWithModel(false);
 		private HashMap<String, Integer> listKey;
-		private JTextField multFrom = new JTextField();
-		private JTextField multTo = new JTextField();
-		private JTextField attributeName = new JTextField();
+		private JTextField multFrom = new JTextField("");
+		private JTextField multTo = new JTextField("");
+		private JTextField attributeName = new JTextField("");
 		private JButton removeButton = new JButton("remove");
 
 		NRelationCellPanel() {
@@ -333,7 +363,7 @@ public class DialogNrelation extends JDialog {
 			for (int i = 0; i < nRelationCombo.getModel().getSize(); i++){
 				listKey.put(nRelationCombo.getModel().getElementAt(i).getName(), i);
 			}		
-			
+			nRelationCombo.setSelectedIndex(0);
 			setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
 			removeButton.addActionListener(new ActionListener() {
@@ -370,11 +400,39 @@ public class DialogNrelation extends JDialog {
 
 		public DoubleMultiplicity getMultiplicity() {
 			
-			int multfrom  = Integer.parseInt(multFrom.getText());
-			int multo = Integer.parseInt(multTo.getText());
-			
-			return new DoubleMultiplicity(multfrom,multo, attributeName.getText(), (A_Class)nRelationCombo.getSelectedItem(), new N_Relation(""));
+			int valminfrom = getFirstMultiplicity(multFrom.getText()); 
+			int valmaxfrom = getSecondMultiplicity(multTo.getText());
+			//System.out.println(((A_Class)nRelationCombo.getSelectedItem()).getName());
+			return new DoubleMultiplicity(valminfrom,valmaxfrom, attributeName.getText(), (A_Class)nRelationCombo.getSelectedItem(), new N_Relation(""));
 		}
+		
+		private int getFirstMultiplicity(String val){
+			int valMin = Multiplicity.NO_VALUE;
+			
+			if (val.equals("*")){
+				valMin = Multiplicity.VALUE_MAX;
+			}
+			else{
+				try{
+					valMin = Integer.parseInt(val);
+				}catch(Exception e){
+					areaError.setText(e.getMessage());
+					valMin = Multiplicity.NO_VALUE;
+				}
+			}
+			return valMin;
+		}
+		
+		private int getSecondMultiplicity(String val){
+			int valMax = Multiplicity.NO_VALUE;
+			
+			if (!val.isEmpty()){
+				valMax = getFirstMultiplicity(val);
+			}
+			
+			return valMax;
+		}
+		
 		
 		
 

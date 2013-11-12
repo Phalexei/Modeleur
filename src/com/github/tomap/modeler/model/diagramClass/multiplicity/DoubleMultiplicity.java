@@ -19,7 +19,10 @@ public class DoubleMultiplicity extends SingleMultiplicity {
 	
 	@Override
 	public String display(){
-		return this.aClass.getName()+"("+ this.value + "..." + this.maxValue + " " + this.attributeName+")";
+		return this.aClass.getName()+
+				"("+ this.value + "..." + 
+				this.maxValue + " " + 
+				this.attributeName+")";
 	}
 	
 	

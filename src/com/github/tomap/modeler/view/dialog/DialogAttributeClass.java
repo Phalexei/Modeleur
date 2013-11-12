@@ -6,7 +6,6 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.EventObject;
-
 import javax.swing.AbstractCellEditor;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -21,12 +20,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
-
 import com.github.tomap.modeler.model.diagramClass.aclass.A_Class;
 import com.github.tomap.modeler.model.diagramClass.type.AString;
 import com.github.tomap.modeler.model.diagramClass.type.Boolean;
@@ -102,14 +97,8 @@ public class DialogAttributeClass extends JDialog{
         attributeModel = new AttributeClassTableModel();
         attributeModel.addRow();
         
-        JTable table = new JTable(attributeModel);
+        JTable table = new JTable (attributeModel);
         table.setRowHeight(new AttributeCellPanel().getPreferredSize().height);
-        
-        JTableHeader th = table.getTableHeader();
-        TableColumnModel tcm = th.getColumnModel();
-        TableColumn tc = tcm.getColumn(0);
-        tc.setHeaderValue( "Attributes" );
-        th.repaint();
         
         AttributeCellEditorRenderer compCellEditorRenderer = new AttributeCellEditorRenderer();
         table.setDefaultRenderer(Object.class, compCellEditorRenderer);
@@ -185,6 +174,7 @@ public class DialogAttributeClass extends JDialog{
     private void privateResetAllFields(){
     	
     	attributeModel = new AttributeClassTableModel();
+    	attributeModel.addColumn("Attribute (visibility, derivated, final, static, type, name)");
     	tableAttribute.setModel(attributeModel);
         attributeModel.addRow();
     }

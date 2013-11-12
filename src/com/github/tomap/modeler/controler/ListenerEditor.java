@@ -34,14 +34,12 @@ public class ListenerEditor implements MouseListener {
 
 	private GlobalContainer cGlobal;
 	private SelectorClass panelClass;
-	@SuppressWarnings("unused")
 	private SelectorObject panelObject;
 	@SuppressWarnings("unused")
 	private PanelEditor panelEditor;
-	
+
 	private DialogClass dialogClass;
 	private DialogInterface dialogInterface;
-	
 
 	// ----------------------------------------- //
 	// --------------CONSTRUCTOR---------------- //
@@ -58,9 +56,12 @@ public class ListenerEditor implements MouseListener {
 			panel.addMouseListener(this);
 		}
 		
+		for (JPanel panel : panelObject.getPanels()) {
+			panel.addMouseListener(this);
+		}
+
 		dialogClass = new DialogClass(cGlobal);
 		dialogInterface = new DialogInterface(cGlobal);
-		//dialogRelation = new DialogRelation(cGlobal);
 	}
 
 	// ----------------------------------------- //
@@ -73,44 +74,54 @@ public class ListenerEditor implements MouseListener {
 				&& (y == panelClass.getPanels().get(0).getY())) {
 
 			dialogClass.setVisible(true);
-			
+
 		}
 		// panel class
 		else if ((x == panelClass.getPanels().get(1).getX())
 				&& (y == panelClass.getPanels().get(1).getY())) {
-			
-			
-				dialogInterface.setVisible(true);
-			
-			
+
+			dialogInterface.setVisible(true);
 
 		} else if ((x == panelClass.getPanels().get(2).getX())
 				&& (y == panelClass.getPanels().get(2).getY())) {
-			
-			if (cGlobal.getContainerTabbedPane().getPanelClass().getListClasses().size() > 0 ||
-					cGlobal.getContainerTabbedPane().getPanelClass().getListInterfaces().size() > 0){
+
+			if (cGlobal.getContainerTabbedPane().getPanelClass().getListClasses().size() > 0
+					|| cGlobal.getContainerTabbedPane().getPanelClass().getListInterfaces().size() > 0) {
 				DialogBinaryRelation dialogRelation = new DialogBinaryRelation(cGlobal);
 				dialogRelation.setVisible(true);
-			}else{
-				JOptionPane.showMessageDialog(cGlobal.getParent(), "There is no available class/interface");
+			} else {
+				JOptionPane.showMessageDialog(cGlobal.getParent(),
+						"There is no available class/interface");
 			}
-			
 
 		} else if ((x == panelClass.getPanels().get(3).getX())
 				&& (y == panelClass.getPanels().get(3).getY())) {
-			
-			if (cGlobal.getContainerTabbedPane().getPanelClass().getListClasses().size() > 0 ||
-					cGlobal.getContainerTabbedPane().getPanelClass().getListInterfaces().size() > 0){
+
+			if (cGlobal.getContainerTabbedPane().getPanelClass().getListClasses().size() > 0
+					|| cGlobal.getContainerTabbedPane().getPanelClass().getListInterfaces().size() > 0) {
 				DialogNrelation dialogNelation = new DialogNrelation(cGlobal);
 				dialogNelation.setVisible(true);
-			}else{
-				JOptionPane.showMessageDialog(cGlobal.getParent(), "There is no available class/interface");
+			} else {
+				JOptionPane.showMessageDialog(cGlobal.getParent(),
+						"There is no available class/interface");
 			}
 		}
 	}
 
 	private void getActionInObjectEditor(int x, int y) {
-		// TODO Auto-generated method stub
+		if ((x == panelObject.getPanels().get(0).getX())
+				&& (y == panelObject.getPanels().get(0).getY())) {
+
+			JOptionPane.showMessageDialog(cGlobal.getParent(),
+					"Feature not available");
+
+		} else if ((x == panelObject.getPanels().get(1).getX())
+				&& (y == panelObject.getPanels().get(1).getY())) {
+
+			JOptionPane.showMessageDialog(cGlobal.getParent(),
+					"Feature not available");
+
+		}
 
 	}
 
@@ -150,7 +161,5 @@ public class ListenerEditor implements MouseListener {
 		// TODO Auto-generated method stub
 
 	}
-	
-	
 
 }

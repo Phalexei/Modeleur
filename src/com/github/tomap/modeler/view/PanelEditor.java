@@ -2,7 +2,6 @@ package com.github.tomap.modeler.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
@@ -28,9 +27,6 @@ public class PanelEditor extends JPanel{
 		super();
 		this.setLayout(new BorderLayout());
 		this.setPreferredSize(new Dimension(SIZE_X, SIZE_Y));
-		
-		JLabel l = new JLabel("Editor");
-		this.add(l, BorderLayout.CENTER);
 		
 	}
 	

@@ -10,6 +10,8 @@ import com.github.tomap.modeler.model.diagramClass.typedElement.Method;
 
 public class A_Class extends Type{
 	
+	public final static String EMPTY_CLASS = "";
+	
 	private boolean isFinal;
 	private boolean isStatic;
 	private boolean isAbstract;
@@ -26,6 +28,11 @@ public class A_Class extends Type{
 		this.listAttribute = new LinkedList<Attribute>();
 		this.listMethod = new LinkedList<Method>();
 		
+	}
+	
+	public A_Class() {
+		super(EMPTY_CLASS);
+		this.aPackage = new A_Package(EMPTY_CLASS);
 	}
 	
 	public void addMethod(Method m){
@@ -80,6 +87,9 @@ public class A_Class extends Type{
 
 	@Override
 	public String toString(){
+		if(this.name.equals(EMPTY_CLASS) && this.aPackage.getName().equals(EMPTY_CLASS)){
+			return EMPTY_CLASS;
+		}
 		return this.name+ "("+this.aPackage.getName()+")";
 	}
 	

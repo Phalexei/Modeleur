@@ -9,12 +9,12 @@ import java.awt.Stroke;
 import java.awt.geom.Line2D;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 
 import javax.swing.JInternalFrame;
 
 import com.github.tomap.modeler.model.diagramClass.aclass.A_Class;
 import com.github.tomap.modeler.model.diagramClass.aninterface.An_Interface;
+import com.github.tomap.modeler.model.diagramClass.multiplicity.DoubleMultiplicity;
 import com.github.tomap.modeler.model.diagramClass.multiplicity.Multiplicity;
 import com.github.tomap.modeler.model.diagramClass.relation.Agregation;
 import com.github.tomap.modeler.model.diagramClass.relation.Association;
@@ -91,7 +91,13 @@ public class G_Relation {
 				
 				N_Relation nr = (N_Relation) ass.getRelation();
 				LinkedList<G_Class> listClassG = makeNaryRelation(nr);
-				drawAssociationNary(g, listClassG, gAssosiative);
+				
+				LinkedList<DoubleMultiplicity> listMult = new LinkedList<DoubleMultiplicity>();
+				for(Multiplicity m : (nr).getListMultiplicity()){
+					listMult.add((DoubleMultiplicity)m);
+				}
+				
+				drawAssociationNary(g, listClassG, gAssosiative, listMult);
 				
 			}else{
 				makeBinaryAssociation(ass, g);
@@ -140,7 +146,13 @@ public class G_Relation {
 		} else if (aRelation instanceof N_Relation){
 			N_Relation nr = (N_Relation) aRelation;
 			LinkedList<G_Class> listClassG = makeNaryRelation(nr);
-			drawNAire(g, listClassG);
+			LinkedList<DoubleMultiplicity> listMult = new LinkedList<DoubleMultiplicity>();
+			
+			for(Multiplicity m : (nr).getListMultiplicity()){
+				listMult.add((DoubleMultiplicity)m);
+			}
+			
+			drawNAire(g, listClassG, listMult);
 		}
 	}
 	
@@ -250,8 +262,8 @@ public class G_Relation {
 		}
 		
 		g2.drawString(name, (x1 + x2) / 2 - 20, (y1 + y2) / 2);
-		g2.drawString(m1, x1 + 10, y1);
-		g2.drawString(m2, x2 - 30, y2);
+		g2.drawString(m1, x1 + 10, y1-10);
+		g2.drawString(m2, x2 - 30, y2-10);
 	}
 	
 	private void drawArrowComposition(Graphics2D g2, double theta, double x0,double y0) {
@@ -363,9 +375,9 @@ public class G_Relation {
 		
 	}
 	
-	private void drawAssociationNary(Graphics2D g2,LinkedList<G_Class> list, JInternalFrame fassociative) {
+	private void drawAssociationNary(Graphics2D g2,LinkedList<G_Class> list, JInternalFrame fassociative,LinkedList<DoubleMultiplicity> listMult) {
 
-		Point milieuLosange = drawNAire(g2, list);
+		Point milieuLosange = drawNAire(g2, list,listMult);
 
 		float[] dash3 = { 4f, 0f, 2f };
 		BasicStroke bs3 = new BasicStroke(1, BasicStroke.CAP_BUTT,
@@ -383,16 +395,20 @@ public class G_Relation {
 
 	}
 	
-	private Point drawNAire(Graphics2D g2, LinkedList<G_Class> list) {
+	private Point drawNAire(Graphics2D g2, LinkedList<G_Class> list, LinkedList<DoubleMultiplicity> listMult) {
 
 		g2.setColor(Color.black);
 
 		// calculer le point d'ancrage de chaque boite (milieu)
 		LinkedList<Point> p = new LinkedList<Point>();
+		LinkedList<Point> pMult = new LinkedList<Point>();
 		int xmilieu = 0;
 		int ymilieu = 0;
 
-		for (G_Class f : list) {
+		for (int i = 0; i<list.size(); i++){
+			
+			G_Class f = list.get(i);
+			
 			int x = f.getX() + f.getWidth() / 2;
 			int y = f.getY() + f.getHeight() / 2;
 
@@ -401,6 +417,7 @@ public class G_Relation {
 
 			Point point = new Point(x, y);
 			p.add(point);
+			
 		}
 
 		// calculer le point d'ancrage (milieu du losange)
@@ -417,8 +434,16 @@ public class G_Relation {
 
 		g2.setColor(Color.black);
 		g2.setStroke(s);
-		for (Point point : p) {
+		
+		for(int i = 0; i<p.size(); i++){
+			Point point = p.get(i);
 			g2.draw(new Line2D.Double(point.getX(), point.getY(), xmilieu,ymilieu));
+			/*if (point.getX() < xmilieu){
+				g2.drawString(listMult.get(i).display(), (int)point.getX() + ,(int) point.getY()-10);
+			}else{
+				g2.drawString(listMult.get(i).display(), (int)point.getX() +,(int) point.getY()-10);
+			}*/
+			
 		}
 
 		return new Point(xmilieu, ymilieu);

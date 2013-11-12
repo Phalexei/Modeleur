@@ -82,9 +82,8 @@ public class ListenerGInterface implements InternalFrameListener {
 		}
 		
 		// delete the interface (model + ui)
+		drawClassPane.getListInterfaces().remove(i);
 		i.getaPackage().removeInterface(i);
-
-		drawClassPane.getListInterfaces().remove(frame);
 		drawClassPane.repaint();
 		
 		System.out.println(drawClassPane.getDiagram().display());
