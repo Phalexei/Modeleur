@@ -3,6 +3,7 @@ package com.github.tomap.modeler.controler;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.github.tomap.modeler.view.GlobalContainer;
@@ -78,22 +79,33 @@ public class ListenerEditor implements MouseListener {
 		else if ((x == panelClass.getPanels().get(1).getX())
 				&& (y == panelClass.getPanels().get(1).getY())) {
 			
-			dialogInterface.setVisible(true);
+			
+				dialogInterface.setVisible(true);
+			
 			
 
 		} else if ((x == panelClass.getPanels().get(2).getX())
 				&& (y == panelClass.getPanels().get(2).getY())) {
 			
-			DialogBinaryRelation dialogRelation = new DialogBinaryRelation(cGlobal);
-			dialogRelation.setVisible(true);
+			if (cGlobal.getContainerTabbedPane().getPanelClass().getListClasses().size() > 0 ||
+					cGlobal.getContainerTabbedPane().getPanelClass().getListInterfaces().size() > 0){
+				DialogBinaryRelation dialogRelation = new DialogBinaryRelation(cGlobal);
+				dialogRelation.setVisible(true);
+			}else{
+				JOptionPane.showMessageDialog(cGlobal.getParent(), "There is no available class/interface");
+			}
+			
 
 		} else if ((x == panelClass.getPanels().get(3).getX())
 				&& (y == panelClass.getPanels().get(3).getY())) {
 			
-			//DialogNrelation dialogNelation = new DialogNrelation(cGlobal);
-			//dialogNelation.setVisible(true);
-
-			
+			if (cGlobal.getContainerTabbedPane().getPanelClass().getListClasses().size() > 0 ||
+					cGlobal.getContainerTabbedPane().getPanelClass().getListInterfaces().size() > 0){
+				DialogNrelation dialogNelation = new DialogNrelation(cGlobal);
+				dialogNelation.setVisible(true);
+			}else{
+				JOptionPane.showMessageDialog(cGlobal.getParent(), "There is no available class/interface");
+			}
 		}
 	}
 

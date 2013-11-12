@@ -42,5 +42,15 @@ public class N_Relation extends Relation {
 		
 		return s;
 	}
+
+	public List<Multiplicity> getListMultiplicity() {
+		return listMultiplicity;
+	}
+
+	public void setListMultiplicity(List<Multiplicity> listMultiplicity) {
+		this.listMultiplicity = listMultiplicity;
+	}
+	
+	
 	
 }

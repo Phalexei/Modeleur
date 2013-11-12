@@ -8,15 +8,21 @@ import java.awt.Polygon;
 import java.awt.Stroke;
 import java.awt.geom.Line2D;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.swing.JInternalFrame;
+
 import com.github.tomap.modeler.model.diagramClass.aclass.A_Class;
 import com.github.tomap.modeler.model.diagramClass.aninterface.An_Interface;
+import com.github.tomap.modeler.model.diagramClass.multiplicity.Multiplicity;
 import com.github.tomap.modeler.model.diagramClass.relation.Agregation;
 import com.github.tomap.modeler.model.diagramClass.relation.Association;
 import com.github.tomap.modeler.model.diagramClass.relation.BinaryRelation;
 import com.github.tomap.modeler.model.diagramClass.relation.Composition;
 import com.github.tomap.modeler.model.diagramClass.relation.Generalization;
 import com.github.tomap.modeler.model.diagramClass.relation.Implementation;
+import com.github.tomap.modeler.model.diagramClass.relation.N_Relation;
 import com.github.tomap.modeler.model.diagramClass.relation.Relation;
 import com.github.tomap.modeler.model.diagramClass.relation.SimpleRelation;
 
@@ -34,6 +40,7 @@ public class G_Relation {
 	@SuppressWarnings("unused")
 	private static final long serialVersionUID = 1L;
 	private static final Stroke s = new BasicStroke(1.0f);
+	private static final Stroke point = new BasicStroke(5.0f);
 	private static final int barb = 20; // barb length
 	private final static double phi = Math.PI / 6; // 30 degrees barb angle
 
@@ -76,7 +83,19 @@ public class G_Relation {
 		
 		if(aRelation instanceof Association){
 			Association ass = (Association) aRelation;
-			makeBinaryAssociation(ass, g);
+			if(ass.getRelation() instanceof N_Relation){
+				
+				A_Class cAssociative = ass.getAssociativeClass();
+				G_Class gAssosiative = listClasses.get(cAssociative);
+				listClassesUsed.put(cAssociative, gAssosiative);
+				
+				N_Relation nr = (N_Relation) ass.getRelation();
+				LinkedList<G_Class> listClassG = makeNaryRelation(nr);
+				drawAssociationNary(g, listClassG, gAssosiative);
+				
+			}else{
+				makeBinaryAssociation(ass, g);
+			}
 		}
 		else if (aRelation instanceof SimpleRelation){
 			SimpleRelation s = (SimpleRelation) aRelation;
@@ -118,7 +137,25 @@ public class G_Relation {
 			String relationame = i.getName();
 			
 			drawImplementation(g, from, to, relationame);
+		} else if (aRelation instanceof N_Relation){
+			N_Relation nr = (N_Relation) aRelation;
+			LinkedList<G_Class> listClassG = makeNaryRelation(nr);
+			drawNAire(g, listClassG);
 		}
+	}
+	
+	private LinkedList<G_Class> makeNaryRelation(N_Relation nr){
+		
+		LinkedList<G_Class> listClassG = new LinkedList<G_Class>();
+		
+		for(int i = 0; i<nr.getListMultiplicity().size(); i++){
+			A_Class c = nr.getListMultiplicity().get(i).getaClass();
+			G_Class gc = listClasses.get(c);
+			listClassesUsed.put(c, gc);
+			listClassG.add(gc);
+		}
+		
+		return listClassG;
 	}
 	
 	private Point makeBinaryRelation(BinaryRelation r, Graphics2D g,boolean isComposition, boolean isAgregation){
@@ -138,6 +175,7 @@ public class G_Relation {
 		
 		return calculateMiddlePoint(from, to);
 	}
+	
 	
 	private void makeBinaryAssociation(Association ass, Graphics2D g){
 		A_Class cAssociative = ass.getAssociativeClass();
@@ -323,6 +361,68 @@ public class G_Relation {
 
 		g2.drawPolygon(p);
 		
+	}
+	
+	private void drawAssociationNary(Graphics2D g2,LinkedList<G_Class> list, JInternalFrame fassociative) {
+
+		Point milieuLosange = drawNAire(g2, list);
+
+		float[] dash3 = { 4f, 0f, 2f };
+		BasicStroke bs3 = new BasicStroke(1, BasicStroke.CAP_BUTT,
+				BasicStroke.JOIN_ROUND, 1.0f, dash3, 2f);
+
+		int x1 = fassociative.getX() + fassociative.getWidth();
+		int y1 = fassociative.getY() + fassociative.getHeight() / 2;
+		g2.setStroke(bs3);
+		g2.draw(new Line2D.Double(x1, y1, milieuLosange.getX(), milieuLosange.getY()));
+		
+		g2.setStroke(s);
+		g2.setColor(Color.black);
+
+		
+
+	}
+	
+	private Point drawNAire(Graphics2D g2, LinkedList<G_Class> list) {
+
+		g2.setColor(Color.black);
+
+		// calculer le point d'ancrage de chaque boite (milieu)
+		LinkedList<Point> p = new LinkedList<Point>();
+		int xmilieu = 0;
+		int ymilieu = 0;
+
+		for (G_Class f : list) {
+			int x = f.getX() + f.getWidth() / 2;
+			int y = f.getY() + f.getHeight() / 2;
+
+			xmilieu += x;
+			ymilieu += y;
+
+			Point point = new Point(x, y);
+			p.add(point);
+		}
+
+		// calculer le point d'ancrage (milieu du losange)
+		xmilieu = xmilieu / p.size();
+		ymilieu = ymilieu / p.size();
+
+		int[] xPolygon = { xmilieu - 10, xmilieu, xmilieu + 10, xmilieu };
+		int[] yPolygon = { ymilieu, ymilieu - 10, ymilieu, ymilieu + 10 };
+
+		Polygon poly = new Polygon(xPolygon, yPolygon, 4);
+		g2.setStroke(point);
+		g2.drawPolygon(xPolygon, yPolygon, 4);
+		g2.fill(poly);
+
+		g2.setColor(Color.black);
+		g2.setStroke(s);
+		for (Point point : p) {
+			g2.draw(new Line2D.Double(point.getX(), point.getY(), xmilieu,ymilieu));
+		}
+
+		return new Point(xmilieu, ymilieu);
+
 	}
 	
 	
