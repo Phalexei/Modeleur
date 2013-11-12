@@ -22,4 +22,22 @@ public class SingleMultiplicity extends Multiplicity {
 	public String Display(){
 		return  this.aClass.getName()+ "("+value + " "+attributeName+")";
 	}
+
+	public int getValue() {
+		return value;
+	}
+
+	public void setValue(int value) {
+		this.value = value;
+	}
+
+	public String getAttributeName() {
+		return attributeName;
+	}
+
+	public void setAttributeName(String attributeName) {
+		this.attributeName = attributeName;
+	}
+	
+	
 }

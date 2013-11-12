@@ -22,6 +22,16 @@ public class DoubleMultiplicity extends SingleMultiplicity {
 		return this.aClass.getName()+"("+ this.value + "..." + this.maxValue + " " + this.attributeName+")";
 	}
 	
+	
+	
+	public int getMaxValue() {
+		return maxValue;
+	}
+
+	public void setMaxValue(int maxValue) {
+		this.maxValue = maxValue;
+	}
+
 	@Override
 	public String getMultiplicities(){
 		String s = "";

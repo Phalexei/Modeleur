@@ -11,7 +11,8 @@ import com.github.tomap.modeler.view.SelectorClass;
 import com.github.tomap.modeler.view.SelectorObject;
 import com.github.tomap.modeler.view.dialog.DialogClass;
 import com.github.tomap.modeler.view.dialog.DialogInterface;
-import com.github.tomap.modeler.view.dialog.DialogRelation;
+import com.github.tomap.modeler.view.dialog.DialogBinaryRelation;
+import com.github.tomap.modeler.view.dialog.DialogNrelation;
 
 public class ListenerEditor implements MouseListener {
 	/**
@@ -83,8 +84,14 @@ public class ListenerEditor implements MouseListener {
 		} else if ((x == panelClass.getPanels().get(2).getX())
 				&& (y == panelClass.getPanels().get(2).getY())) {
 			
-			DialogRelation dialogRelation = new DialogRelation(cGlobal);
+			DialogBinaryRelation dialogRelation = new DialogBinaryRelation(cGlobal);
 			dialogRelation.setVisible(true);
+
+		} else if ((x == panelClass.getPanels().get(3).getX())
+				&& (y == panelClass.getPanels().get(3).getY())) {
+			
+			//DialogNrelation dialogNelation = new DialogNrelation(cGlobal);
+			//dialogNelation.setVisible(true);
 
 		}
 	}

@@ -43,17 +43,20 @@ public class SelectorClass extends JPanel{
 		
 		panels = new LinkedList<JPanel>();
 		
-		JPanel a_package = createSquareJPanel(new Color(218,224,241), 30,"Class",Main._ICON_PATH+"class_image.png");
-        JPanel a_class = createSquareJPanel(new Color(218,224,241), 30,"Interface",Main._ICON_PATH+"interface_image.png");
-        JPanel an_interface = createSquareJPanel(new Color(218,224,241), 30,"Relation",Main._ICON_PATH+"relation_image.png");
+		JPanel a_class = createSquareJPanel(new Color(218,224,241), 30,"Class",Main._ICON_PATH+"class_image.png");
+        JPanel an_interface = createSquareJPanel(new Color(218,224,241), 30,"Interface",Main._ICON_PATH+"interface_image.png");
+        JPanel aBinaryRelation = createSquareJPanel(new Color(218,224,241), 30," Binary Relation",Main._ICON_PATH+"relation_image.png");
+        JPanel aNaryRelation = createSquareJPanel(new Color(218,224,241), 30," N Relation",Main._ICON_PATH+"relation_image.png");
         
-        panels.add(a_package);
         panels.add(a_class);
         panels.add(an_interface);
+        panels.add(aBinaryRelation);
+        panels.add(aNaryRelation);
         
-       this.add(a_package);
        this.add(a_class);
        this.add(an_interface);
+       this.add(aBinaryRelation);
+       this.add(aNaryRelation);
 
 	}
 	

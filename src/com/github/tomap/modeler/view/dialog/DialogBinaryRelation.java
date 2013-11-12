@@ -40,7 +40,7 @@ import com.github.tomap.modeler.model.diagramClass.relation.Implementation;
 import com.github.tomap.modeler.model.diagramClass.relation.Relation;
 import com.github.tomap.modeler.model.diagramClass.relation.SimpleRelation;
 
-public class DialogRelation extends JDialog {
+public class DialogBinaryRelation extends JDialog {
 
 	/**
 	 * <h4>DialogRelation Allows to display a dialog to make relation</h4>
@@ -91,7 +91,7 @@ public class DialogRelation extends JDialog {
 	/**
 	 * Construcutor
 	 */
-    public DialogRelation(GlobalContainer cGlobal) {
+    public DialogBinaryRelation(GlobalContainer cGlobal) {
 		super(cGlobal.getMainframe());
 		this.cGlobal = cGlobal;
 		this.a_classDiagram = cGlobal.getContainerTabbedPane().getDiagram();
@@ -320,7 +320,7 @@ public class DialogRelation extends JDialog {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				DialogRelation.this.dispose();	
+				DialogBinaryRelation.this.dispose();	
 			}
 		});
 		
@@ -350,7 +350,7 @@ public class DialogRelation extends JDialog {
 			Implementation im = new Implementation(c,i);
 			
 			cGlobal.getContainerTabbedPane().getPanelClass().addRelation(im);
-			DialogRelation.this.dispose();	
+			DialogBinaryRelation.this.dispose();	
 		}catch(ClassCastException e){
 			areaError.setText(e.getMessage());
 		}	
@@ -362,7 +362,7 @@ public class DialogRelation extends JDialog {
 			Generalization g = new Generalization((com.github.tomap.modeler.model.diagramClass.type.Type)comboTypeFrom.getSelectedItem(), 
 					(com.github.tomap.modeler.model.diagramClass.type.Type)comboTypeTo.getSelectedItem());
 			cGlobal.getContainerTabbedPane().getPanelClass().addRelation(g);
-			DialogRelation.this.dispose();	
+			DialogBinaryRelation.this.dispose();	
 		} catch (BadTypeException e) {
 			areaError.setText(e.getMessage());
 		}
@@ -420,7 +420,7 @@ public class DialogRelation extends JDialog {
 				cGlobal.getContainerTabbedPane().getPanelClass().addRelation(r);
 			}
 			
-			DialogRelation.this.dispose();
+			DialogBinaryRelation.this.dispose();
 		}catch(Exception e){
 			areaError.setText(e.getMessage());
 		}
