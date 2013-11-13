@@ -1,0 +1,25 @@
+@startuml
+
+    actor User as u
+    participant Application as a
+    participant A_ClassDiagram as Cd
+    participant "p : A_Package" as p
+    participant "c : A_Class" as c
+        
+	u -> a: Add binary relation click
+	activate a
+
+        a --> u: Information form
+
+        loop !validInformations
+            u -> a: String : relationName,\nfromLabel, fromMultiplicity,\ntoLabel, toMultiplicity\nBoolean : associative\nRelationType\nFrom\nTo
+
+            u -> a: click OK
+
+            a -> a: validateForm()
+            opt !validForm
+                a --> u: error message
+            end
+        end
+        
+@enduml

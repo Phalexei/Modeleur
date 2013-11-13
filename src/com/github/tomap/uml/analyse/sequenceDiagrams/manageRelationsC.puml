@@ -2,7 +2,7 @@
     actor User as u
     participant System as s
 
-    opt number of existing class >= 2
+    opt number of existing class >= 1
         u -> s: add a binary relation
         loop !validation
             s -> u: information demand
@@ -10,7 +10,7 @@
         end
     end
 
-    opt number of existing class >= 3
+    opt number of existing class >= 2
         u -> s: add a n-ary relation
         loop !validation
             s -> u: information demand

@@ -1,0 +1,45 @@
+@startuml
+
+    actor User as u
+    participant Application as a
+    participant "c : An_Interface" as i
+    participant "m : Method" as m
+    participant "p : Parameter" as p
+
+
+    u -> a: click add method
+    activate a
+
+    a -> i: getClickedInterface()
+    activate i
+
+    i --> a: this
+    deactivate i
+
+    a --> u: information form
+
+    u -> a: String : name\nBoolean : static, final\nTypeRetour\nVisibility\n
+    loop for each parameter
+        u -> a: click add parameter
+        u -> a: String : name\nBoolean : final\nType
+    end
+
+    u -> a: click OK
+    a -> m: new Method(Visibility, TypeRetour, String, boolean, boolean, class)
+    activate m
+    m --> a
+    deactivate m
+    loop for each parameter
+        a -> p: new Parameter(name, final, Type)
+        activate p
+        p --> a
+        deactivate p
+        a -> m: addParameter(p)
+        activate m
+        deactivate m
+    end
+    deactivate m
+    a -> i: addMethod(m)
+    activate i
+    deactivate i
+@enduml
