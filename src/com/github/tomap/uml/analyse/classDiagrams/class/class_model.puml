@@ -1,0 +1,60 @@
+@startuml
+
+title Class diagram which models class diagrams
+
+package model <<folder>> {
+
+	class UMLDiagram {
+
+	}
+
+	package model.class.Classdiagram <<folder>> {
+
+		 class A_ClassDiagram {
+
+		}
+	}
+
+
+	package model.class.package <<folder>> {
+		class A_Package {
+
+		}
+	}
+
+	package model.class.relation <<folder>> {
+		class Relation {
+		}
+	}
+
+	A_ClassDiagram "1" *-- "1..*" A_Package
+	A_ClassDiagram "1" *-- "1..*" Relation
+
+
+	package model.object.Objectdiagram <<folder>> {
+
+		 class A_ObjectDiagram {
+
+		}
+	}
+
+	package model.object.package <<folder>> {
+		class PackageObject {
+		}
+	}
+
+	package model.object.relation <<folder>> {
+		class RelationObject {
+		}
+	}
+
+	A_ObjectDiagram "1" *-- "1..*" PackageObject
+	A_ObjectDiagram "1" *-- "1..*" RelationObject
+
+	UMLDiagram  "1" *-- "1" A_ObjectDiagram
+	UMLDiagram  "1" *-- "1" A_ClassDiagram
+}
+
+
+
+@enduml

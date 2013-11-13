@@ -1,0 +1,70 @@
+@startuml
+
+title Class diagram which models class diagrams
+
+package model.class <<folder>> {
+
+	class UMLDiagram {
+		+ UMLDiagram()
+	}
+
+	package model.class.Classdiagram <<folder>> {
+
+		 class A_ClassDiagram {
+		 	+ A_ClassDiagram()
+		 	+ addPackage(A_Package) : void
+		 	+ removePackage(A_Package) : void
+		 	+ addRelation (Relation) : void
+		 	+ removeRelation (Relation) : void
+		 	+ toString() : String
+		}
+	}
+
+
+	package model.class.package <<folder>> {
+		class A_Package {
+			+ A_Package(String)
+		}
+	}
+
+	package model.class.relation <<folder>> {
+		class Relation {
+		}
+	}
+
+	A_ClassDiagram "1" *-- "1..*" A_Package
+	A_ClassDiagram "1" *-- "1..*" Relation
+
+
+	package model.object.Objectdiagram <<folder>> {
+
+		 class A_ObjectDiagram {
+		 	+ A_ObjectDiagram()
+		 	+ addPackage(A_PackageObject) : void
+		 	+ removePackage(A_PackageObject) : void
+		 	+ addRelation (RelationObject) : void
+		 	+ removeRelation (RelationObject) : void
+		 	+ toString() : String
+		}
+	}
+
+	package model.object.package <<folder>> {
+		class PackageObject {
+		}
+	}
+
+	package model.object.relation <<folder>> {
+		class RelationObject {
+		}
+	}
+
+	A_ObjectDiagram "1" *-- "1..*" PackageObject
+	A_ObjectDiagram "1" *-- "1..*" RelationObject
+
+	UMLDiagram  "1" *-- "1" A_ObjectDiagram
+	UMLDiagram  "1" *-- "1" A_ClassDiagram
+}
+
+
+
+@enduml

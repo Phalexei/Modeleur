@@ -1,18 +1,5 @@
 @startuml
 
-package utils <<folder>> {
-	interface Observable {
-		+ attach(Observateur)
-		+ detach(Observateur)
-		+ notify()
-	}
-
-	interface Observator {
-		+ notified()
-	}
-}
-
-
 package model.class <<folder>> {
 
 	package model.class.typedElement <<folder>> {
@@ -34,14 +21,6 @@ package model.class <<folder>> {
 		class Relation {
 		}
 	}
-
-	Relation --|> Observable
-	Attribute --|> Observable
-	A_class --|> Observable
-
-	Relation "1" --> "*" Observator
-	Attribute "1" --> "*" Observator
-	A_class "1" --> "*" Observator
 }
 
 
@@ -59,7 +38,6 @@ package model.object.objectDiagram <<folder>> {
 	package model.object.value <<folder>> {
 
 		 abstract class Value {
-		   + toString() : String
 		 }
 
 		 class IntValue {
@@ -80,12 +58,12 @@ package model.object.objectDiagram <<folder>> {
 
 	}
 
-	RelationO  --> "1" Relation
-	A_class "1" <-- Object
-	Object --> "*" RelationO
-	Object --* "*" Value
+	RelationO "1..*" --> "1" Relation
+	A_class "1" <-- "1..*" Object
+	Object --> "1..*" RelationO
+	Object "1" *-- "*" Value
 
-	Value --> "1" Attribute
+	Value "1..*" --> "1" Attribute
 
 	IntValue --|> Value
 	FloatValue --|> Value
@@ -93,9 +71,6 @@ package model.object.objectDiagram <<folder>> {
 	StringValue --|> Value
 	BooleanValue --|> Value
 
-	Value --|> Observator
-	RelationO --|> Observator
-	Object --|> Observator
 }
 
 
