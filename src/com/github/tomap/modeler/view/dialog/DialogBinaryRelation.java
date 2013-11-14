@@ -21,15 +21,8 @@ import javax.swing.border.EmptyBorder;
 import com.github.tomap.modeler.view.GlobalContainer;
 import com.github.tomap.modeler.controler.ListenerDialogBinaryRelation;
 import com.github.tomap.modeler.model.diagramClass.A_Class_Diagram;
-import com.github.tomap.modeler.model.diagramClass.aclass.A_Class;
-import com.github.tomap.modeler.model.diagramClass.aninterface.An_Interface;
 import com.github.tomap.modeler.model.diagramClass.apackage.A_Package;
-import com.github.tomap.modeler.model.diagramClass.exception.BadTypeException;
-import com.github.tomap.modeler.model.diagramClass.multiplicity.DoubleMultiplicity;
-import com.github.tomap.modeler.model.diagramClass.multiplicity.Multiplicity;
 import com.github.tomap.modeler.model.diagramClass.relation.Agregation;
-import com.github.tomap.modeler.model.diagramClass.relation.Association;
-import com.github.tomap.modeler.model.diagramClass.relation.BinaryRelation;
 import com.github.tomap.modeler.model.diagramClass.relation.Composition;
 import com.github.tomap.modeler.model.diagramClass.relation.Generalization;
 import com.github.tomap.modeler.model.diagramClass.relation.Implementation;
@@ -311,125 +304,6 @@ public class DialogBinaryRelation extends JDialog {
 		return panelValidation;
 	}
 	
-	public void makeRelation() {
-		int index = comboTypeRelation.getSelectedIndex();
-		switch(index){
-		case 0: makeSimpleRelation(); break;
-		case 1: makeComposition(); break;
-		case 2: makeAgregation(); break;
-		case 3: makeGeneralization(); break;
-		case 4:makeImplementation(); break;
-		}
-	}
-
-	private void makeImplementation() {
-		
-		try{
-			A_Class c = (A_Class)comboTypeFrom.getSelectedItem();
-			An_Interface i = (An_Interface)comboTypeTo.getSelectedItem();
-			
-			Implementation im = new Implementation(c,i);
-			
-			cGlobal.getContainerTabbedPane().getPanelClass().addRelation(im);
-			DialogBinaryRelation.this.dispose();	
-		}catch(ClassCastException e){
-			areaError.setText(e.getMessage());
-		}	
-	}
-
-	private void makeGeneralization() {
-		
-		try {
-			Generalization g = new Generalization((com.github.tomap.modeler.model.diagramClass.type.Type)comboTypeFrom.getSelectedItem(), 
-					(com.github.tomap.modeler.model.diagramClass.type.Type)comboTypeTo.getSelectedItem());
-			cGlobal.getContainerTabbedPane().getPanelClass().addRelation(g);
-			DialogBinaryRelation.this.dispose();	
-		} catch (BadTypeException e) {
-			areaError.setText(e.getMessage());
-		}
-	}
-	
-	private void makeAgregation() {
-		
-		Agregation a = new Agregation(relationName.getText());
-		makeBinaryRelation(a);
-		
-		
-	}
-	
-	private void makeComposition() {
-		Composition c = new Composition(relationName.getText());
-		makeBinaryRelation(c);
-		
-	}
-
-	private void makeSimpleRelation() {
-		SimpleRelation s = new SimpleRelation(relationName.getText());
-		makeBinaryRelation(s);
-	}
-	
-	private void makeBinaryRelation(BinaryRelation r){
-		try{
-			int valminfrom = getFirstMultiplicity(multFromMin.getText()); 
-			int valmaxfrom = getSecondMultiplicity(multFromMax.getText());
-			
-			DoubleMultiplicity from = new DoubleMultiplicity(
-					valminfrom,
-					valmaxfrom,
-					nameAttributeFrom.getText(),
-					(A_Class)comboTypeFrom.getSelectedItem(),
-					r);
-		
-			
-			int valminto = getFirstMultiplicity(multtoMin.getText()); 
-			int valmaxto = getSecondMultiplicity(multtoMax.getText());
-			DoubleMultiplicity to = new DoubleMultiplicity(
-					valminto, 
-					valmaxto,
-					nameAttributeTo.getText(),
-					(A_Class)comboTypeTo.getSelectedItem(),
-					r);
-			
-			r.updateMultiplicities(from, to);
-			
-			
-			if(isAssociative.isSelected()){
-				A_Class associative = (A_Class) comboAssociativeWith.getSelectedItem();
-				Association ass = new Association(associative, r);
-				cGlobal.getContainerTabbedPane().getPanelClass().addRelation(ass);
-			}else{
-				cGlobal.getContainerTabbedPane().getPanelClass().addRelation(r);
-			}
-			
-			DialogBinaryRelation.this.dispose();
-		}catch(Exception e){
-			areaError.setText(e.getMessage());
-		}
-	}
-		
-	private int getFirstMultiplicity(String val){
-		int valMin = Multiplicity.NO_VALUE;
-		
-		if (val.equals("*")){
-			valMin = Multiplicity.VALUE_MAX;
-		}
-		else{
-			valMin = Integer.parseInt(val);
-		}
-		
-		return valMin;
-	}
-	
-	private int getSecondMultiplicity(String val){
-		int valMax = Multiplicity.NO_VALUE;
-		
-		if (!val.isEmpty()){
-			valMax = getFirstMultiplicity(val);
-		}
-		
-		return valMax;
-	}
-
 	public JButton getValid() {
 		return valid;
 	}
@@ -444,6 +318,185 @@ public class DialogBinaryRelation extends JDialog {
 
 	public void setCancel(JButton cancel) {
 		this.cancel = cancel;
+	}
+
+	public A_Class_Diagram getA_classDiagram() {
+		return a_classDiagram;
+	}
+
+	public void setA_classDiagram(A_Class_Diagram a_classDiagram) {
+		this.a_classDiagram = a_classDiagram;
+	}
+
+	public GlobalContainer getcGlobal() {
+		return cGlobal;
+	}
+
+	public void setcGlobal(GlobalContainer cGlobal) {
+		this.cGlobal = cGlobal;
+	}
+
+	public JPanel getPanelRelationType() {
+		return panelRelationType;
+	}
+
+	public void setPanelRelationType(JPanel panelRelationType) {
+		this.panelRelationType = panelRelationType;
+	}
+
+	public JPanel getPanelBinaryRelation() {
+		return panelBinaryRelation;
+	}
+
+	public void setPanelBinaryRelation(JPanel panelBinaryRelation) {
+		this.panelBinaryRelation = panelBinaryRelation;
+	}
+
+	public JPanel getPanelMultiplicityfromBR() {
+		return panelMultiplicityfromBR;
+	}
+
+	public void setPanelMultiplicityfromBR(JPanel panelMultiplicityfromBR) {
+		this.panelMultiplicityfromBR = panelMultiplicityfromBR;
+	}
+
+	public JPanel getPanelMultiplicitytoBR() {
+		return panelMultiplicitytoBR;
+	}
+
+	public void setPanelMultiplicitytoBR(JPanel panelMultiplicitytoBR) {
+		this.panelMultiplicitytoBR = panelMultiplicitytoBR;
+	}
+
+	public JPanel getPanelAssociativeClass() {
+		return panelAssociativeClass;
+	}
+
+	public void setPanelAssociativeClass(JPanel panelAssociativeClass) {
+		this.panelAssociativeClass = panelAssociativeClass;
+	}
+
+	public JPanel getPanelValidation() {
+		return panelValidation;
+	}
+
+	public void setPanelValidation(JPanel panelValidation) {
+		this.panelValidation = panelValidation;
+	}
+
+	public JPanel getPanelError() {
+		return panelError;
+	}
+
+	public void setPanelError(JPanel panelError) {
+		this.panelError = panelError;
+	}
+
+	public JComboBox<Relation> getComboTypeRelation() {
+		return comboTypeRelation;
+	}
+
+	public void setComboTypeRelation(JComboBox<Relation> comboTypeRelation) {
+		this.comboTypeRelation = comboTypeRelation;
+	}
+
+	public JComboBox<com.github.tomap.modeler.model.diagramClass.type.Type> getComboTypeFrom() {
+		return comboTypeFrom;
+	}
+
+	public void setComboTypeFrom(
+			JComboBox<com.github.tomap.modeler.model.diagramClass.type.Type> comboTypeFrom) {
+		this.comboTypeFrom = comboTypeFrom;
+	}
+
+	public JComboBox<com.github.tomap.modeler.model.diagramClass.type.Type> getComboTypeTo() {
+		return comboTypeTo;
+	}
+
+	public void setComboTypeTo(
+			JComboBox<com.github.tomap.modeler.model.diagramClass.type.Type> comboTypeTo) {
+		this.comboTypeTo = comboTypeTo;
+	}
+
+	public JComboBox<com.github.tomap.modeler.model.diagramClass.type.Type> getComboAssociativeWith() {
+		return comboAssociativeWith;
+	}
+
+	public void setComboAssociativeWith(
+			JComboBox<com.github.tomap.modeler.model.diagramClass.type.Type> comboAssociativeWith) {
+		this.comboAssociativeWith = comboAssociativeWith;
+	}
+
+	public JTextField getMultFromMin() {
+		return multFromMin;
+	}
+
+	public void setMultFromMin(JTextField multFromMin) {
+		this.multFromMin = multFromMin;
+	}
+
+	public JTextField getMultFromMax() {
+		return multFromMax;
+	}
+
+	public void setMultFromMax(JTextField multFromMax) {
+		this.multFromMax = multFromMax;
+	}
+
+	public JTextField getNameAttributeFrom() {
+		return nameAttributeFrom;
+	}
+
+	public void setNameAttributeFrom(JTextField nameAttributeFrom) {
+		this.nameAttributeFrom = nameAttributeFrom;
+	}
+
+	public JTextField getMulttoMin() {
+		return multtoMin;
+	}
+
+	public void setMulttoMin(JTextField multtoMin) {
+		this.multtoMin = multtoMin;
+	}
+
+	public JTextField getMulttoMax() {
+		return multtoMax;
+	}
+
+	public void setMulttoMax(JTextField multtoMax) {
+		this.multtoMax = multtoMax;
+	}
+
+	public JTextField getNameAttributeTo() {
+		return nameAttributeTo;
+	}
+
+	public void setNameAttributeTo(JTextField nameAttributeTo) {
+		this.nameAttributeTo = nameAttributeTo;
+	}
+
+	public JTextField getRelationName() {
+		return relationName;
+	}
+
+	public void setRelationName(JTextField relationName) {
+		this.relationName = relationName;
+	}
+
+	public JCheckBox getIsAssociative() {
+		return isAssociative;
+	}
+
+	public void setIsAssociative(JCheckBox isAssociative) {
+		this.isAssociative = isAssociative;
+	}
+
+	public JTextArea getAreaError() {
+		return areaError;
+	}
+
+	public void setAreaError(JTextArea areaError) {
+		this.areaError = areaError;
 	}
 	
 	
