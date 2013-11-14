@@ -21,7 +21,7 @@ package model.class <<folder>> {
 
 	package model.class.exception <<folder>> {
 		class BadTypeException {
-			+ BadTypeException(String)
+			+ BadTypeException (String msg)
 		}
 	}
 
@@ -29,54 +29,62 @@ package model.class <<folder>> {
 
 
 		abstract class Relation{
-			- title : String
+			- name : String
 
-			+ Relation(String)
+			+ Relation(String name)
+			+ String display()
 		}
 
 		abstract class BinaryRelation{
 
-			+ BinaryRelation(String, Multiplicity, Multiplicity)
-			+ updateMultiplicities (Multiplicity, Multiplicity) : void
+			+ BinaryRelation(String name, Multiplicity from, Multiplicity to)
+			+ void updateMultiplicities(Multiplicity from, Multiplicity to)
 		}
 
 		class N_Relation{
-			+ N_Relation (String)
-			+ addMultiplicity(Multiplicity) : void
-			+ removeMultiplicity(Multiplicity) : void
-			+ toString() : String
+			+ N_Relation(String name)
+			+ N_Relation()
+			+ void addMultiplicity(Multiplicity m)
+			+ void removeMultiplicity(Multiplicity m)
+			+ String display()
 		}
 
 		note top of Generalization : forbidden : \n class extends interface\n interface extends class\nlaunch BadTypeException()
 		class Generalization {
-			+ Generalization (Type, Type)
-			+ toString() : String
+			+ Generalization(Type type1, Type type2)
+			+ Generalization()
+			+ String display()
 		}
 
 		class Agregation {
-			+ Agregation(String)
-			+ toString() : String
+			+ Agregation()
+			+ Agregation(String name)
+			+ String display()
 		}
 
 		class Composition {
-			+ Composition(String)
-			+ toString() : String
+			+ Composition(String name)
+			+ Composition()
+			+ String display()
 		}
 
 		class SimpleRelation {
-			+ SimpleRelation(String)
-			+ toString() : String
+			+ SimpleRelation(String name)
+			+ SimpleRelation()
+			+ String display()
 		}
 
 		class Implementation {
-			+ Implementation (A_class, An_Interface)
-			+ toString() : String
+			+ Implementation(A_Class aClass, An_Interface anInterface)
+			+ Implementation()
+			+ String display()
 
 		}
 
 		class Association {
-			+ Association(A_class, Relation)
-			+ toString() : String
+			+ Association()
+			+ Association(A_Class associativeClass, Relation relation)
+			+ String display()
 		}
 
 	}
@@ -110,27 +118,28 @@ package model.class <<folder>> {
 
 		package model.class.multiplicity <<folder>> {
 			Abstract class Multiplicity{
-				+ Multiplicity (A_class, Relation)
+				+ Multiplicity(A_Class aClass, Relation relation)
+				+ String display()
 			}
 
 			class SingleMultiplicity{
 				# value : int
 				# attributeName : String
 
-				+ SingleMultiplicity(int, String, A_class, Relation)
-				+ toString() : String
+				+ SingleMultiplicity(int value2, String attributeName,A_Class aClass, Relation relation)
+				+ String display()
 			}
 
 			class DoubleMultiplicity{
 				- maxValue : int
 
-				+ DoubleMultiplicity(int,int, String, A_class, Relation)
-				+ toString() : String
+				+ DoubleMultiplicity(int value,int maxvalue, String attributeName, A_Class aClass, Relation relation)
+				+ String display()
 			}
 
 			class NoMultiplicity{
-				+ NoMultiplicity(A_class, Relation)
-				+ toString() : String
+				+ NoMultiplicity(A_Class aClass, Relation relation)
+				+ String display()
 			}
 		}
 
