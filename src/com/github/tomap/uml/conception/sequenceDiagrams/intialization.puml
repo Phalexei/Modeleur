@@ -2,6 +2,7 @@
     actor User as u
     participant Application as a
     participant A_ClassDiagram as Cd
+    participant ListenerEditor as le
     
     u -> a: Start the application
     activate a
@@ -9,6 +10,10 @@
     activate Cd
     Cd --> a
     deactivate Cd
-    
-
+    a -> le: new ListenerEditor()
+    activate le
+    le --> a
+    deactivate le
+    a --> u: application view
+    deactivate a
 @enduml
