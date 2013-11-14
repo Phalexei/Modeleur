@@ -199,10 +199,10 @@ public class DialogNrelation extends JDialog {
 							A_Class associativeC = (A_Class)comboAssociativeWith.getSelectedItem();
 							Association ass = new Association(associativeC, rn);
 							//System.out.println(ass.display());
-							cGlobal.getContainerTabbedPane().getPanelClass().addRelation(ass);
+							cGlobal.getContainerTabbedPane().getPanelClass().addGraphicalRelation(ass);
 						}else{
 							//System.out.println(rn.display());
-							cGlobal.getContainerTabbedPane().getPanelClass().addRelation(rn);
+							cGlobal.getContainerTabbedPane().getPanelClass().addGraphicalRelation(rn);
 						}
 						setVisible(false);
 					}else{

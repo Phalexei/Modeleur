@@ -3,6 +3,7 @@ package com.github.tomap.modeler.controler;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import com.github.tomap.modeler.model.diagramClass.aninterface.An_Interface;
 import com.github.tomap.modeler.model.diagramClass.typedElement.Method;
 import com.github.tomap.modeler.model.diagramClass.typedElement.Parameter;
 import com.github.tomap.modeler.model.diagramClass.visibility.Visibility;
@@ -23,14 +24,14 @@ public class ListenerDialogMethodInterface implements ActionListener {
 	// ----------------------------------------- //
 		
 	private DialogMethodInterface dialogMethodInterface;
-	
+	private An_Interface anInterface;
 	// ----------------------------------------- //
 	// --------------CONSTRUCTOR---------------- //
 	// ------------------------------------------//
 
 	public ListenerDialogMethodInterface(DialogMethodInterface dialogMethodInterface){
 		this.dialogMethodInterface = dialogMethodInterface;
-		
+		this.anInterface = dialogMethodInterface.getAnInterface();
 		this.dialogMethodInterface.getValid().addActionListener(this);
 		this.dialogMethodInterface.getCancel().addActionListener(this);
 	}
@@ -62,8 +63,10 @@ public class ListenerDialogMethodInterface implements ActionListener {
 
 				}
 			}
-			m.setBelongtoType(dialogMethodInterface.getAnInterface());
-			dialogMethodInterface.getAnInterface().addMethod(m);
+			//update model
+			m.setBelongtoType(anInterface);
+			anInterface.addMethod(m);
+			//update ui
 			dialogMethodInterface.getModelJlist().addElement(m);
 			dialogMethodInterface.getRemoveButton().setEnabled(true);
 			dialogMethodInterface.setVisible(false);

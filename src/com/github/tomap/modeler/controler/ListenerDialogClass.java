@@ -3,6 +3,7 @@ package com.github.tomap.modeler.controler;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import com.github.tomap.modeler.model.diagramClass.A_Class_Diagram;
 import com.github.tomap.modeler.model.diagramClass.aclass.A_Class;
 import com.github.tomap.modeler.model.diagramClass.apackage.A_Package;
 import com.github.tomap.modeler.view.dialog.DialogClass;
@@ -22,6 +23,7 @@ public class ListenerDialogClass implements ActionListener {
 	// ----------------------------------------- //
 		
 	private DialogClass dialogClass;
+	private A_Class_Diagram classDiagram;
 	
 	// ----------------------------------------- //
 	// --------------CONSTRUCTOR---------------- //
@@ -29,6 +31,7 @@ public class ListenerDialogClass implements ActionListener {
 
 	public ListenerDialogClass(DialogClass dialogClass){
 		this.dialogClass = dialogClass;
+		this.classDiagram = dialogClass.getcGlobal().getContainerTabbedPane().getPanelClass().getDiagram();
 		this.dialogClass.getValid().addActionListener(this);
 		this.dialogClass.getCancel().addActionListener(this);
 	}
@@ -50,18 +53,17 @@ public class ListenerDialogClass implements ActionListener {
 			// update model
 			
                         A_Package p;
-			if (dialogClass.getcGlobal().getContainerTabbedPane().getPanelClass().getDiagram().getListPackages().containsKey(packagename)) {
-				p = dialogClass.getcGlobal().getContainerTabbedPane().getPanelClass().getDiagram().getListPackages().get(packagename);
+			if (classDiagram.getListPackages().containsKey(packagename)) {
+				p = classDiagram.getListPackages().get(packagename);
 			} else {
 				p = new A_Package(packagename);
-				dialogClass.getcGlobal().getContainerTabbedPane().getPanelClass().getDiagram().addPackage(p);
+				classDiagram.addPackage(p);
 			}
                         
                         A_Class c = new A_Class(classname, isFinal, isStatic, isAbstract, p);
                         p.addClass(c);
 			
-			dialogClass.getcGlobal().getContainerTabbedPane().getPanelClass()
-					.addClassPane(c);
+			dialogClass.getcGlobal().getContainerTabbedPane().getPanelClass().addGraphicalClass(c);
 
 			dialogClass.resetDialog();
 			dialogClass.setVisible(false);

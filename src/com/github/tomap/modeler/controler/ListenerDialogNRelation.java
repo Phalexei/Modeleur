@@ -31,6 +31,7 @@ public class ListenerDialogNRelation implements ActionListener {
 		
 		//this.dialogBinaryRelation.getValid().addActionListener(this);
 		//this.dialogBinaryRelation.getCancel().addActionListener(this);
+		
 	}
 	
 	// ----------------------------------------- //
@@ -48,6 +49,7 @@ public class ListenerDialogNRelation implements ActionListener {
 		} 
 		*/
 
+		// this.diagram.addRelation(r);
 	}
 
 }

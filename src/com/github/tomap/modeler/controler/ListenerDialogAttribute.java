@@ -3,6 +3,7 @@ package com.github.tomap.modeler.controler;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import com.github.tomap.modeler.model.diagramClass.aclass.A_Class;
 import com.github.tomap.modeler.model.diagramClass.typedElement.Attribute;
 import com.github.tomap.modeler.view.dialog.DialogAttributeClass;
 
@@ -21,13 +22,14 @@ public class ListenerDialogAttribute implements ActionListener {
 	// ----------------------------------------- //
 		
 	private DialogAttributeClass dialogAttribute;
-	
+	private A_Class aclass;
 	// ----------------------------------------- //
 	// --------------CONSTRUCTOR---------------- //
 	// ------------------------------------------//
 
 	public ListenerDialogAttribute(DialogAttributeClass dialogAttribute){
 		this.dialogAttribute = dialogAttribute;
+		this.aclass = dialogAttribute.getA_class();
 		this.dialogAttribute.getValid().addActionListener(this);
 		this.dialogAttribute.getCancel().addActionListener(this);
 	}
@@ -46,8 +48,10 @@ public class ListenerDialogAttribute implements ActionListener {
         		for (int j = 0; j<dialogAttribute.getAttributeModel().getColumnCount(); j++){
         			
         			Attribute a = (Attribute)dialogAttribute.getAttributeModel().getValueAt(i, j);
-        			a.setBelongtoType(dialogAttribute.getA_class());
-        			dialogAttribute.getA_class().addAttribute(a);
+        			a.setBelongtoType(aclass);
+        			//update model
+        			aclass.addAttribute(a);
+        			//update ui
         			dialogAttribute.getModelJlist().addElement(a);
         			
         		}

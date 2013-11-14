@@ -3,6 +3,7 @@ package com.github.tomap.modeler.controler;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import com.github.tomap.modeler.model.diagramClass.A_Class_Diagram;
 import com.github.tomap.modeler.model.diagramClass.aclass.A_Class;
 import com.github.tomap.modeler.model.diagramClass.aninterface.An_Interface;
 import com.github.tomap.modeler.model.diagramClass.exception.BadTypeException;
@@ -32,6 +33,7 @@ public class ListenerDialogBinaryRelation implements ActionListener {
 	// ----------------------------------------- //
 		
 	private DialogBinaryRelation dialogBinaryRelation;
+	private A_Class_Diagram aclassDiagram;
 	
 	// ----------------------------------------- //
 	// --------------CONSTRUCTOR---------------- //
@@ -39,7 +41,7 @@ public class ListenerDialogBinaryRelation implements ActionListener {
 
 	public ListenerDialogBinaryRelation(DialogBinaryRelation dialogBinaryRelation){
 		this.dialogBinaryRelation = dialogBinaryRelation;
-		
+		this.aclassDiagram = dialogBinaryRelation.getcGlobal().getContainerTabbedPane().getPanelClass().getDiagram();
 		this.dialogBinaryRelation.getValid().addActionListener(this);
 		this.dialogBinaryRelation.getCancel().addActionListener(this);
 	}
@@ -78,8 +80,10 @@ public class ListenerDialogBinaryRelation implements ActionListener {
 			An_Interface i = (An_Interface)dialogBinaryRelation.getComboTypeTo().getSelectedItem();
 			
 			Implementation im = new Implementation(c,i);
-			
-			dialogBinaryRelation.getcGlobal().getContainerTabbedPane().getPanelClass().addRelation(im);
+			//update model 
+			aclassDiagram.addRelation(im);
+			//update ui
+			dialogBinaryRelation.getcGlobal().getContainerTabbedPane().getPanelClass().addGraphicalRelation(im);
 			dialogBinaryRelation.dispose();	
 		}catch(ClassCastException e){
 			dialogBinaryRelation.getAreaError().setText(e.getMessage());
@@ -92,7 +96,10 @@ public class ListenerDialogBinaryRelation implements ActionListener {
 			Generalization g = new Generalization((com.github.tomap.modeler.model.diagramClass.type.Type)dialogBinaryRelation.getComboTypeFrom()
 					.getSelectedItem(), 
 					(com.github.tomap.modeler.model.diagramClass.type.Type)dialogBinaryRelation.getComboTypeTo().getSelectedItem());
-			dialogBinaryRelation.getcGlobal().getContainerTabbedPane().getPanelClass().addRelation(g);
+			//update model 
+			aclassDiagram.addRelation(g);
+			//update ui
+			dialogBinaryRelation.getcGlobal().getContainerTabbedPane().getPanelClass().addGraphicalRelation(g);
 			dialogBinaryRelation.dispose();	
 		} catch (BadTypeException e) {
 			dialogBinaryRelation.getAreaError().setText(e.getMessage());
@@ -146,9 +153,15 @@ public class ListenerDialogBinaryRelation implements ActionListener {
 			if(dialogBinaryRelation.getIsAssociative().isSelected()){
 				A_Class associative = (A_Class) dialogBinaryRelation.getComboAssociativeWith().getSelectedItem();
 				Association ass = new Association(associative, r);
-				dialogBinaryRelation.getcGlobal().getContainerTabbedPane().getPanelClass().addRelation(ass);
+				//update model 
+				aclassDiagram.addRelation(ass);
+				//update ui
+				dialogBinaryRelation.getcGlobal().getContainerTabbedPane().getPanelClass().addGraphicalRelation(ass);
 			}else{
-				dialogBinaryRelation.getcGlobal().getContainerTabbedPane().getPanelClass().addRelation(r);
+				//update model 
+				aclassDiagram.addRelation(r);
+				//update ui
+				dialogBinaryRelation.getcGlobal().getContainerTabbedPane().getPanelClass().addGraphicalRelation(r);
 			}
 			
 			dialogBinaryRelation.dispose();

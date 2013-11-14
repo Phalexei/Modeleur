@@ -14,7 +14,6 @@ import com.github.tomap.modeler.controler.ListenerGclass;
 import com.github.tomap.modeler.model.diagramClass.A_Class_Diagram;
 import com.github.tomap.modeler.model.diagramClass.aclass.A_Class;
 import com.github.tomap.modeler.model.diagramClass.aninterface.An_Interface;
-import com.github.tomap.modeler.model.diagramClass.apackage.A_Package;
 import com.github.tomap.modeler.model.diagramClass.relation.Relation;
 import com.github.tomap.modeler.view.DClass.G_Class;
 import com.github.tomap.modeler.view.DClass.G_Interface;
@@ -72,8 +71,9 @@ public class DrawClassPane extends JDesktopPane {
 	 * @param isFinal
 	 * @param isStatic
 	 */
-	public void addClassPane(A_Class c) {
+	public void addGraphicalClass(A_Class c) {
 
+		//update ui
 		G_Class frame1 = new G_Class(c, this);
 		@SuppressWarnings("unused")
 		ListenerGclass listener = new ListenerGclass(frame1, this);
@@ -89,9 +89,8 @@ public class DrawClassPane extends JDesktopPane {
 	 * @param a_package
 	 * @param an_interface
 	 */
-	public void addInterface(An_Interface i) {
+	public void addGraphicalInterface(An_Interface i) {
 
-		
 		// update ui
 		G_Interface frame1 = new G_Interface(i, this);
 		@SuppressWarnings("unused")
@@ -103,9 +102,7 @@ public class DrawClassPane extends JDesktopPane {
 	}
 
 	
-	public void addRelation(Relation r){
-		//update model
-		this.diagram.addRelation(r);
+	public void addGraphicalRelation(Relation r){
 		
 		//update ui
 		G_Relation grelation = new G_Relation(r, listClasses, listInterfaces);
