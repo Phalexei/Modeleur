@@ -12,31 +12,31 @@ public class A_Class_Diagram {
 
 	private HashMap<String,A_Package> listPackages;
 	private List<Relation> listRelations;
-	
+
 	public A_Class_Diagram() {
 		super();
 		this.listPackages = new HashMap<String, A_Package>();
 		this.listRelations = new LinkedList<Relation>();
 	}
-	
+
 	public void addPackage(A_Package p){
 		this.listPackages.put(p.getName(), p);
 	}
-	
+
 	public void removePackage(A_Package p){
 		this.listPackages.remove(p.toString());
 	}
-	
+
 	public void addRelation (Relation r){
 		this.listRelations.add(r);
 	}
-	
+
 	public void removeRelation (Relation r){
 		this.listRelations.remove(r);
 	}
-	
-	
-	
+
+
+
 	public HashMap<String, A_Package> getListPackages() {
 		return listPackages;
 	}
@@ -55,19 +55,19 @@ public class A_Class_Diagram {
 
 	public String display(){
 		String s = "====== CLASS DIAGRAMM ======\n";
-		
-		for (Map.Entry entry : listPackages.entrySet()) { 
+
+		for (Map.Entry entry : listPackages.entrySet()) {
 			s+=((A_Package) entry.getValue()).display();
 		}
-		
+
 		s+= "\n\n";
-		
+
 		for (Relation r : listRelations){
 			s+= r.display()+"\n";
 		}
-		
+
 		return s;
-		
+
 	}
-	
+
 }

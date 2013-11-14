@@ -1,7 +1,7 @@
 package com.github.tomap.modeler.model.diagramClass.typedElement;
 
 import com.github.tomap.modeler.model.diagramClass.aclass.A_Class;
-import com.github.tomap.modeler.model.diagramClass.excpetion.BadTypeException;
+import com.github.tomap.modeler.model.diagramClass.exception.BadTypeException;
 import com.github.tomap.modeler.model.diagramClass.type.Type;
 import com.github.tomap.modeler.model.diagramClass.visibility.Visibility;
 

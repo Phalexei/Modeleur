@@ -1,4 +1,4 @@
-package com.github.tomap.modeler.model.diagramClass.excpetion;
+package com.github.tomap.modeler.model.diagramClass.exception;
 
 public class BadTypeException extends Exception{
 

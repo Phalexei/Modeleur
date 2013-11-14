@@ -11,13 +11,11 @@ package model.class <<folder>> {
 		 - name : String
 
 		 + A_Package(String name)
-		 + addClass(A_Class) : void
-		 + removeClass(A_Class) : void
-		 + removeClasses() : void
-		 + addInterface(An_Interface) : void
-		 + removeInterface(An_Interface) : void
-		 + removeInterfaces() : void
-		 + toString() : String
+		 + void addClass(A_Class aClass)
+		 + void removeClass(A_Class aClass)
+		 + void addInterface(An_Interface anInterface)
+		 + void removeInterface(An_Interface anInterface)
+		 + String display()
 		}
 	}
 
@@ -28,23 +26,22 @@ package model.class <<folder>> {
 		  - isStatic : boolean
 		  - isAbstract : boolean
 
-		  + A_class(String, boolean, boolean, boolean, A_Package)
-		  + addMethod(Method) : void
-		  + removeMethod(Method) : void
-		  + addAttribute(Attribute) : void
-		  + removeAttribute(Attribute) : void
-		  + toString() : String
+		  + A_Class(String name, boolean isFinal, boolean isStatic, boolean isAbstract, A_Package apackage)
+		  + A_Class()
+		  + void addMethod(Method m)
+		  + void removeMethod(Method m)
+		  + void addAttribute(Attribute a)
+		  + void removeAttribute(Attribute a)
 		}
 	}
 
 	package model.class.interface <<folder>> {
 		class An_Interface {
 
-		+ An_Interface(String, A_Package)
-		+ addMethod(Method) : void
-		+ removeMethod(Method) : void
-		+ removeAllMethod() : void
-		+ toString() : String
+		+ An_Interface(String name, A_Package a_Package)
+		+ void addMethod(Method m)
+		+ void removeMethod(Method m)
+		+ String display()
 		}
 	}
 
@@ -54,35 +51,38 @@ package model.class <<folder>> {
 		class Attribute {
 			- isDerivated : boolean
 
-			+ Attribute(boolean, boolean, boolean,String, TypeBase, Visibility,Type)
-			+ toString() : String
+			+ Attribute(String name, boolean isFinal, Type type, boolean isStatic, boolean isDerivated,  Type belongtoType, Visibility visibility)
+			+ Attribute(String name, boolean isFinal, Type type, boolean isStatic, boolean isDerivated, Visibility visibility)
+			+ String display()
 		}
 
 		class Method {
 			- isAbstract : boolean
 
-			+ Method(Visibility, Type, String, boolean, boolean, Type)
-			+ addParameter (Parameter) : void
-			+ removeParameter (Parameter) : void
-			+ toString() : String
+			+ Method(Visibility v, Type typeReturn, String name,boolean isFinal, boolean isAbstract, Type belongtoType)
+			+ Method(Visibility v, Type typeReturn, String name,boolean isFinal, boolean isAbstract)
+			+ Method(String name)
+			+ void addParameter (Parameter p)
+			+ void removeParameter (Parameter p)
+			+ String display()
 		}
 
 		class Parameter {
-			+ Parameter(boolean, Type, String, Method)
-			+ toString() : String
+			+ Parameter(String name, boolean isFinal, Type type, Method method)
+			+ String display()
 		}
 
 		abstract class TypedElement{
 			# name : String
 			# isFinal : boolean
 
-			+ TypedElement(String, boolean, Type)
+			+ TypedElement(String name, boolean isFinal, Type type)
 		}
 
 		abstract class VisibleTypedElement {
 			# isStatic : boolean
 
-			+ VisibleTypedElement(String, boolean, Type, boolean, Visibility)
+			+ VisibleTypedElement(String name, boolean isFinal, Type type, boolean isStatic, Visibility visibility)
 		}
 	}
 
@@ -92,14 +92,13 @@ package model.class <<folder>> {
 		abstract class Type{
 			# name : String
 
-			+ Type (String)
-			+ toString() : String
-			+ getName() : String
+			+ Type (String name)
+			+ String display()
 		}
 
 		abstract class TypeBase{
-		 	- ByteSize : int
-		 	+ TypeBase(String, int)
+		 	- byteSize : int
+		 	+ TypeBase(String name, int byteSize)
 		}
 
 		class Integer {
@@ -145,8 +144,7 @@ package model.class <<folder>> {
 		abstract class Visibility{
 			- name : String
 
-			+ Visibility(String)
-			+ toString() : String
+			+ Visibility(String name)
 		}
 
 		class Private {
