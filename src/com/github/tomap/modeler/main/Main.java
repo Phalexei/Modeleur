@@ -1,6 +1,6 @@
 package com.github.tomap.modeler.main;
 
-import com.github.tomap.modeler.model.diagramClass.excpetion.BadTypeException;
+import com.github.tomap.modeler.model.diagramClass.exception.BadTypeException;
 import com.github.tomap.modeler.view.MainFrame;
 
 public class Main {

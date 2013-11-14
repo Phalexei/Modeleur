@@ -1,41 +1,55 @@
 @startuml
 
     actor User as u
-    participant Application as a
+    participant ListenerEditor as le
+    participant ListenerDialogClass as ldc
     participant A_ClassDiagram as Cd
     participant "p : A_Package" as p
     participant "c : A_Class" as c
+    participant "lgc : ListenetGclass" as lgc
         
-	u -> a: Add class click
-	activate a
+	u -> le: Add class click
+	activate le
+        le -> ldc: new ListenDialogClass()
+        activate ldc
+        ldc --> le
+        deactivate ldc
+        le --> u: New class form 
+        deactivate le
 
-        a --> u: Information form
-        u -> a: String : className, packageName\n Boolean : final, static, abstract
-
-	a -> Cd: getListPackage()
+        u -> ldc: String : className, packageName\n Boolean : final, static, abstract
+        activate ldc
+        u -> ldc: click OK
+	ldc -> Cd: getListPackage()
         activate Cd
-	Cd --> a: listPackage
+	Cd --> ldc: listPackage
         deactivate Cd
 
-        a -> a: existsPackage(p)
+        ldc -> ldc: existsPackage(p)
 
 	opt !existsPackage(p)
-            a -> p: new A_Package(packageName)
+            ldc -> p: new A_Package(packageName)
             activate p
-            p --> a
+            p --> ldc
             deactivate p
 
-            a -> a: listPackage.add(p)
+            ldc -> ldc: listPackage.add(p)
 	end
         
-	a -> c: new A_Class(className, final, static, abstract, p)
+	ldc -> c: new A_Class(className, final, static, abstract, p)
         activate c
-        c --> a
+        c --> ldc
 	deactivate c
 
-        a -> p: addClass(c)
+        ldc -> p: addClass(c)
         activate p
+        p --> ldc
         deactivate p
+        
+        ldc -> lgc: new ListenerGclass()
+        activate lgc
+        lgc --> ldc
+        deactivate lgc
 
-
+        ldc --> u: repainted view
 @enduml

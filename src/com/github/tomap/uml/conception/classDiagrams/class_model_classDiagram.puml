@@ -12,18 +12,17 @@ package model.class <<folder>> {
 
 		 class A_ClassDiagram {
 		 	+ A_ClassDiagram()
-		 	+ addPackage(A_Package) : void
-		 	+ removePackage(A_Package) : void
-		 	+ addRelation (Relation) : void
-		 	+ removeRelation (Relation) : void
-		 	+ toString() : String
+		 	+ void addPackage(A_Package p)
+		 	+ void removePackage(A_Package p)
+		 	+ void addRelation (Relation r)
+		 	+ void removeRelation (Relation r)
+		 	+ String display()
 		}
 	}
 
 
 	package model.class.package <<folder>> {
 		class A_Package {
-			+ A_Package(String)
 		}
 	}
 
@@ -40,11 +39,11 @@ package model.class <<folder>> {
 
 		 class A_ObjectDiagram {
 		 	+ A_ObjectDiagram()
-		 	+ addPackage(A_PackageObject) : void
-		 	+ removePackage(A_PackageObject) : void
-		 	+ addRelation (RelationObject) : void
-		 	+ removeRelation (RelationObject) : void
-		 	+ toString() : String
+		 	+ void addPackage(A_PackageObject p)
+		 	+ void removePackage(A_PackageObject p)
+		 	+ void addRelation (RelationObject r)
+		 	+ void removeRelation (RelationObject r)
+		 	+ String display()
 		}
 	}
 

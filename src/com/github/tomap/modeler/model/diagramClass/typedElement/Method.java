@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.github.tomap.modeler.model.diagramClass.aclass.A_Class;
 import com.github.tomap.modeler.model.diagramClass.aninterface.An_Interface;
-import com.github.tomap.modeler.model.diagramClass.excpetion.BadTypeException;
+import com.github.tomap.modeler.model.diagramClass.exception.BadTypeException;
 import com.github.tomap.modeler.model.diagramClass.type.Integer;
 import com.github.tomap.modeler.model.diagramClass.type.Type;
 import com.github.tomap.modeler.model.diagramClass.visibility.Private;

@@ -24,7 +24,7 @@ import com.github.tomap.modeler.model.diagramClass.A_Class_Diagram;
 import com.github.tomap.modeler.model.diagramClass.aclass.A_Class;
 import com.github.tomap.modeler.model.diagramClass.aninterface.An_Interface;
 import com.github.tomap.modeler.model.diagramClass.apackage.A_Package;
-import com.github.tomap.modeler.model.diagramClass.excpetion.BadTypeException;
+import com.github.tomap.modeler.model.diagramClass.exception.BadTypeException;
 import com.github.tomap.modeler.model.diagramClass.multiplicity.DoubleMultiplicity;
 import com.github.tomap.modeler.model.diagramClass.multiplicity.Multiplicity;
 import com.github.tomap.modeler.model.diagramClass.relation.Agregation;
