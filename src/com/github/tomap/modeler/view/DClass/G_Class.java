@@ -122,4 +122,5 @@ public class G_Class extends JInternalFrame {
 		return aClass;
 	}
 
+	
 }
