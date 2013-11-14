@@ -46,18 +46,19 @@ public class ListenerDialogInterface implements ActionListener {
 
 			
 			// update model
-			An_Interface i = new An_Interface(interfacename, null);
+			
 
+                        A_Package p;
 			if (dialogInterface.getcGlobal().getContainerTabbedPane().getPanelClass().getDiagram().getListPackages().containsKey(packagename)) {
-				A_Package p = dialogInterface.getcGlobal().getContainerTabbedPane().getPanelClass().getDiagram().getListPackages().get(packagename);
-				i.setaPackage(p);
-				p.addInterface(i);
+				p = dialogInterface.getcGlobal().getContainerTabbedPane().getPanelClass().getDiagram().getListPackages().get(packagename);
 			} else {
-				A_Package p = new A_Package(packagename);
-				i.setaPackage(p);
-				p.addInterface(i);
+				p = new A_Package(packagename);
 				dialogInterface.getcGlobal().getContainerTabbedPane().getPanelClass().getDiagram().addPackage(p);
 			}
+                        
+                        An_Interface i = new An_Interface(interfacename, p);
+                        
+			p.addInterface(i);
 
 			dialogInterface.getcGlobal().getContainerTabbedPane().getPanelClass()
 					.addInterface(i);
