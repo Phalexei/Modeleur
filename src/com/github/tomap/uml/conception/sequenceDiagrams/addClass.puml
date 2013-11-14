@@ -6,7 +6,7 @@
     participant A_ClassDiagram as Cd
     participant "p : A_Package" as p
     participant "c : A_Class" as c
-    participant "lgc : ListenetGclass" as lgc
+    participant "lgc : ListenerGclass" as lgc
         
 	u -> le: Add class click
 	activate le
@@ -20,25 +20,26 @@
         u -> ldc: String : className, packageName\n Boolean : final, static, abstract
         activate ldc
         u -> ldc: click OK
-	ldc -> Cd: getListPackage()
+        
+        ldc -> Cd: getListPackages()
         activate Cd
-	Cd --> ldc: listPackage
+        Cd --> ldc: List<Package> lp
         deactivate Cd
+        
+        ldc -> ldc: lp.contains(packageName)
 
-        ldc -> ldc: existsPackage(p)
-
-	opt !existsPackage(p)
+	opt !existsPackage(p, lp)
             ldc -> p: new A_Package(packageName)
             activate p
-            p --> ldc
+            p --> ldc: Package p
             deactivate p
 
-            ldc -> ldc: listPackage.add(p)
+            ldc -> ldc: lp.add(p)
 	end
         
-	ldc -> c: new A_Class(className, final, static, abstract, p)
+	ldc -> c: new A_Class(className, final, static, abstract, packageName)
         activate c
-        c --> ldc
+        c --> ldc: c
 	deactivate c
 
         ldc -> p: addClass(c)

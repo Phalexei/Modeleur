@@ -48,18 +48,17 @@ public class ListenerDialogClass implements ActionListener {
 			boolean isAbstract = dialogClass.getCb_abstract().isSelected();
 
 			// update model
-			A_Class c = new A_Class(classname, isFinal, isStatic, isAbstract, null);
 			
+                        A_Package p;
 			if (dialogClass.getcGlobal().getContainerTabbedPane().getPanelClass().getDiagram().getListPackages().containsKey(packagename)) {
-				A_Package p = dialogClass.getcGlobal().getContainerTabbedPane().getPanelClass().getDiagram().getListPackages().get(packagename);
-				c.setaPackage(p);
-				p.addClass(c);
+				p = dialogClass.getcGlobal().getContainerTabbedPane().getPanelClass().getDiagram().getListPackages().get(packagename);
 			} else {
-				A_Package p = new A_Package(packagename);
-				c.setaPackage(p);
-				p.addClass(c);
+				p = new A_Package(packagename);
 				dialogClass.getcGlobal().getContainerTabbedPane().getPanelClass().getDiagram().addPackage(p);
 			}
+                        
+                        A_Class c = new A_Class(classname, isFinal, isStatic, isAbstract, p);
+                        p.addClass(c);
 			
 			dialogClass.getcGlobal().getContainerTabbedPane().getPanelClass()
 					.addClassPane(c);

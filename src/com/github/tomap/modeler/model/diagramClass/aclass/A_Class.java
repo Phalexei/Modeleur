@@ -27,6 +27,7 @@ public class A_Class extends Type{
 		this.isStatic = isStatic;
 		this.listAttribute = new LinkedList<Attribute>();
 		this.listMethod = new LinkedList<Method>();
+                this.aPackage = apackage;
 		
 	}
 	
