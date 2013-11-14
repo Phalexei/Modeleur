@@ -40,6 +40,7 @@ public class ListenerEditor implements MouseListener {
 
 	private DialogClass dialogClass;
 	private DialogInterface dialogInterface;
+	
 
 	// ----------------------------------------- //
 	// --------------CONSTRUCTOR---------------- //

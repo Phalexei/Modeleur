@@ -81,6 +81,7 @@ public class DrawClassPane extends JDesktopPane {
 		listClasses.put(c, frame1);
 		this.add(frame1);
 		
+		this.repaint();
 		System.out.println(diagram.display());
 	}
 
@@ -98,6 +99,7 @@ public class DrawClassPane extends JDesktopPane {
 		listInterfaces.put(i, frame1);
 		this.add(frame1);
 		
+		this.repaint();
 		System.out.println(diagram.display());
 	}
 
@@ -107,6 +109,9 @@ public class DrawClassPane extends JDesktopPane {
 		//update ui
 		G_Relation grelation = new G_Relation(r, listClasses, listInterfaces);
 		this.listRelations.add(grelation);
+		
+		this.repaint();
+		
 		System.out.println(diagram.display());
 	}
 	
