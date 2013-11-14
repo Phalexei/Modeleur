@@ -2,6 +2,9 @@ package com.github.tomap.modeler.controler;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import com.github.tomap.modeler.model.diagramClass.aninterface.An_Interface;
+import com.github.tomap.modeler.model.diagramClass.apackage.A_Package;
 import com.github.tomap.modeler.view.dialog.DialogInterface;
 
 public class ListenerDialogInterface implements ActionListener {
@@ -39,10 +42,25 @@ public class ListenerDialogInterface implements ActionListener {
 		
 		if (e.getSource() == this.dialogInterface.getValid()){
 			String packagename = dialogInterface.getTextPackageName().getText();
-			String classname = dialogInterface.getTextInterfaceName().getText();
+			String interfacename = dialogInterface.getTextInterfaceName().getText();
+
+			
+			// update model
+			An_Interface i = new An_Interface(interfacename, null);
+
+			if (dialogInterface.getcGlobal().getContainerTabbedPane().getPanelClass().getDiagram().getListPackages().containsKey(packagename)) {
+				A_Package p = dialogInterface.getcGlobal().getContainerTabbedPane().getPanelClass().getDiagram().getListPackages().get(packagename);
+				i.setaPackage(p);
+				p.addInterface(i);
+			} else {
+				A_Package p = new A_Package(packagename);
+				i.setaPackage(p);
+				p.addInterface(i);
+				dialogInterface.getcGlobal().getContainerTabbedPane().getPanelClass().getDiagram().addPackage(p);
+			}
 
 			dialogInterface.getcGlobal().getContainerTabbedPane().getPanelClass()
-					.addInterface(packagename, classname);
+					.addInterface(i);
 
 			dialogInterface.resetDialog();
 			dialogInterface.setVisible(false);

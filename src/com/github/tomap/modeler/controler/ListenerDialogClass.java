@@ -3,6 +3,8 @@ package com.github.tomap.modeler.controler;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import com.github.tomap.modeler.model.diagramClass.aclass.A_Class;
+import com.github.tomap.modeler.model.diagramClass.apackage.A_Package;
 import com.github.tomap.modeler.view.dialog.DialogClass;
 
 public class ListenerDialogClass implements ActionListener {
@@ -45,8 +47,22 @@ public class ListenerDialogClass implements ActionListener {
 			boolean isFinal = dialogClass.getCb_final().isSelected();
 			boolean isAbstract = dialogClass.getCb_abstract().isSelected();
 
+			// update model
+			A_Class c = new A_Class(classname, isFinal, isStatic, isAbstract, null);
+			
+			if (dialogClass.getcGlobal().getContainerTabbedPane().getPanelClass().getDiagram().getListPackages().containsKey(packagename)) {
+				A_Package p = dialogClass.getcGlobal().getContainerTabbedPane().getPanelClass().getDiagram().getListPackages().get(packagename);
+				c.setaPackage(p);
+				p.addClass(c);
+			} else {
+				A_Package p = new A_Package(packagename);
+				c.setaPackage(p);
+				p.addClass(c);
+				dialogClass.getcGlobal().getContainerTabbedPane().getPanelClass().getDiagram().addPackage(p);
+			}
+			
 			dialogClass.getcGlobal().getContainerTabbedPane().getPanelClass()
-					.addClass(packagename, classname, isAbstract, isFinal,isStatic);
+					.addClassPane(c);
 
 			dialogClass.resetDialog();
 			dialogClass.setVisible(false);

@@ -72,24 +72,8 @@ public class DrawClassPane extends JDesktopPane {
 	 * @param isFinal
 	 * @param isStatic
 	 */
-	public void addClass(String a_package, String a_class, boolean isAbstract,
-			boolean isFinal, boolean isStatic) {
+	public void addClassPane(A_Class c) {
 
-		// update model
-		A_Class c = new A_Class(a_class, isFinal, isStatic, isAbstract, null);
-
-		if (diagram.getListPackages().containsKey(a_package)) {
-			A_Package p = diagram.getListPackages().get(a_package);
-			c.setaPackage(p);
-			p.addClass(c);
-		} else {
-			A_Package p = new A_Package(a_package);
-			c.setaPackage(p);
-			p.addClass(c);
-			diagram.addPackage(p);
-		}
-
-		// update ui
 		G_Class frame1 = new G_Class(c, this);
 		@SuppressWarnings("unused")
 		ListenerGclass listener = new ListenerGclass(frame1, this);
@@ -105,22 +89,9 @@ public class DrawClassPane extends JDesktopPane {
 	 * @param a_package
 	 * @param an_interface
 	 */
-	public void addInterface(String a_package, String an_interface) {
+	public void addInterface(An_Interface i) {
 
-		// update model
-		An_Interface i = new An_Interface(an_interface, null);
-
-		if (diagram.getListPackages().containsKey(a_package)) {
-			A_Package p = diagram.getListPackages().get(a_package);
-			i.setaPackage(p);
-			p.addInterface(i);
-		} else {
-			A_Package p = new A_Package(a_package);
-			i.setaPackage(p);
-			p.addInterface(i);
-			diagram.addPackage(p);
-		}
-
+		
 		// update ui
 		G_Interface frame1 = new G_Interface(i, this);
 		@SuppressWarnings("unused")
