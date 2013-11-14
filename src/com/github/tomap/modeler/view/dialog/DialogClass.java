@@ -1,9 +1,6 @@
 package com.github.tomap.modeler.view.dialog;
 
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
@@ -11,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.github.tomap.modeler.controler.ListenerDialogClass;
 import com.github.tomap.modeler.view.GlobalContainer;
 
 public class DialogClass extends JDialog {
@@ -54,6 +52,9 @@ public class DialogClass extends JDialog {
 		this.setTitle("Make a class");
 		this.setLocationRelativeTo(cGlobal.getMainframe());
 		this.setSize(new Dimension(300, 200));
+		
+		@SuppressWarnings("unused")
+		ListenerDialogClass listener = new ListenerDialogClass(this);
 
 	}
 
@@ -87,36 +88,8 @@ public class DialogClass extends JDialog {
 
 		JPanel pn3 = new JPanel();
 		valid = new JButton("Ok");
-		valid.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String packagename = textPackageName.getText();
-				String classname = textClassName.getText();
-				boolean isStatic = cb_static.isSelected();
-				boolean isFinal = cb_final.isSelected();
-				boolean isAbstract = cb_abstract.isSelected();
-
-				cGlobal.getContainerTabbedPane()
-						.getPanelClass()
-						.addClass(packagename, classname, isAbstract, isFinal,
-								isStatic);
-
-				resetDialog();
-				setVisible(false);
-
-			}
-		});
-
 		cancel = new JButton("Cancel");
-		cancel.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				resetDialog();
-				setVisible(false);
-			}
-		});
+		
 		pn3.add(valid);
 		pn3.add(cancel);
 
@@ -128,12 +101,78 @@ public class DialogClass extends JDialog {
 		return content;
 	}
 
-	private void resetDialog() {
+	public void resetDialog() {
 		this.cb_abstract.setSelected(false);
 		this.cb_final.setSelected(false);
 		this.cb_static.setSelected(false);
 		this.textClassName.setText("");
 		this.textPackageName.setText("");
 	}
+
+	public GlobalContainer getcGlobal() {
+		return cGlobal;
+	}
+
+	public void setcGlobal(GlobalContainer cGlobal) {
+		this.cGlobal = cGlobal;
+	}
+
+	public JCheckBox getCb_final() {
+		return cb_final;
+	}
+
+	public void setCb_final(JCheckBox cb_final) {
+		this.cb_final = cb_final;
+	}
+
+	public JCheckBox getCb_static() {
+		return cb_static;
+	}
+
+	public void setCb_static(JCheckBox cb_static) {
+		this.cb_static = cb_static;
+	}
+
+	public JCheckBox getCb_abstract() {
+		return cb_abstract;
+	}
+
+	public void setCb_abstract(JCheckBox cb_abstract) {
+		this.cb_abstract = cb_abstract;
+	}
+
+	public JTextField getTextClassName() {
+		return textClassName;
+	}
+
+	public void setTextClassName(JTextField textClassName) {
+		this.textClassName = textClassName;
+	}
+
+	public JTextField getTextPackageName() {
+		return textPackageName;
+	}
+
+	public void setTextPackageName(JTextField textPackageName) {
+		this.textPackageName = textPackageName;
+	}
+
+	public JButton getValid() {
+		return valid;
+	}
+
+	public void setValid(JButton valid) {
+		this.valid = valid;
+	}
+
+	public JButton getCancel() {
+		return cancel;
+	}
+
+	public void setCancel(JButton cancel) {
+		this.cancel = cancel;
+	}
+	
+	
 
 }

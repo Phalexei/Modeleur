@@ -1,8 +1,6 @@
 package com.github.tomap.modeler.view.dialog;
 
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -10,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.github.tomap.modeler.controler.ListenerDialogInterface;
 import com.github.tomap.modeler.view.GlobalContainer;
 
 public class DialogInterface extends JDialog {
@@ -51,6 +50,8 @@ public class DialogInterface extends JDialog {
 		this.setLocationRelativeTo(cGlobal.getMainframe());
 		this.setSize(new Dimension(300, 200));
 
+		@SuppressWarnings("unused")
+		ListenerDialogInterface listener = new ListenerDialogInterface(this);
 	}
 
 	// ----------------------------------------- //
@@ -75,31 +76,8 @@ public class DialogInterface extends JDialog {
 
 		JPanel pn3 = new JPanel();
 		valid = new JButton("Ok");
-		valid.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String packagename = textPackageName.getText();
-				String classname = textInterfaceName.getText();
-
-				cGlobal.getContainerTabbedPane().getPanelClass()
-						.addInterface(packagename, classname);
-
-				resetDialog();
-				setVisible(false);
-
-			}
-		});
-
 		cancel = new JButton("Cancel");
-		cancel.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				resetDialog();
-				setVisible(false);
-			}
-		});
+		
 		pn3.add(valid);
 		pn3.add(cancel);
 
@@ -110,9 +88,51 @@ public class DialogInterface extends JDialog {
 		return content;
 	}
 
-	private void resetDialog() {
+	public void resetDialog() {
 		this.textInterfaceName.setText("");
 		this.textPackageName.setText("");
 	}
+
+	public GlobalContainer getcGlobal() {
+		return cGlobal;
+	}
+
+	public void setcGlobal(GlobalContainer cGlobal) {
+		this.cGlobal = cGlobal;
+	}
+
+	public JTextField getTextInterfaceName() {
+		return textInterfaceName;
+	}
+
+	public void setTextInterfaceName(JTextField textInterfaceName) {
+		this.textInterfaceName = textInterfaceName;
+	}
+
+	public JTextField getTextPackageName() {
+		return textPackageName;
+	}
+
+	public void setTextPackageName(JTextField textPackageName) {
+		this.textPackageName = textPackageName;
+	}
+
+	public JButton getValid() {
+		return valid;
+	}
+
+	public void setValid(JButton valid) {
+		this.valid = valid;
+	}
+
+	public JButton getCancel() {
+		return cancel;
+	}
+
+	public void setCancel(JButton cancel) {
+		this.cancel = cancel;
+	}
+	
+	
 
 }

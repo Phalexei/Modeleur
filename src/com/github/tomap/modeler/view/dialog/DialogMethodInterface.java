@@ -30,9 +30,9 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import com.github.tomap.modeler.view.DClass.PanelMethodInterface;
+import com.github.tomap.modeler.controler.ListenerDialogMethodInterface;
 import com.github.tomap.modeler.model.diagramClass.aninterface.An_Interface;
 import com.github.tomap.modeler.model.diagramClass.type.Boolean;
-import com.github.tomap.modeler.model.diagramClass.type.Type;
 import com.github.tomap.modeler.model.diagramClass.type.AString;
 import com.github.tomap.modeler.model.diagramClass.type.Double;
 import com.github.tomap.modeler.model.diagramClass.type.Float;
@@ -106,6 +106,9 @@ public class DialogMethodInterface extends JDialog {
 		this.pack();
 		this.setTitle("Make a Method");
 		this.setLocationRelativeTo(null);
+		
+		@SuppressWarnings("unused")
+		ListenerDialogMethodInterface listener = new ListenerDialogMethodInterface(this);
 
 	}
 
@@ -205,46 +208,8 @@ public class DialogMethodInterface extends JDialog {
 		panel.add(addButton);
 
 		valid = new JButton("Ok");
-		valid.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Visibility v = (Visibility) comboVisibility.getSelectedItem();
-				com.github.tomap.modeler.model.diagramClass.type.Type returnType = (com.github.tomap.modeler.model.diagramClass.type.Type) comboReturnType
-						.getSelectedItem();
-				String name = textMethodName.getText();
-				boolean isFinal = finalButton.isSelected();
-				boolean isAbstract = abstractButton.isSelected();
-
-				Method m = new Method(v, returnType, name, isFinal, isAbstract);
-
-				for (int i = 0; i < parameterModel.getRowCount(); i++) {
-					for (int j = 0; j < parameterModel.getColumnCount(); j++) {
-
-						Parameter p = (Parameter) parameterModel.getValueAt(i,
-								j);
-						m.addParameter(p);
-
-					}
-				}
-				m.setBelongtoType(anInterface);
-				anInterface.addMethod(m);
-				modelJlist.addElement(m);
-				removeButton.setEnabled(true);
-				setVisible(false);
-
-			}
-		});
-
 		cancel = new JButton("Cancel");
-		cancel.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				setVisible(false);
-			}
-		});
+		
 		panel.add(cancel);
 		panel.add(valid);
 
@@ -270,123 +235,242 @@ public class DialogMethodInterface extends JDialog {
 
 	}
 
-}
+	
+	// ----------------------------------------- //
+	// -----------------OTHER CLASS------------ //
+	// ----------------------------------------- //
 
-// ----------------------------------------- //
-// -----------------OTHER CLASS------------ //
-// ----------------------------------------- //
+	private class InterfaceCellEditorRenderer extends AbstractCellEditor implements
+			TableCellRenderer, TableCellEditor {
 
-class InterfaceCellEditorRenderer extends AbstractCellEditor implements
-		TableCellRenderer, TableCellEditor {
+		private static final long serialVersionUID = 1L;
+		private InterfaceParameterCellPanel renderer = new InterfaceParameterCellPanel();
+		private InterfaceParameterCellPanel editor = new InterfaceParameterCellPanel();
 
-	private static final long serialVersionUID = 1L;
-	private InterfaceParameterCellPanel renderer = new InterfaceParameterCellPanel();
-	private InterfaceParameterCellPanel editor = new InterfaceParameterCellPanel();
-
-	@Override
-	public Component getTableCellRendererComponent(JTable table, Object value,
-			boolean isSelected, boolean hasFocus, int row, int column) {
-		renderer.setParameter((Parameter) value);
-		return renderer;
-	}
-
-	@Override
-	public Component getTableCellEditorComponent(JTable table, Object value,
-			boolean isSelected, int row, int column) {
-		editor.setParameter((Parameter) value);
-		return editor;
-	}
-
-	@Override
-	public Object getCellEditorValue() {
-		return editor.getParameter();
-	}
-
-	@Override
-	public boolean isCellEditable(EventObject anEvent) {
-		return true;
-	}
-
-	@Override
-	public boolean shouldSelectCell(EventObject anEvent) {
-		return false;
-	}
-}
-
-class ParameterInterfaceTableModel extends DefaultTableModel {
-
-	private static final long serialVersionUID = 1L;
-
-	@Override
-	public int getColumnCount() {
-		return 1;
-	}
-
-	public void addRow() {
-		super.addRow(new Object[] { new Parameter("", false, new Integer(),
-				null) });
-		super.fireTableDataChanged();
-
-	}
-
-}
-
-class InterfaceParameterCellPanel extends JPanel {
-
-	private static final long serialVersionUID = 1L;
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private JComboBox<Type> typeCombo = new JComboBox(new Object[] {
-			new Integer(), new Double(), new Float(), new Boolean(),
-			new AString() });
-	private JCheckBox isfinalBox = new JCheckBox();
-	private JTextField paramterName = new JTextField();
-	private JButton removeButton = new JButton("remove");
-
-	InterfaceParameterCellPanel() {
-		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-
-		removeButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JTable table = (JTable) SwingUtilities.getAncestorOfClass(
-						JTable.class, (Component) e.getSource());
-				int row = table.getEditingRow();
-				table.getCellEditor().stopCellEditing();
-				((DefaultTableModel) table.getModel()).removeRow(row);
-			}
-		});
-
-		add(typeCombo);
-		add(isfinalBox);
-		add(paramterName);
-		add(Box.createHorizontalStrut(100));
-		add(removeButton);
-	}
-
-	public void setParameter(Parameter p) {
-
-		int index = 0;
-		if (p.getType().toString().equals("int")) {
-			index = 0;
-		} else if (p.getType().toString().equals("double")) {
-			index = 1;
-		} else if (p.getType().toString().equals("float")) {
-			index = 2;
-		} else if (p.getType().toString().equals("boolean")) {
-			index = 3;
-		} else if (p.getType().toString().equals("String")) {
-			index = 4;
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value,
+				boolean isSelected, boolean hasFocus, int row, int column) {
+			renderer.setParameter((Parameter) value);
+			return renderer;
 		}
 
-		typeCombo.setSelectedIndex(index);
-		isfinalBox.setSelected(p.isFinal());
-		paramterName.setText(p.getName());
+		@Override
+		public Component getTableCellEditorComponent(JTable table, Object value,
+				boolean isSelected, int row, int column) {
+			editor.setParameter((Parameter) value);
+			return editor;
+		}
+
+		@Override
+		public Object getCellEditorValue() {
+			return editor.getParameter();
+		}
+
+		@Override
+		public boolean isCellEditable(EventObject anEvent) {
+			return true;
+		}
+
+		@Override
+		public boolean shouldSelectCell(EventObject anEvent) {
+			return false;
+		}
 	}
 
-	public Parameter getParameter() {
-		return new Parameter(paramterName.getText(), isfinalBox.isSelected(),
-				(Type) typeCombo.getSelectedItem(), new Method("m"));
+	public class ParameterInterfaceTableModel extends DefaultTableModel {
+
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public int getColumnCount() {
+			return 1;
+		}
+
+		public void addRow() {
+			super.addRow(new Object[] { new Parameter("", false, new Integer(),
+					null) });
+			super.fireTableDataChanged();
+
+		}
+
 	}
+
+	private class InterfaceParameterCellPanel extends JPanel {
+
+		private static final long serialVersionUID = 1L;
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		private JComboBox<Type> typeCombo = new JComboBox(new Object[] {
+				new Integer(), new Double(), new Float(), new Boolean(),
+				new AString() });
+		private JCheckBox isfinalBox = new JCheckBox();
+		private JTextField paramterName = new JTextField();
+		private JButton removeButton = new JButton("remove");
+
+		InterfaceParameterCellPanel() {
+			setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+
+			removeButton.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JTable table = (JTable) SwingUtilities.getAncestorOfClass(
+							JTable.class, (Component) e.getSource());
+					int row = table.getEditingRow();
+					table.getCellEditor().stopCellEditing();
+					((DefaultTableModel) table.getModel()).removeRow(row);
+				}
+			});
+
+			add(typeCombo);
+			add(isfinalBox);
+			add(paramterName);
+			add(Box.createHorizontalStrut(100));
+			add(removeButton);
+		}
+
+		public void setParameter(Parameter p) {
+
+			int index = 0;
+			if (p.getType().toString().equals("int")) {
+				index = 0;
+			} else if (p.getType().toString().equals("double")) {
+				index = 1;
+			} else if (p.getType().toString().equals("float")) {
+				index = 2;
+			} else if (p.getType().toString().equals("boolean")) {
+				index = 3;
+			} else if (p.getType().toString().equals("String")) {
+				index = 4;
+			}
+
+			typeCombo.setSelectedIndex(index);
+			isfinalBox.setSelected(p.isFinal());
+			paramterName.setText(p.getName());
+		}
+
+		public Parameter getParameter() {
+			return new Parameter(paramterName.getText(), isfinalBox.isSelected(),
+					(com.github.tomap.modeler.model.diagramClass.type.Type) typeCombo.getSelectedItem(), new Method("m"));
+		}
+
+	}
+
+	public JComboBox<Visibility> getComboVisibility() {
+		return comboVisibility;
+	}
+
+	public void setComboVisibility(JComboBox<Visibility> comboVisibility) {
+		this.comboVisibility = comboVisibility;
+	}
+
+	public JComboBox<com.github.tomap.modeler.model.diagramClass.type.Type> getComboReturnType() {
+		return comboReturnType;
+	}
+
+	public void setComboReturnType(
+			JComboBox<com.github.tomap.modeler.model.diagramClass.type.Type> comboReturnType) {
+		this.comboReturnType = comboReturnType;
+	}
+
+	public JCheckBox getFinalButton() {
+		return finalButton;
+	}
+
+	public void setFinalButton(JCheckBox finalButton) {
+		this.finalButton = finalButton;
+	}
+
+	public JCheckBox getAbstractButton() {
+		return abstractButton;
+	}
+
+	public void setAbstractButton(JCheckBox abstractButton) {
+		this.abstractButton = abstractButton;
+	}
+
+	public JTextField getTextMethodName() {
+		return textMethodName;
+	}
+
+	public void setTextMethodName(JTextField textMethodName) {
+		this.textMethodName = textMethodName;
+	}
+
+	public JButton getValid() {
+		return valid;
+	}
+
+	public void setValid(JButton valid) {
+		this.valid = valid;
+	}
+
+	public JButton getCancel() {
+		return cancel;
+	}
+
+	public void setCancel(JButton cancel) {
+		this.cancel = cancel;
+	}
+
+	public JTable getTableParameter() {
+		return tableParameter;
+	}
+
+	public void setTableParameter(JTable tableParameter) {
+		this.tableParameter = tableParameter;
+	}
+
+	public ParameterInterfaceTableModel getParameterModel() {
+		return parameterModel;
+	}
+
+	public void setParameterModel(ParameterInterfaceTableModel parameterModel) {
+		this.parameterModel = parameterModel;
+	}
+
+	public JButton getAddButton() {
+		return addButton;
+	}
+
+	public void setAddButton(JButton addButton) {
+		this.addButton = addButton;
+	}
+
+	public An_Interface getAnInterface() {
+		return anInterface;
+	}
+
+	public void setAnInterface(An_Interface anInterface) {
+		this.anInterface = anInterface;
+	}
+
+	public DefaultListModel<Method> getModelJlist() {
+		return modelJlist;
+	}
+
+	public void setModelJlist(DefaultListModel<Method> modelJlist) {
+		this.modelJlist = modelJlist;
+	}
+
+	public JButton getRemoveButton() {
+		return removeButton;
+	}
+
+	public void setRemoveButton(JButton removeButton) {
+		this.removeButton = removeButton;
+	}
+
+	public ButtonGroup getGroup() {
+		return group;
+	}
+
+	public void setGroup(ButtonGroup group) {
+		this.group = group;
+	}
+	
+	
 
 }
+
+
+

@@ -1,18 +1,13 @@
 package com.github.tomap.modeler.view.dialog;
 
-
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Iterator;
-
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -24,6 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import com.github.tomap.modeler.view.GlobalContainer;
+import com.github.tomap.modeler.controler.ListenerDialogBinaryRelation;
 import com.github.tomap.modeler.model.diagramClass.A_Class_Diagram;
 import com.github.tomap.modeler.model.diagramClass.aclass.A_Class;
 import com.github.tomap.modeler.model.diagramClass.aninterface.An_Interface;
@@ -99,6 +95,9 @@ public class DialogBinaryRelation extends JDialog {
 		this.pack();
 		this.setTitle("Make a relation");
 		this.setLocationRelativeTo(cGlobal.getMainframe());
+		
+		@SuppressWarnings("unused")
+		ListenerDialogBinaryRelation listener = new ListenerDialogBinaryRelation(this);
 }
 
     // ----------------------------------------- //
@@ -306,31 +305,13 @@ public class DialogBinaryRelation extends JDialog {
 		panelValidation = new JPanel();
 		valid = new JButton("OK");
 		cancel = new JButton("Cancel");
-		
-		valid.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				makeRelation();
-			}
-
-		});
-		
-		cancel.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				DialogBinaryRelation.this.dispose();	
-			}
-		});
-		
 		panelValidation.add(cancel);
 		panelValidation.add(valid);
 		
 		return panelValidation;
 	}
 	
-	private void makeRelation() {
+	public void makeRelation() {
 		int index = comboTypeRelation.getSelectedIndex();
 		switch(index){
 		case 0: makeSimpleRelation(); break;
@@ -448,6 +429,24 @@ public class DialogBinaryRelation extends JDialog {
 		
 		return valMax;
 	}
+
+	public JButton getValid() {
+		return valid;
+	}
+
+	public void setValid(JButton valid) {
+		this.valid = valid;
+	}
+
+	public JButton getCancel() {
+		return cancel;
+	}
+
+	public void setCancel(JButton cancel) {
+		this.cancel = cancel;
+	}
+	
+	
 
 	
 }
