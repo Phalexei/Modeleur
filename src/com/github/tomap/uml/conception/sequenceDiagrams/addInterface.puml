@@ -1,40 +1,59 @@
 @startuml
 
     actor User as u
-    participant Application as a
+    participant ListenerEditor as le
+    participant ListenerDialogInterface as ldi
     participant A_ClassDiagram as Cd
     participant "p : A_Package" as p
     participant "i : An_Interface" as i
+    participant "lgi : ListenerGinterface" as lgi
+        
+	u -> le: Add interface click
+	activate le
+        le -> ldi: new ListenDialogInterface()
+        activate ldi
+        ldi --> le
+        deactivate ldi
+        le --> u: New interface form 
+        deactivate le
 
-	u -> a: Add interface click
-        activate a
-        a --> u: information form
-        u -> a: String : interfaceName, packageName
-
-	a -> Cd: getListPackage()
+        u -> ldi: String : interfaceName, packageName
+        activate ldi
+        u -> ldi: click OK
+        
+        ldi -> Cd: getListPackages()
         activate Cd
-	Cd --> a: listPackage
+        Cd --> ldi: List<Package> lp
         deactivate Cd
+        
+        ldi -> ldi: lp.containsKey(packageName)
 
-        a -> a: existsPackage(p)
-
-	opt !existsPackage(p)
-            a -> p: new A_Package(packageName)
+	opt !existsPackage(p, lp)
+            ldi -> p: new A_Package(packageName)
             activate p
-            p --> a
+            p --> ldi: Package p
             deactivate p
-            a -> a: listPackage.add(p)
+
+            ldi -> Cd: addPackage(p)
+            activate Cd
+            Cd --> ldi
+            deactivate Cd
 	end
-
-	a -> i: new An_Interface(interfaceName, p)
-	activate i
-
-	i --> a
+        
+	ldi -> i: new new An_Interface(interfaceName, p)
+        activate i
+        i --> ldi: i
 	deactivate i
 
-        a -> p: addInterface(i)
+        ldi -> p: addInterface(i)
         activate p
+        p --> ldi
         deactivate p
-	deactivate a
+        
+        ldi -> lgi: new ListenerGInterface()
+        activate lgi
+        lgi --> ldi
+        deactivate lgi
 
+        ldi --> u: repainted view
 @enduml
