@@ -55,7 +55,6 @@ public class ListenerDialogBinaryRelation implements ActionListener {
 		
 		if (e.getSource() == this.dialogBinaryRelation.getValid()){
 			makeRelation();
-			
 		}else if (e.getSource() == this.dialogBinaryRelation.getCancel()){
 			dialogBinaryRelation.dispose();	
 		} 

@@ -9,71 +9,68 @@ import com.github.tomap.modeler.model.diagramClass.apackage.A_Package;
 import com.github.tomap.modeler.view.dialog.DialogInterface;
 
 public class ListenerDialogInterface implements ActionListener {
-	/**
-	 * <h4>ListenerDialogInterface listens the interface dialog</h4>
-	 * 
-	 * @author Alexis CHRETIENNE
-	 */
+
+    /**
+     * <h4>ListenerDialogInterface listens the interface dialog</h4>
+     *
+     * @author Alexis CHRETIENNE
+     */
 	// ----------------------------------------- //
-	// --------------- CONSTANTS --------------- //
-	// ----------------------------------------- //
+    // --------------- CONSTANTS --------------- //
+    // ----------------------------------------- //
+    // ----------------------------------------- //
+    // ----------------ATRIBUTES---------------- //
+    // ----------------------------------------- //
+    private DialogInterface dialogInterface;
+    private A_Class_Diagram classDiagram;
 
-	// ----------------------------------------- //
-	// ----------------ATRIBUTES---------------- //
-	// ----------------------------------------- //
-		
-	private DialogInterface dialogInterface;
-	private A_Class_Diagram classDiagram;
-	
-	// ----------------------------------------- //
-	// --------------CONSTRUCTOR---------------- //
-	// ------------------------------------------//
+    // ----------------------------------------- //
+    // --------------CONSTRUCTOR---------------- //
+    // ------------------------------------------//
+    public ListenerDialogInterface(DialogInterface dialogInterface) {
+        this.dialogInterface = dialogInterface;
+        this.classDiagram = dialogInterface.getcGlobal().getContainerTabbedPane().getPanelClass().getDiagram();
+        this.dialogInterface.getValid().addActionListener(this);
+        this.dialogInterface.getCancel().addActionListener(this);
+    }
 
-	public ListenerDialogInterface(DialogInterface dialogInterface){
-		this.dialogInterface = dialogInterface;
-		this.classDiagram = dialogInterface.getcGlobal().getContainerTabbedPane().getPanelClass().getDiagram();
-		this.dialogInterface.getValid().addActionListener(this);
-		this.dialogInterface.getCancel().addActionListener(this);
-	}
-	
-	// ----------------------------------------- //
-	// -----------------METHODS----------------- //
-	// ----------------------------------------- //
+    // ----------------------------------------- //
+    // -----------------METHODS----------------- //
+    // ----------------------------------------- //
+    @Override
+    public void actionPerformed(ActionEvent e) {
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-		if (e.getSource() == this.dialogInterface.getValid()){
-			String packagename = dialogInterface.getTextPackageName().getText();
-			String interfacename = dialogInterface.getTextInterfaceName().getText();
+        if (e.getSource() == this.dialogInterface.getValid()) {
+            addInterface();
+        } else if (e.getSource() == this.dialogInterface.getCancel()) {
+            dialogInterface.resetDialog();
+            dialogInterface.setVisible(false);
+        }
 
-			
-			// update model
-			
+    }
 
-                        A_Package p;
-			if (classDiagram.getListPackages().containsKey(packagename)) {
-				p = classDiagram.getListPackages().get(packagename);
-			} else {
-				p = new A_Package(packagename);
-				classDiagram.addPackage(p);
-			}
-                        
-                        An_Interface i = new An_Interface(interfacename, p);
-                        
-			p.addInterface(i);
+    public void addInterface() {
+        String packagename = dialogInterface.getTextPackageName().getText();
+        String interfacename = dialogInterface.getTextInterfaceName().getText();
 
-			dialogInterface.getcGlobal().getContainerTabbedPane().getPanelClass()
-					.addGraphicalInterface(i);
+        // update model
+        A_Package p;
+        if (classDiagram.getListPackages().containsKey(packagename)) {
+            p = classDiagram.getListPackages().get(packagename);
+        } else {
+            p = new A_Package(packagename);
+            classDiagram.addPackage(p);
+        }
 
-			dialogInterface.resetDialog();
-			dialogInterface.setVisible(false);
+        An_Interface i = new An_Interface(interfacename, p);
 
-		}else if (e.getSource() == this.dialogInterface.getCancel()){
-			dialogInterface.resetDialog();
-			dialogInterface.setVisible(false);
-		} 
+        p.addInterface(i);
 
-	}
+        dialogInterface.getcGlobal().getContainerTabbedPane().getPanelClass()
+                .addGraphicalInterface(i);
+
+        dialogInterface.resetDialog();
+        dialogInterface.setVisible(false);
+    }
 
 }

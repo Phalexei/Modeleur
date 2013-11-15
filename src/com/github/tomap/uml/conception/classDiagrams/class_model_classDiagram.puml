@@ -5,13 +5,13 @@ title Class diagram which models class diagrams
 package model.class <<folder>> {
 
 	class UMLDiagram {
-		+ UMLDiagram()
+		'+ UMLDiagram()
 	}
 
 	package model.class.Classdiagram <<folder>> {
 
 		 class A_ClassDiagram {
-		 	+ A_ClassDiagram()
+		 	'+ A_ClassDiagram()
 		 	+ void addPackage(A_Package p)
 		 	+ void removePackage(A_Package p)
 		 	+ void addRelation (Relation r)
@@ -38,7 +38,7 @@ package model.class <<folder>> {
 	package model.object.Objectdiagram <<folder>> {
 
 		 class A_ObjectDiagram {
-		 	+ A_ObjectDiagram()
+		 	'+ A_ObjectDiagram()
 		 	+ void addPackage(A_PackageObject p)
 		 	+ void removePackage(A_PackageObject p)
 		 	+ void addRelation (RelationObject r)

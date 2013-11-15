@@ -10,7 +10,7 @@ package model.class <<folder>> {
 		class A_Package {
 		 - name : String
 
-		 + A_Package(String name)
+		 '+ A_Package(String name)
 		 + void addClass(A_Class aClass)
 		 + void removeClass(A_Class aClass)
 		 + void addInterface(An_Interface anInterface)
@@ -26,8 +26,8 @@ package model.class <<folder>> {
 		  - isStatic : boolean
 		  - isAbstract : boolean
 
-		  + A_Class(String name, boolean isFinal, boolean isStatic, boolean isAbstract, A_Package apackage)
-		  + A_Class()
+		  '+ A_Class(String name, boolean isFinal, boolean isStatic, boolean isAbstract, A_Package apackage)
+		  '+ A_Class()
 		  + void addMethod(Method m)
 		  + void removeMethod(Method m)
 		  + void addAttribute(Attribute a)
@@ -38,7 +38,7 @@ package model.class <<folder>> {
 	package model.class.interface <<folder>> {
 		class An_Interface {
 
-		+ An_Interface(String name, A_Package a_Package)
+		'+ An_Interface(String name, A_Package a_Package)
 		+ void addMethod(Method m)
 		+ void removeMethod(Method m)
 		+ String display()
@@ -51,24 +51,24 @@ package model.class <<folder>> {
 		class Attribute {
 			- isDerivated : boolean
 
-			+ Attribute(String name, boolean isFinal, Type type, boolean isStatic, boolean isDerivated,  Type belongtoType, Visibility visibility)
-			+ Attribute(String name, boolean isFinal, Type type, boolean isStatic, boolean isDerivated, Visibility visibility)
+			'+ Attribute(String name, boolean isFinal, Type type, boolean isStatic, boolean isDerivated,  Type belongtoType, Visibility visibility)
+			'+ Attribute(String name, boolean isFinal, Type type, boolean isStatic, boolean isDerivated, Visibility visibility)
 			+ String display()
 		}
 
 		class Method {
 			- isAbstract : boolean
 
-			+ Method(Visibility v, Type typeReturn, String name,boolean isFinal, boolean isAbstract, Type belongtoType)
-			+ Method(Visibility v, Type typeReturn, String name,boolean isFinal, boolean isAbstract)
-			+ Method(String name)
+			'+ Method(Visibility v, Type typeReturn, String name,boolean isFinal, boolean isAbstract, Type belongtoType)
+			'+ Method(Visibility v, Type typeReturn, String name,boolean isFinal, boolean isAbstract)
+			'+ Method(String name)
 			+ void addParameter (Parameter p)
 			+ void removeParameter (Parameter p)
 			+ String display()
 		}
 
 		class Parameter {
-			+ Parameter(String name, boolean isFinal, Type type, Method method)
+			'+ Parameter(String name, boolean isFinal, Type type, Method method)
 			+ String display()
 		}
 
@@ -76,13 +76,13 @@ package model.class <<folder>> {
 			# name : String
 			# isFinal : boolean
 
-			+ TypedElement(String name, boolean isFinal, Type type)
+			'+ TypedElement(String name, boolean isFinal, Type type)
 		}
 
 		abstract class VisibleTypedElement {
 			# isStatic : boolean
 
-			+ VisibleTypedElement(String name, boolean isFinal, Type type, boolean isStatic, Visibility visibility)
+			'+ VisibleTypedElement(String name, boolean isFinal, Type type, boolean isStatic, Visibility visibility)
 		}
 	}
 
@@ -92,37 +92,37 @@ package model.class <<folder>> {
 		abstract class Type{
 			# name : String
 
-			+ Type (String name)
+			' Type (String name)
 			+ String display()
 		}
 
 		abstract class TypeBase{
 		 	- byteSize : int
-		 	+ TypeBase(String name, int byteSize)
+		 	'+ TypeBase(String name, int byteSize)
 		}
 
 		class Integer {
-			+ Integer()
+			'+ Integer()
 		}
 
 		class Double {
-			+ Double()
+			'+ Double()
 		}
 
 		class Float {
-			+ IntFloateger()
+			'+ IntFloateger()
 		}
 
 		class Void {
-			+ Void()
+			'+ Void()
 		}
 
 		class Boolean {
-			+ Boolean()
+			'+ Boolean()
 		}
 
 		class AString {
-			+ AString()
+			'+ AString()
 		}
 	}
 
@@ -144,23 +144,23 @@ package model.class <<folder>> {
 		abstract class Visibility{
 			- name : String
 
-			+ Visibility(String name)
+			'+ Visibility(String name)
 		}
 
 		class Private {
-			+ Private()
+			'+ Private()
 		}
 
 		class Public {
-			+ Public()
+			'+ Public()
 		}
 
 		class Protected {
-			+ Protected()
+			'+ Protected()
 		}
 
 		class Package {
-			+ Package()
+			'+ Package()
 		}
 	}
 

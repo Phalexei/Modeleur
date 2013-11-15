@@ -1,0 +1,63 @@
+@startuml
+package controller <<folder>> {
+    class Controller {
+
+    }
+
+    class DiagramController {
+        
+    }
+
+    class ListenerDialogAttribute {
+    }
+
+    class ListenerDialogBinaryRelation {
+
+    }
+
+    class ListenerDialogClass {
+
+    }
+
+    class ListenerDialogInterface {
+
+    }
+
+    class ListenerDialogMethodClass {
+
+    }
+
+    class ListenerDialogMethodInterface {
+
+    }
+
+    class ListenerDialogNRelation {
+
+    }
+
+    class ListenerEditor {
+
+    }
+
+    class ListenerGInterface {
+
+    }
+
+    class ListenerGclass {
+
+    }
+
+    ListenerDialogBinaryRelation --|> DiagramController
+    ListenerDialogClass --|> DiagramController
+    ListenerDialogInterface --|> DiagramController
+    ListenerDialogNRelation --|> DiagramController
+    DiagramController --|> Controller
+    ListenerDialogAttribute --|> Controller
+    ListenerDialogMethodClass --|> Controller
+    ListenerDialogMethodInterface --|> Controller
+    ListenerEditor --|> Controller
+    ListenerGInterface --|> Controller
+    ListenerGclass --|> Controller
+}
+
+@enduml

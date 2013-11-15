@@ -8,62 +8,63 @@ import com.github.tomap.modeler.model.diagramClass.typedElement.Attribute;
 import com.github.tomap.modeler.view.dialog.DialogAttributeClass;
 
 public class ListenerDialogAttribute implements ActionListener {
-	/**
-	 * <h4>ListenerDialogAttribute listens the attribute dialog</h4>
-	 * 
-	 * @author Alexis CHRETIENNE
-	 */
+
+    /**
+     * <h4>ListenerDialogAttribute listens the attribute dialog</h4>
+     *
+     * @author Alexis CHRETIENNE
+     */
 	// ----------------------------------------- //
-	// --------------- CONSTANTS --------------- //
-	// ----------------------------------------- //
+    // --------------- CONSTANTS --------------- //
+    // ----------------------------------------- //
 
 	// ----------------------------------------- //
-	// ----------------ATRIBUTES---------------- //
+    // ----------------ATRIBUTES---------------- //
+    // ----------------------------------------- //
+    private DialogAttributeClass dialogAttribute;
+    private A_Class aclass;
 	// ----------------------------------------- //
-		
-	private DialogAttributeClass dialogAttribute;
-	private A_Class aclass;
-	// ----------------------------------------- //
-	// --------------CONSTRUCTOR---------------- //
-	// ------------------------------------------//
+    // --------------CONSTRUCTOR---------------- //
+    // ------------------------------------------//
 
-	public ListenerDialogAttribute(DialogAttributeClass dialogAttribute){
-		this.dialogAttribute = dialogAttribute;
-		this.aclass = dialogAttribute.getA_class();
-		this.dialogAttribute.getValid().addActionListener(this);
-		this.dialogAttribute.getCancel().addActionListener(this);
-	}
-	
-	// ----------------------------------------- //
-	// -----------------METHODS----------------- //
-	// ----------------------------------------- //
+    public ListenerDialogAttribute(DialogAttributeClass dialogAttribute) {
+        this.dialogAttribute = dialogAttribute;
+        this.aclass = dialogAttribute.getA_class();
+        this.dialogAttribute.getValid().addActionListener(this);
+        this.dialogAttribute.getCancel().addActionListener(this);
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-		if (e.getSource() == this.dialogAttribute.getValid()){
-			
-			// list attribute
-			for (int i = 0; i<dialogAttribute.getAttributeModel().getRowCount(); i++){
-        		for (int j = 0; j<dialogAttribute.getAttributeModel().getColumnCount(); j++){
-        			
-        			Attribute a = (Attribute)dialogAttribute.getAttributeModel().getValueAt(i, j);
-        			a.setBelongtoType(aclass);
-        			//update model
-        			aclass.addAttribute(a);
-        			//update ui
-        			dialogAttribute.getModelJlist().addElement(a);
-        			
-        		}
-        	}
-			
-			dialogAttribute.getRemoveButton().setEnabled(true);
-			dialogAttribute.setVisible(false);
-			
-		}else if (e.getSource() == this.dialogAttribute.getCancel()){
-			dialogAttribute.setVisible(false);
-		} 
+	// ----------------------------------------- //
+    // -----------------METHODS----------------- //
+    // ----------------------------------------- //
+    @Override
+    public void actionPerformed(ActionEvent e) {
 
-	}
+        if (e.getSource() == this.dialogAttribute.getValid()) {
+            addAttributes();
+        } else if (e.getSource() == this.dialogAttribute.getCancel()) {
+            dialogAttribute.setVisible(false);
+        }
+
+    }
+
+    public void addAttributes() {
+        // list attribute
+        for (int i = 0; i < dialogAttribute.getAttributeModel().getRowCount(); i++) {
+            for (int j = 0; j < dialogAttribute.getAttributeModel().getColumnCount(); j++) {
+
+                Attribute a = (Attribute) dialogAttribute.getAttributeModel().getValueAt(i, j);
+                a.setBelongtoType(aclass);
+                //update model
+                aclass.addAttribute(a);
+                //update ui
+                dialogAttribute.getModelJlist().addElement(a);
+
+            }
+        }
+
+        dialogAttribute.getRemoveButton().setEnabled(true);
+        dialogAttribute.setVisible(false);
+    }
 
 }
