@@ -1,2 +1,67 @@
 @startuml
+
+    actor User as u
+    participant ListenerDialogEditor as lde
+    participant ListenerDialogNRelation as ldbr
+    participant A_ClassDiagram as Cd
+    participant "r : N_Relation" as r
+    participant "dm : DoubleMultiplicity" as dm
+    participant "a : Association" as a
+        
+	u -> lde: Add n- relation click
+	activate lde
+
+        lde -> ldbr: new ListenerDialogNRelation()
+        activate ldbr
+        ldbr --> lde
+        deactivate ldbr
+
+        lde --> u: Add binary relation form
+        deactivate lde
+
+        
+        u -> ldbr: Array<A_class> : classes
+        activate ldbr
+
+        opt
+            u -> ldbr: A_class : associative
+        end
+
+        u -> ldbr: click OK
+
+        ldbr -> r: new N_Relation("n-ary")
+        activate r
+        r --> ldbr: r
+        deactivate r
+
+        loop foreach A_Class c in classes
+            ldbr -> dm: new DoubleMultiplicity(0, 0, "", c, r)
+            activate dm
+            dm --> ldbr: dm
+            deactivate dm
+
+            ldbr -> r: addMultiplicity(dm)
+            activate r
+            r --> ldbr
+            deactivate r
+        end
+  
+        alt isDefined(associative)
+           ldbr -> a: new Association(associative, r)
+           activate a
+           a --> ldbr: a
+           deactivate a
+           ldbr -> Cd: addRelation(a)
+           activate Cd
+           Cd --> ldbr
+           deactivate Cd
+        else
+           ldbr -> Cd: addRelation(r)
+           activate Cd
+           Cd --> ldbr
+           deactivate Cd
+        end
+
+        ldbr --> u: repainted view
+        deactivate ldbr
 @enduml
