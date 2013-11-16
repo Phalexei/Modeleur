@@ -122,16 +122,10 @@ package model.class <<folder>> {
 				+ String display()
 			}
 
-			class SingleMultiplicity{
-				# value : int
-				# attributeName : String
-
-				'+ SingleMultiplicity(int value2, String attributeName,A_Class aClass, Relation relation)
-				+ String display()
-			}
-
 			class DoubleMultiplicity{
 				- maxValue : int
+				- minValue : int
+				- attributeName : String
 
 				'+ DoubleMultiplicity(int value,int maxvalue, String attributeName, A_Class aClass, Relation relation)
 				+ String display()
@@ -143,8 +137,7 @@ package model.class <<folder>> {
 			}
 		}
 
-		SingleMultiplicity --|> Multiplicity
-		DoubleMultiplicity --|> SingleMultiplicity
+		DoubleMultiplicity --|> Multiplicity
 		NoMultiplicity --|> Multiplicity
 		(N_Relation, A_class) .. Multiplicity
 		(BinaryRelation, A_class) .. Multiplicity

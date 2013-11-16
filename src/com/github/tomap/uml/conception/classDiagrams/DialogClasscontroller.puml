@@ -1,0 +1,47 @@
+@startuml
+    
+    class A_ClassDiagram {
+    
+    }
+    
+    class javax.swing.JDialog {
+    
+    }
+    
+    interface java.awt.event.ActionListener {
+
+    }
+    
+    abstract class DiagramController {
+		
+    }
+
+    abstract class DialogController {
+        
+    }
+
+	class DialogClass {
+		+ DialogClass (DialogClass) 
+		- makePanels()
+		- makeListener(DialogClass) : void
+	}
+   
+    class ListenerDialogClass {
+		+ ListenerDialogClass(DialogClass,DialogClass)
+		+ actionPerformed(ActionEvent e) : void
+		+ addClass() : void
+    }
+
+
+    DialogClass --|> javax.swing.JDialog
+    ListenerDialogClass --|> DialogController
+    DialogController --|> DiagramController
+    ListenerDialogClass ..> java.awt.event.ActionListener
+    
+    DiagramController --> A_ClassDiagram
+    DialogClass "1"-->"1" A_ClassDiagram
+    
+    DialogClass "1"*."1" ListenerDialogClass
+
+
+@enduml

@@ -89,21 +89,17 @@ package model.class <<folder>> {
 			Abstract class Multiplicity{
 			}
 
-			class SingleMultiplicity{
-				# value : int
-				# attributeName : String
-			}
-
 			class DoubleMultiplicity{
 				- maxValue : int
+				- value : int
+				- attributeName : String
 			}
 
 			class NoMultiplicity{
 			}
 		}
 
-		SingleMultiplicity --|> Multiplicity
-		DoubleMultiplicity --|> SingleMultiplicity
+		DoubleMultiplicity --|> Multiplicity
 		NoMultiplicity --|> Multiplicity
 		(N_Relation, A_class) .. Multiplicity
 		(BinaryRelation, A_class) .. Multiplicity

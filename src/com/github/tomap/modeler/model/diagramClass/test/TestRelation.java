@@ -7,7 +7,6 @@ import com.github.tomap.modeler.model.diagramClass.apackage.A_Package;
 import com.github.tomap.modeler.model.diagramClass.exception.BadTypeException;
 import com.github.tomap.modeler.model.diagramClass.multiplicity.DoubleMultiplicity;
 import com.github.tomap.modeler.model.diagramClass.multiplicity.NoMultiplicity;
-import com.github.tomap.modeler.model.diagramClass.multiplicity.SingleMultiplicity;
 import com.github.tomap.modeler.model.diagramClass.relation.Agregation;
 import com.github.tomap.modeler.model.diagramClass.relation.Association;
 import com.github.tomap.modeler.model.diagramClass.relation.Composition;
@@ -71,7 +70,7 @@ public class TestRelation {
 		
 		Composition c = new Composition("works");
 		DoubleMultiplicity m1 = new DoubleMultiplicity(0, 2, "att1",c1,c);
-		SingleMultiplicity m2 = new SingleMultiplicity(2, "att2", c2, c);
+		DoubleMultiplicity m2 = new DoubleMultiplicity(2,2, "att2", c2, c);
 		c.updateMultiplicities(m1, m2);
 		
 		
@@ -95,7 +94,7 @@ public class TestRelation {
 		
 		Agregation a = new Agregation("works");
 		DoubleMultiplicity m1 = new DoubleMultiplicity(0, 2, "att1",c1,a);
-		SingleMultiplicity m2 = new SingleMultiplicity(2, "att2", c2, a);
+		DoubleMultiplicity m2 = new DoubleMultiplicity(2,2, "att2", c2, a);
 		a.updateMultiplicities(m1, m2);
 		
 		d.addRelation(a);
@@ -145,7 +144,7 @@ public class TestRelation {
 		
 		Agregation a = new Agregation("works");
 		DoubleMultiplicity m1 = new DoubleMultiplicity(0, 2, "att1",c1,a);
-		SingleMultiplicity m2 = new SingleMultiplicity(2, "att2", c2, a);
+		DoubleMultiplicity m2 = new DoubleMultiplicity(2,2, "att2", c2, a);
 		a.updateMultiplicities(m1, m2);
 		
 		Association ass = new Association(c3, a);
@@ -174,7 +173,7 @@ public class TestRelation {
 		
 		
 		SimpleRelation r = new SimpleRelation("");
-		SingleMultiplicity m1 = new SingleMultiplicity(2, "att1", c1, r);
+		DoubleMultiplicity m1 = new DoubleMultiplicity(2,2, "att2", c1, r);
 		DoubleMultiplicity m2 = new DoubleMultiplicity(0, 2, "att2",c2,r);
 		DoubleMultiplicity m3 = new DoubleMultiplicity(0, 7, "att3",c3,r);
 		
