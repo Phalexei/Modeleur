@@ -3,12 +3,11 @@ package com.github.tomap.modeler.controler;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import com.github.tomap.modeler.model.diagramClass.A_Class_Diagram;
 import com.github.tomap.modeler.model.diagramClass.aclass.A_Class;
 import com.github.tomap.modeler.model.diagramClass.apackage.A_Package;
 import com.github.tomap.modeler.view.dialog.DialogClass;
 
-public class ListenerDialogClass implements ActionListener {
+public class ListenerDialogClass extends DialogController implements ActionListener {
 
     /**
      * <h4>ListenerDialogClass listens the class dialog</h4>
@@ -22,14 +21,13 @@ public class ListenerDialogClass implements ActionListener {
     // ----------------ATRIBUTES---------------- //
     // ----------------------------------------- //
     private DialogClass dialogClass;
-    private A_Class_Diagram classDiagram;
 
     // ----------------------------------------- //
     // --------------CONSTRUCTOR---------------- //
     // ------------------------------------------//
     public ListenerDialogClass(DialogClass dialogClass) {
+    	super(dialogClass.getcGlobal().getContainerTabbedPane().getPanelClass().getDiagram());
         this.dialogClass = dialogClass;
-        this.classDiagram = dialogClass.getcGlobal().getContainerTabbedPane().getPanelClass().getDiagram();
         this.dialogClass.getValid().addActionListener(this);
         this.dialogClass.getCancel().addActionListener(this);
     }
@@ -58,11 +56,11 @@ public class ListenerDialogClass implements ActionListener {
 
         // update model
         A_Package p;
-        if (classDiagram.getListPackages().containsKey(packagename)) {
-            p = classDiagram.getListPackages().get(packagename);
+        if (aclassDiagram.getListPackages().containsKey(packagename)) {
+            p = aclassDiagram.getListPackages().get(packagename);
         } else {
             p = new A_Package(packagename);
-            classDiagram.addPackage(p);
+            aclassDiagram.addPackage(p);
         }
 
         A_Class c = new A_Class(classname, isFinal, isStatic, isAbstract, p);

@@ -7,7 +7,7 @@ import com.github.tomap.modeler.model.diagramClass.aclass.A_Class;
 import com.github.tomap.modeler.model.diagramClass.typedElement.Attribute;
 import com.github.tomap.modeler.view.dialog.DialogAttributeClass;
 
-public class ListenerDialogAttribute implements ActionListener {
+public class ListenerDialogAttribute extends DialogController implements ActionListener {
 
     /**
      * <h4>ListenerDialogAttribute listens the attribute dialog</h4>
@@ -28,6 +28,7 @@ public class ListenerDialogAttribute implements ActionListener {
     // ------------------------------------------//
 
     public ListenerDialogAttribute(DialogAttributeClass dialogAttribute) {
+    	super();
         this.dialogAttribute = dialogAttribute;
         this.aclass = dialogAttribute.getA_class();
         this.dialogAttribute.getValid().addActionListener(this);

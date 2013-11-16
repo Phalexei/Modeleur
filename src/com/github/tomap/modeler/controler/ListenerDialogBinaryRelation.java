@@ -3,7 +3,6 @@ package com.github.tomap.modeler.controler;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import com.github.tomap.modeler.model.diagramClass.A_Class_Diagram;
 import com.github.tomap.modeler.model.diagramClass.aclass.A_Class;
 import com.github.tomap.modeler.model.diagramClass.aninterface.An_Interface;
 import com.github.tomap.modeler.model.diagramClass.exception.BadTypeException;
@@ -18,7 +17,7 @@ import com.github.tomap.modeler.model.diagramClass.relation.Implementation;
 import com.github.tomap.modeler.model.diagramClass.relation.SimpleRelation;
 import com.github.tomap.modeler.view.dialog.DialogBinaryRelation;
 
-public class ListenerDialogBinaryRelation implements ActionListener {
+public class ListenerDialogBinaryRelation extends DialogController implements ActionListener {
 	/**
 	 * <h4>ListenerDialogBinaryRelation listens the binary relation dialog</h4>
 	 * 
@@ -33,15 +32,14 @@ public class ListenerDialogBinaryRelation implements ActionListener {
 	// ----------------------------------------- //
 		
 	private DialogBinaryRelation dialogBinaryRelation;
-	private A_Class_Diagram aclassDiagram;
 	
 	// ----------------------------------------- //
 	// --------------CONSTRUCTOR---------------- //
 	// ------------------------------------------//
 
 	public ListenerDialogBinaryRelation(DialogBinaryRelation dialogBinaryRelation){
+		super(dialogBinaryRelation.getcGlobal().getContainerTabbedPane().getPanelClass().getDiagram());
 		this.dialogBinaryRelation = dialogBinaryRelation;
-		this.aclassDiagram = dialogBinaryRelation.getcGlobal().getContainerTabbedPane().getPanelClass().getDiagram();
 		this.dialogBinaryRelation.getValid().addActionListener(this);
 		this.dialogBinaryRelation.getCancel().addActionListener(this);
 	}

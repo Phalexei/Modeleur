@@ -4,14 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JList;
-import com.github.tomap.modeler.model.diagramClass.A_Class_Diagram;
 import com.github.tomap.modeler.model.diagramClass.aclass.A_Class;
 import com.github.tomap.modeler.model.diagramClass.multiplicity.DoubleMultiplicity;
 import com.github.tomap.modeler.model.diagramClass.relation.Association;
 import com.github.tomap.modeler.model.diagramClass.relation.N_Relation;
 import com.github.tomap.modeler.view.dialog.DialogNrelation;
 
-public class ListenerDialogNRelation implements ActionListener {
+public class ListenerDialogNRelation extends DialogController implements ActionListener {
 	/**
 	 * <h4>ListenerDialogNRelation listens the N relation dialog</h4>
 	 * 
@@ -26,7 +25,6 @@ public class ListenerDialogNRelation implements ActionListener {
 	// ----------------------------------------- //
 
 	private DialogNrelation dialogNRelation;
-	private A_Class_Diagram classDiagram;
 	private JList<Object> jlistClasses;
 	private Object[] arrayClassesUsed;
 
@@ -35,8 +33,8 @@ public class ListenerDialogNRelation implements ActionListener {
 	// ------------------------------------------//
 
 	public ListenerDialogNRelation(DialogNrelation dialogNRelation) {
+		super(dialogNRelation.getcGlobal().getContainerTabbedPane().getDiagram());
 		this.dialogNRelation = dialogNRelation;
-		this.classDiagram = dialogNRelation.getcGlobal().getContainerTabbedPane().getDiagram();
 		this.jlistClasses = dialogNRelation.getListClasses();
 		
 		this.dialogNRelation.getValid().addActionListener(this);
@@ -60,27 +58,8 @@ public class ListenerDialogNRelation implements ActionListener {
 			}else if(arrayClassesUsed.length < 3){
 				dialogNRelation.getAreaError().setText("Select a minimum of 3 classes to make an N relation");
 			}else{
-				N_Relation rn = new N_Relation("n-ary");
-				for (int i = 0; i < arrayClassesUsed.length; i++){
-					A_Class a = (A_Class) arrayClassesUsed[i];
-					DoubleMultiplicity d = new DoubleMultiplicity(0, 0, "", a, rn);
-					rn.addMultiplicity(d);
-				}
 				
-				if(dialogNRelation.getIsAssociative().isSelected()){
-					A_Class associative = (A_Class) dialogNRelation.getComboAssociativeWith().getSelectedItem();
-					Association ass = new Association(associative, rn);
-					// update model
-					classDiagram.addRelation(ass);
-					//update ui
-					dialogNRelation.getcGlobal().getContainerTabbedPane().getPanelClass().addGraphicalRelation(ass);
-				}else{
-					//update model
-					classDiagram.addRelation(rn);
-					//update ui
-					dialogNRelation.getcGlobal().getContainerTabbedPane().getPanelClass().addGraphicalRelation(rn);
-				}
-				
+				makeNRelation();
 				dialogNRelation.dispose();
 			}
 			
@@ -88,6 +67,33 @@ public class ListenerDialogNRelation implements ActionListener {
 			dialogNRelation.dispose();
 		}
 
+	}
+	
+	public void makeNRelation(){
+		N_Relation rn = new N_Relation("n-ary");
+		for (int i = 0; i < arrayClassesUsed.length; i++){
+			A_Class a = (A_Class) arrayClassesUsed[i];
+			DoubleMultiplicity d = new DoubleMultiplicity(0, 0, "", a, rn);
+			rn.addMultiplicity(d);
+		}
+		
+		if(dialogNRelation.getIsAssociative().isSelected()){
+			makeAssociationNRelation(rn);
+		}else{
+			//update model
+			aclassDiagram.addRelation(rn);
+			//update ui
+			dialogNRelation.getcGlobal().getContainerTabbedPane().getPanelClass().addGraphicalRelation(rn);
+		}
+	}
+	
+	public void makeAssociationNRelation(N_Relation rn){
+		A_Class associative = (A_Class) dialogNRelation.getComboAssociativeWith().getSelectedItem();
+		Association ass = new Association(associative, rn);
+		// update model
+		aclassDiagram.addRelation(ass);
+		//update ui
+		dialogNRelation.getcGlobal().getContainerTabbedPane().getPanelClass().addGraphicalRelation(ass);
 	}
 
 }

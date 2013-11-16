@@ -2,15 +2,17 @@ package com.github.tomap.modeler.controler;
 
 import java.util.LinkedList;
 import java.util.List;
+
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
+
 import com.github.tomap.modeler.model.diagramClass.aninterface.An_Interface;
 import com.github.tomap.modeler.model.diagramClass.relation.Relation;
 import com.github.tomap.modeler.view.DrawClassPane;
 import com.github.tomap.modeler.view.DClass.G_Interface;
 import com.github.tomap.modeler.view.DClass.G_Relation;
 
-public class ListenerGInterface implements InternalFrameListener {
+public class ListenerGInterface extends GFrameController implements InternalFrameListener {
 
 	/**
 	 * <h4>ListenerGInterface allows to listen the G_Interface class</h4>
@@ -36,6 +38,7 @@ public class ListenerGInterface implements InternalFrameListener {
 	 */
 
 	public ListenerGInterface(G_Interface frame, DrawClassPane drawClassPane) {
+		super(drawClassPane.getDiagram());
 		this.drawClassPane = drawClassPane;
 		this.frame = frame;
 		frame.addInternalFrameListener(this);
@@ -53,7 +56,10 @@ public class ListenerGInterface implements InternalFrameListener {
 
 	@Override
 	public void internalFrameClosing(InternalFrameEvent e) {
-		
+		deleteInterfaceAndImplementation();
+	}
+	
+	public void deleteInterfaceAndImplementation(){
 		List<Relation> listRelationToDel = new LinkedList<Relation>();
 		List<G_Relation> listGrelationToDel = new LinkedList<G_Relation>();
 		
@@ -74,7 +80,7 @@ public class ListenerGInterface implements InternalFrameListener {
 		
 		// Cannot delete directly since previous loop, pointer problem. c is deleted in the fist time !
 		for(int j = 0; j < listRelationToDel.size(); j++){
-			drawClassPane.getDiagram().removeRelation(listRelationToDel.get(j));
+			aclassDiagram.removeRelation(listRelationToDel.get(j));
 		}
 		
 		for(int j = 0; j < listGrelationToDel.size(); j++){
@@ -86,7 +92,7 @@ public class ListenerGInterface implements InternalFrameListener {
 		i.getaPackage().removeInterface(i);
 		drawClassPane.repaint();
 		
-		System.out.println(drawClassPane.getDiagram().display());
+		System.out.println(aclassDiagram.display());
 	}
 
 	@Override

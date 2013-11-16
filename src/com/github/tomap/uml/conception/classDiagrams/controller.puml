@@ -1,63 +1,103 @@
 @startuml
-package controller <<folder>> {
-    class Controller {
-
+package DiagramController <<folder>> {
+    
+    class A_ClassDiagram {
+    
+    }
+    
+    class A_Class {
+    
+    }
+    
+    class An_Interface {
+    
+    }
+    
+    abstract class DiagramController {
+		
     }
 
-    class DiagramController {
+    abstract class DialogController {
         
     }
 
     class ListenerDialogAttribute {
+    	+ ListenerDialogAttribute()
+    	+ addAttributes() : void
     }
 
     class ListenerDialogBinaryRelation {
-
+		+ ListenerDialogBinaryRelation()
+		+ makeRelation() : void
+		- makeImplementation() : void
+		- makeGeneralization() : void
+		- makeAgregation() : void
+		- makeComposition() : void
+		- makeSimpleRelation() : void
+		- makeBinaryRelation(BinaryRelation r) : void
+		- getFirstMultiplicity(String val) : int
+		- getSencondMultiplicity(String val) : int
     }
 
     class ListenerDialogClass {
-
+		+ ListenerDialogClass()
+		+ addClass()
     }
 
     class ListenerDialogInterface {
-
+		+ ListenerDialogInterface()
+		+ addInterface()
     }
 
     class ListenerDialogMethodClass {
-
+		+ ListenerDialogMethodClass()
+		+ addMethod()
     }
 
     class ListenerDialogMethodInterface {
-
+		+ ListenerDialogMethodInterface()
+		+ addMethod()
     }
 
     class ListenerDialogNRelation {
-
-    }
-
-    class ListenerEditor {
-
+		+ ListenerDialogNRelation()
+		+ makeNRelation() : void
+		+ makeAssociationNRelation(N_Relation rn) : void
     }
 
     class ListenerGInterface {
-
+		+ deleteInterfaceAndImplementation() : void
     }
 
     class ListenerGclass {
-
+		+ deleteClassAndAssociation() : void
     }
+    
+    abstract class GFrameController {
+    
+    } 
 
-    ListenerDialogBinaryRelation --|> DiagramController
-    ListenerDialogClass --|> DiagramController
-    ListenerDialogInterface --|> DiagramController
-    ListenerDialogNRelation --|> DiagramController
-    DiagramController --|> Controller
-    ListenerDialogAttribute --|> Controller
-    ListenerDialogMethodClass --|> Controller
-    ListenerDialogMethodInterface --|> Controller
-    ListenerEditor --|> Controller
-    ListenerGInterface --|> Controller
-    ListenerGclass --|> Controller
+    ListenerDialogBinaryRelation --|> DialogController
+    ListenerDialogClass --|> DialogController
+    ListenerDialogInterface --|> DialogController
+    ListenerDialogNRelation --|> DialogController
+    ListenerDialogAttribute --|> DialogController
+    ListenerDialogMethodClass --|> DialogController
+    ListenerDialogMethodInterface --|> DialogController
+   
+    DialogController --|> DiagramController
+    ListenerGInterface --|> GFrameController
+    ListenerGclass --|> GFrameController
+    GFrameController --|> DiagramController
+    
+
+
+	ListenerDialogAttribute -- A_Class
+    ListenerDialogMethodClass -- A_Class
+    ListenerDialogMethodInterface -- An_Interface
+    ListenerGInterface -- An_Interface
+    ListenerGclass -- A_Class
+    DiagramController -- A_ClassDiagram
 }
 
 @enduml

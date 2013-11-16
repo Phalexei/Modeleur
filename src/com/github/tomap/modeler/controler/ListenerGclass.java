@@ -12,7 +12,7 @@ import com.github.tomap.modeler.view.DrawClassPane;
 import com.github.tomap.modeler.view.DClass.G_Class;
 import com.github.tomap.modeler.view.DClass.G_Relation;
 
-public class ListenerGclass implements InternalFrameListener {
+public class ListenerGclass extends GFrameController implements InternalFrameListener {
 
 	/**
 	 * <h4>ListenerGclass allows to listen the G_Class class</h4>
@@ -38,6 +38,7 @@ public class ListenerGclass implements InternalFrameListener {
 	 */
 
 	public ListenerGclass(G_Class frame, DrawClassPane drawClassPane) {
+		super(drawClassPane.getDiagram());
 		this.drawClassPane = drawClassPane;
 		this.frame = frame;
 		frame.addInternalFrameListener(this);
@@ -55,7 +56,10 @@ public class ListenerGclass implements InternalFrameListener {
 
 	@Override
 	public void internalFrameClosing(InternalFrameEvent e) {
-		
+		deleteClassAndAssociation();
+	}
+
+	public void deleteClassAndAssociation(){
 		List<Relation> listRelationToDel = new LinkedList<Relation>();
 		List<G_Relation> listGrelationToDel = new LinkedList<G_Relation>();
 		
@@ -79,7 +83,7 @@ public class ListenerGclass implements InternalFrameListener {
 		// Cannot delete directly since previous loop, pointer problem. c is deleted in the fist time !
 		for(int i = 0; i < listRelationToDel.size(); i++){
 			System.out.println("okk model");
-			drawClassPane.getDiagram().removeRelation(listRelationToDel.get(i));
+			aclassDiagram.removeRelation(listRelationToDel.get(i));
 		}
 		
 		for(int i = 0; i < listGrelationToDel.size(); i++){
@@ -95,9 +99,8 @@ public class ListenerGclass implements InternalFrameListener {
 		drawClassPane.repaint();
 		
 		
-		System.out.println(drawClassPane.getDiagram().display());
+		System.out.println(aclassDiagram.display());
 	}
-
 	@Override
 	public void internalFrameClosed(InternalFrameEvent e) {
 

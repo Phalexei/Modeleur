@@ -9,7 +9,7 @@ import com.github.tomap.modeler.model.diagramClass.typedElement.Parameter;
 import com.github.tomap.modeler.model.diagramClass.visibility.Visibility;
 import com.github.tomap.modeler.view.dialog.DialogMethodClass;
 
-public class ListenerDialogMethodClass implements ActionListener {
+public class ListenerDialogMethodClass extends DialogController implements ActionListener {
 
     /**
      * <h4>ListenerDialogMethodClass listens the attribute dialog for a
@@ -30,6 +30,7 @@ public class ListenerDialogMethodClass implements ActionListener {
     // --------------CONSTRUCTOR---------------- //
     // ------------------------------------------//
     public ListenerDialogMethodClass(DialogMethodClass dialogMethodClass) {
+    	super();
         this.dialogMethodClass = dialogMethodClass;
         this.aclass = dialogMethodClass.getA_class();
         this.dialogMethodClass.getValid().addActionListener(this);
