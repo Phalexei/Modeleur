@@ -35,12 +35,12 @@
         r --> ldbr: r
         deactivate r
 
-        ldbr -> dmFrom: new DoubleMultiplicity(minValFrom, maxValFrom, fromLabel, from)
+        ldbr -> dmFrom: new DoubleMultiplicity(minValFrom, maxValFrom, fromLabel, from, r)
         activate dmFrom
         dmFrom --> ldbr: dmFrom
         deactivate dmFrom
         
-        ldbr -> dmTo: new DoubleMultiplicity(minValTo, maxValTo, toLabel, to)
+        ldbr -> dmTo: new DoubleMultiplicity(minValTo, maxValTo, toLabel, to, r)
         activate dmTo
         dmTo --> ldbr: dmTo
         deactivate dmTo
