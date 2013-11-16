@@ -1,7 +1,7 @@
 @startuml
 
     actor User as u
-    participant ListenerDialogEditor as lde
+    participant ListenerEditor as lde
     participant ListenerDialogBinaryRelation as ldbr
     participant A_ClassDiagram as Cd
     participant "r : BinaryRelation" as r
