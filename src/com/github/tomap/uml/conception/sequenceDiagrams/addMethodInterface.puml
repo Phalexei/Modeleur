@@ -1,45 +1,55 @@
 @startuml
 
     actor User as u
-    participant Application as a
-    participant "c : An_Interface" as i
+    participant ListenerGinterface as lgi
+    participant ListenerDialogMethodInterface as lmi
+    participant "i : An_Interface" as i
     participant "m : Method" as m
     participant "p : Parameter" as p
 
+    u -> lgi: click add method
+    activate lgi
 
-    u -> a: click add method
-    activate a
+    lgi -> lmi : new ListenerDialogMethodClass()
+    activate lmi
+    lmi --> lgi
+    deactivate lmi
 
-    a -> i: getClickedInterface()
-    activate i
+    lgi --> u : add method to interface form
+    deactivate lgi
 
-    i --> a: this
-    deactivate i
+    
 
-    a --> u: information form
-
-    u -> a: String : name\nBoolean : static, final\nTypeRetour\nVisibility\n
+    u -> lmi: String : name\nBoolean : static, final\nTypeRetour\nVisibility\n
+    activate lmi
     loop for each parameter
-        u -> a: click add parameter
-        u -> a: String : name\nBoolean : final\nType
+        u -> lmi: click add parameter
+        u -> lmi: String : name\nBoolean : final\nType
     end
 
-    u -> a: click OK
-    a -> m: new Method(Visibility, TypeRetour, String, boolean, boolean, class)
+    u -> lmi: click OK
+
+
+    lmi -> m: new Method(Visibility, TypeRetour, String, boolean, boolean, i)
     activate m
-    m --> a
+    m --> lmi
     deactivate m
     loop for each parameter
-        a -> p: new Parameter(name, final, Type)
+        lmi -> p: new Parameter(name, final, Type)
         activate p
-        p --> a
+        p --> lmi
         deactivate p
-        a -> m: addParameter(p)
+        lmi -> m: addParameter(p)
         activate m
+        m --> lmi
         deactivate m
     end
     deactivate m
-    a -> i: addMethod(m)
+    lmi -> i: addMethod(m)
     activate i
+    i --> lmi
     deactivate i
+
+    lmi --> u: repainted view
+    deactivate lmi
 @enduml

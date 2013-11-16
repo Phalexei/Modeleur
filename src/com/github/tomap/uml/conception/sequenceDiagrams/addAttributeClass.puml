@@ -1,35 +1,41 @@
 @startuml
 
     actor User as u
-    participant Application as a
+    participant ListenerGclass as lgc
+    participant ListenerDialogAttribute as lda
     participant "c : A_Class" as c
     participant "a : Attribute" as at
 
-    u -> a: click add attribute
-    activate a
+    u -> lgc: click add attribute
+    activate lgc
 
-    a -> c: getClickedClass()
-    activate c
+    lgc -> lda: new ListenerDialogAttribute()
+    activate lda
+    lda --> lgc
+    deactivate lda
 
-    c --> a: this
-    deactivate c
-
-    a --> u: information form
+    lgc --> u: add attributes form
+    deactivate lgc
 
     loop for each attribute
-        u -> a: click add attribute
-        u -> a: String : name\nBoolean : static, final, derivated\nTypeBase\nVisibility
+        u -> lda: click add attribute
+        activate lda
+        u -> lda: String : name\nBoolean : static, final, derivated\nTypeBase\nVisibility
     end
 
-    u -> a: click OK
+    u -> lda: click OK
 
     loop for each attribute
-        a -> at: new Attribute(static, final, derivated, name, TypeBase, Visibility, class)
+        lda -> at: new Attribute(static, final, derivated, name, TypeBase, Visibility, c)
         activate at
-        at --> a
+        at --> lda
         deactivate at
-        a -> c: addAttribute(a)
+        lda -> c: addAttribute(a)
         activate c
+        c --> lda
         deactivate c
     end
+
+    lda --> u: repainted view
+    deactivate lda
 @enduml

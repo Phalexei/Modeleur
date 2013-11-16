@@ -1,29 +1,41 @@
 @startuml
 
     actor User as u
-    participant Application as a
+    participant ListenerGinterface as lgi
+    participant A_ClassDiagram as Cd
     participant "p : A_Package" as p
     participant "i : An_Interface" as i
+    participant Relation as r
 
-        u -> a: Remove class click
-	activate a
+	u -> lgi: Remove class click
+	activate lgi
 
-        a -> i: getClickedInterface()
+        lgi -> Cd: getListRelation()
+        activate Cd
+        Cd --> lgi: List<Relation> lr
+        deactivate Cd
+
+        loop for each relation r
+            lgi -> r: contains(c)
+            activate r
+            r --> lgi
+            deactivate r
+            opt r.contains(c)
+                lgi -> lgi: lr.remove(r)
+            end
+        end
+        
+        lgi -> i: getPackage()
         activate i
-
-        i --> a: this
+        i --> lgi: p
         deactivate i
-
-	a -> i: getPackage()
-	activate i
-        i --> a: package
-        deactivate i
-
-	a -> p: removeInterface(i)
+        
+	lgi -> p: removeInterface(i)
         activate p
         p -> p: listInterfaces.remove(i)
-        p --> a
+        p --> lgi
 	deactivate p
 
-
+        lgi --> u: rapainted view
+        deactivate lgi
 @enduml

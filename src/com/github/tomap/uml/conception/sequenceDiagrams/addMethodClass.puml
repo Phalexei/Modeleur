@@ -1,45 +1,55 @@
 @startuml
 
     actor User as u
-    participant Application as a
+    participant ListenerGclass as lgc
+    participant ListenerDialogMethodClass as lmc
     participant "c : A_Class" as c
     participant "m : Method" as m
     participant "p : Parameter" as p
 
+    u -> lgc: click add method
+    activate lgc
 
-     u -> a: click add method
-    activate a
+    lgc -> lmc : new ListenerDialogMethodClass()
+    activate lmc
+    lmc --> lgc
+    deactivate lmc
 
-    a -> c: getClickedClass()
-    activate c
+    lgc --> u : add method to interface form
+    deactivate lgc
 
-    c --> a: this
-    deactivate c
+    
 
-    a --> u: information form
-
-    u -> a: String : name\nBoolean : static, final\nTypeRetour\nVisibility\n
+    u -> lmc: String : name\nBoolean : static, final\nTypeRetour\nVisibility\n
+    activate lmc
     loop for each parameter
-        u -> a: click add parameter
-        u -> a: String : name\nBoolean : final\nType
+        u -> lmc: click add parameter
+        u -> lmc: String : name\nBoolean : final\nType
     end
 
-    u -> a: click OK
-    a -> m: new Method(Visibility, TypeRetour, String, boolean, boolean, class)
+    u -> lmc: click OK
+
+
+    lmc -> m: new Method(Visibility, TypeRetour, String, boolean, boolean, c)
     activate m
-    m --> a
+    m --> lmc
     deactivate m
     loop for each parameter
-        a -> p: new Parameter(name, final, Type)
+        lmc -> p: new Parameter(name, final, Type)
         activate p
-        p --> a
+        p --> lmc
         deactivate p
-        a -> m: addParameter(p)
+        lmc -> m: addParameter(p)
         activate m
+        m --> lmc
         deactivate m
     end
     deactivate m
-    a -> c: addMethod(m)
+    lmc -> c: addMethod(m)
     activate c
+    c --> lmc
     deactivate c
+
+    lmc --> u: repainted view
+    deactivate lmc
 @enduml
