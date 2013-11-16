@@ -21,7 +21,7 @@
         deactivate lde
 
         
-        u -> ldbr: String : relationName,\nfromLabel, toLabel\nminValFrom, maxValFrom,\nminValTo, maxValTo,\nRelationType\nA_class : from, to
+        u -> ldbr: String : relationName,\nfromLabel, toLabel\nminValFrom, maxValFrom,\nminValTo, maxValTo,\nrelationType\nA_class : from, to
         activate ldbr
 
         opt

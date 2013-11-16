@@ -1,2 +1,52 @@
 @startuml
+
+    actor User as u
+    participant ListenerDialogEditor as lde
+    participant ListenerDialogBinaryRelation as ldbr
+    participant A_ClassDiagram as Cd
+    participant "r : BinaryRelation" as r
+    participant "i : Implmentation" as i
+    participant "g : Generalization" as g
+        
+	u -> lde: Add binary relation click
+	activate lde
+
+        lde -> ldbr: new ListenerDialogBinaryRelation()
+        activate ldbr
+        ldbr --> lde
+        deactivate ldbr
+
+        lde --> u: Add binary relation form
+        deactivate lde
+
+        
+        u -> ldbr: String : relationType\nA_class : from, to
+        activate ldbr
+
+        u -> ldbr: click OK
+
+        alt relationType = Implementation
+            ldbr -> i: new Implementation(from, to)
+            activate i
+            i --> ldbr: i
+            deactivate i
+
+            ldbr -> Cd: addRelation(i)
+            activate Cd
+            Cd -> ldbr
+            deactivate Cd
+        else relationType = Generalization
+            ldbr -> g: new Generalization(from, to)
+            activate g
+            g --> ldbr: g
+            deactivate g
+
+            ldbr -> Cd: addRelation(g)
+            activate Cd
+            Cd -> ldbr
+            deactivate Cd
+        end
+
+        ldbr --> u: repainted view
+        deactivate ldbr
 @enduml
