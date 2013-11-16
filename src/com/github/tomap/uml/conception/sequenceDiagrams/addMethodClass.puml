@@ -20,7 +20,7 @@
 
     
 
-    u -> lmc: String : name\nBoolean : static, final\nTypeRetour\nVisibility\n
+    u -> lmc: String : name\nBoolean : static, final\nReturnType : rt\nVisibility : v\n
     activate lmc
     loop for each parameter
         u -> lmc: click add parameter
@@ -30,7 +30,7 @@
     u -> lmc: click OK
 
 
-    lmc -> m: new Method(Visibility, TypeRetour, String, boolean, boolean, c)
+    lmc -> m: new Method(v, rt, String, boolean, boolean, c)
     activate m
     m --> lmc
     deactivate m

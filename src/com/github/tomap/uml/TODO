@@ -2,5 +2,3 @@ Noter dans le doc :
     explication des controller
     non représentation des vues et des vérifications des formulaire (doublon, mauvaises valeurs) pour ne pas alourdir les diagrammes
     pas de messages asynchrones (limitation du modeleur)
-
-revoir le nom des objets dans les diagrammes de séquence, suivant le nom réel des attributs

@@ -20,13 +20,13 @@
     loop for each attribute
         u -> lda: click add attribute
         activate lda
-        u -> lda: String : name\nBoolean : static, final, derivated\nTypeBase\nVisibility
+        u -> lda: String : name\nBoolean : static, final, derivated\nTypeBase : t\nVisibility : v
     end
 
     u -> lda: click OK
 
     loop for each attribute
-        lda -> at: new Attribute(static, final, derivated, name, TypeBase, Visibility, c)
+        lda -> at: new Attribute(static, final, derivated, name, t, v, c)
         activate at
         at --> lda
         deactivate at
